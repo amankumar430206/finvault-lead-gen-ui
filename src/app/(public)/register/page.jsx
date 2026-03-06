@@ -5,6 +5,7 @@ import { useCreateStudent } from "@/hooks/useStudent";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { BackgroundGrid } from "../login/page";
 
 const Icon = ({ path, className = "w-5 h-5" }) => (
   <svg
@@ -17,35 +18,6 @@ const Icon = ({ path, className = "w-5 h-5" }) => (
   >
     <path strokeLinecap="round" strokeLinejoin="round" d={path} />
   </svg>
-);
-
-const BackgroundGrid = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    <div className="absolute inset-0 bg-[#070910]" />
-    <div
-      className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full"
-      style={{
-        background: "radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%)",
-      }}
-    />
-    <div
-      className="absolute -bottom-40 -right-20 w-[500px] h-[500px] rounded-full"
-      style={{
-        background: "radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%)",
-      }}
-    />
-    <div
-      className="absolute inset-0"
-      style={{
-        backgroundImage: "radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px)",
-        backgroundSize: "28px 28px",
-      }}
-    />
-    <div
-      className="absolute left-0 right-0 h-px bg-gradient-to-r from-bg-card via-emerald-500/20 from-bg-card"
-      style={{ top: "38%" }}
-    />
-  </div>
 );
 
 export const InputField = ({ label, type = "text", placeholder, icon, rightEl, error, register, name, ...props }) => (
@@ -117,10 +89,10 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center p-4 font-sans overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center p-4 font-sans overflow-hidden py-12 md:py-32">
       <BackgroundGrid />
 
-      <div className="relative w-full max-w-[420px] z-10">
+      <div className="relative w-full max-w-md z-10">
         <div
           className="absolute -inset-px rounded-3xl opacity-40"
           style={{
@@ -290,7 +262,7 @@ export default function RegisterPage() {
                   <button
                     type="submit"
                     disabled={isPending || isSubmitting}
-                    className="relative w-full overflow-hidden py-3 rounded-xl bg-accent hover:bg-accent/80 disabled:opacity-70 text-primary text-sm font-semibold tracking-wide transition-all duration-200 shadow-md shadow-accent/20 hover:shadow-accent/20 flex items-center justify-center gap-2 shimmer-btn"
+                    className="relative w-full overflow-hidden py-3 rounded-xl bg-accent hover:bg-accent/80 disabled:opacity-70 text-white text-sm font-semibold tracking-wide transition-all duration-200 shadow-md shadow-accent/20 hover:shadow-accent/20 flex items-center justify-center gap-2 shimmer-btn"
                   >
                     {isPending || isSubmitting ? (
                       <>

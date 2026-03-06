@@ -7,33 +7,51 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 
-const BackgroundGrid = () => (
+export const BackgroundGrid = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    <div className="absolute inset-0 bg-[#070910]" />
+    <style>{`
+      @keyframes a1 {
+        0%,100% { transform: translate(0,0) scale(1); }
+        33%      { transform: translate(40px,-30px) scale(1.06); }
+        66%      { transform: translate(-20px,20px) scale(0.96); }
+      }
+      @keyframes a2 {
+        0%,100% { transform: translate(0,0) scale(1); }
+        33%      { transform: translate(-50px,30px) scale(1.08); }
+        66%      { transform: translate(30px,-20px) scale(0.94); }
+      }
+      @keyframes a3 {
+        0%,100% { transform: translate(0,0) scale(1); }
+        50%      { transform: translate(25px,35px) scale(1.05); }
+      }
+      .a1 { animation: a1 14s ease-in-out infinite; }
+      .a2 { animation: a2 17s ease-in-out infinite; }
+      .a3 { animation: a3 11s ease-in-out infinite; }
+    `}</style>
+
+    <div className="absolute inset-0 bg-base" />
+
     <div
-      className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full"
-      style={{
-        background: "radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%)",
-      }}
+      className="a1 absolute -top-40 -left-20 w-[650px] h-[500px] rounded-full"
+      style={{ background: `var(--accent)`, opacity: 0.08, filter: "blur(110px)" }}
     />
     <div
-      className="absolute -bottom-40 -right-20 w-[500px] h-[500px] rounded-full"
-      style={{
-        background: "radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%)",
-      }}
+      className="a2 absolute -bottom-40 -right-20 w-[600px] h-[500px] rounded-full"
+      style={{ background: "rgba(6,182,212,1)", opacity: 0.07, filter: "blur(110px)" }}
     />
     <div
-      className="absolute inset-0"
-      style={{
-        backgroundImage: "radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px)",
-        backgroundSize: "28px 28px",
-      }}
+      className="a3 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full"
+      style={{ background: "rgba(139,92,246,1)", opacity: 0.05, filter: "blur(90px)" }}
     />
+
+    {/* Soft noise */}
     <div
-      className="absolute left-0 right-0 h-px bg-gradient-to-r from-bg-card via-emerald-500/20 from-bg-card"
-      style={{ top: "38%" }}
+      className="absolute inset-0 opacity-[0.02]"
+      style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+        backgroundSize: "180px 180px",
+      }}
     />
   </div>
 );
@@ -101,16 +119,8 @@ export default function LoginPage() {
       <BackgroundGrid />
 
       <div className="relative w-full max-w-md z-10">
-        <div
-          className="absolute -inset-px rounded-3xl opacity-40"
-          style={{
-            background: "linear-gradient(135deg, rgba(16,185,129,0.3), transparent 50%, rgba(6,182,212,0.2))",
-            filter: "blur(1px)",
-          }}
-        />
-
         <div className="relative rounded-3xl bg-card/95 backdrop-blur-xl border  border-[var(--border-clr)] overflow-hidden shadow-md">
-          <div className="h-px w-full bg-gradient-to-r from-bg-card via-emerald-500/60 from-bg-card" />
+          <div className="h-px w-full bg-gradient-to-r from-bg-card via-accent/80 from-bg-card" />
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="p-8">
@@ -204,7 +214,7 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     disabled={loginMutation.isPending || isSubmitting}
-                    className="relative w-full overflow-hidden py-3 rounded-xl bg-accent hover:bg-accent/80 disabled:opacity-70 text-primary text-sm font-semibold tracking-wide transition-all duration-200 shadow-md shadow-accent/20 hover:shadow-accent/20 flex items-center justify-center gap-2 shimmer-btn"
+                    className="relative w-full overflow-hidden py-3 rounded-xl bg-accent hover:bg-accent/80 disabled:opacity-70 text-white text-sm font-semibold tracking-wide transition-all duration-200 shadow-md shadow-accent/20 hover:shadow-accent/20 flex items-center justify-center gap-2 shimmer-btn"
                   >
                     {loginMutation.isPending || isSubmitting ? (
                       <>
