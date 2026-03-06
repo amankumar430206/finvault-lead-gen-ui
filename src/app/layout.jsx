@@ -24,6 +24,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        {/* Runs before React — prevents flash */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function() {
+              const t = localStorage.getItem('fv-theme') || 'dark';
+              document.documentElement.classList.add(t);
+            })();
+          `,
+          }}
+        />
         <TopLoader />
         <Toaster toastOptions={{ removeDelay: 1000 }} />
         <ReactQueryProvider>
