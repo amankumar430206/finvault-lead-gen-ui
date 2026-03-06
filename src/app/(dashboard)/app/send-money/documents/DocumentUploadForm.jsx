@@ -258,15 +258,15 @@ const getFileIcon = (name = "") => {
   const ext = name.split(".").pop()?.toLowerCase();
   if (ext === "pdf") return { icon: "PDF", bg: "bg-red-500/10 text-red-400" };
   if (["jpg", "jpeg", "png", "webp"].includes(ext)) return { icon: "IMG", bg: "bg-blue-500/10 text-blue-400" };
-  return { icon: "DOC", bg: "bg-white/[0.08] text-white/45" };
+  return { icon: "DOC", bg: "bg-inputbg text-primary/45" };
 };
 
 const colorMap = {
   emerald: {
-    pill: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    pill: "bg-accent/10 text-accent  border-[var(--border-clr)]",
     glow: "via-emerald-500/40",
-    ring: "border-emerald-500/50 bg-emerald-500/[0.07]",
-    dot: "bg-emerald-400",
+    ring: " border-[var(--border-clr)] bg-accent/[0.07]",
+    dot: "bg-accent",
   },
   blue: {
     pill: "bg-blue-500/10    text-blue-400    border-blue-500/20",
@@ -335,18 +335,18 @@ const UploadZone = ({ docId, file, onFile, onRemove, accept, required, color }) 
           {fileIcon.icon}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-white/80 text-sm font-medium truncate">{file.name}</p>
-          <p className="text-white/30 text-xs mt-0.5">{fmtSize(file.size)}</p>
+          <p className="text-primary/80 text-sm font-medium truncate">{file.name}</p>
+          <p className="text-primary/50 text-xs mt-0.5">{fmtSize(file.size)}</p>
         </div>
         {/* Progress bar (simulated) */}
         <div className="flex items-center gap-2.5 shrink-0">
-          <div className="w-16 h-1 bg-white/[0.06] rounded-full overflow-hidden">
+          <div className="w-16 h-1 bg-inputbg rounded-full overflow-hidden">
             <div className={`h-full rounded-full ${c.dot}`} style={{ width: "100%" }} />
           </div>
-          <span className="text-[10px] text-white/30">Done</span>
+          <span className="text-[10px] text-primary/50">Done</span>
           <button
             onClick={() => onRemove(docId)}
-            className="w-6 h-6 rounded-lg flex items-center justify-center text-white/25 hover:text-red-400 hover:bg-red-500/10 transition-all"
+            className="w-6 h-6 rounded-lg flex items-center justify-center text-primary/70 hover:text-red-400 hover:bg-red-500/10 transition-all"
           >
             <svg viewBox="0 0 12 12" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path strokeLinecap="round" d="M2 2l8 8M10 2L2 10" />
@@ -369,13 +369,13 @@ const UploadZone = ({ docId, file, onFile, onRemove, accept, required, color }) 
       className={[
         "flex flex-col items-center justify-center gap-2.5 px-4 py-5 rounded-xl border-2 border-dashed cursor-pointer transition-all duration-200 group",
         drag
-          ? `border-emerald-500/50 bg-emerald-500/[0.06] scale-[1.01]`
-          : "border-white/[0.09] hover:border-white/[0.2] hover:bg-white/[0.03]",
+          ? ` border-[var(--border-clr)] bg-accent/[0.06] scale-[1.01]`
+          : " border-[var(--border-clr)] hover: border-[var(--border-clr)] hover:bg-inputbg",
       ].join(" ")}
     >
       <div
         className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all
-        ${drag ? "bg-emerald-500/15 text-emerald-400" : "bg-white/[0.05] text-white/25 group-hover:text-white/50"}`}
+        ${drag ? "bg-accent/15 text-accent" : "bg-inputbg text-primary/70 group-hover:text-primary/75"}`}
       >
         <svg viewBox="0 0 20 20" className="w-4.5 h-4.5" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path
@@ -386,10 +386,10 @@ const UploadZone = ({ docId, file, onFile, onRemove, accept, required, color }) 
         </svg>
       </div>
       <div className="text-center">
-        <p className="text-white/40 text-xs font-medium group-hover:text-white/60 transition-colors">
+        <p className="text-primary/40 text-xs font-medium group-hover:text-primary/60 transition-colors">
           {drag ? "Drop to upload" : "Click or drag to upload"}
         </p>
-        <p className="text-white/20 text-[10px] mt-0.5">
+        <p className="text-primary/20 text-[10px] mt-0.5">
           {accept.replace(/\./g, "").toUpperCase().replace(/,/g, " · ")}
         </p>
       </div>
@@ -407,7 +407,7 @@ const DocumentRow = ({ doc, file, onFile, onRemove, color, index }) => {
 
   return (
     <div
-      className="rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden transition-all duration-200"
+      className="rounded-2xl border  border-[var(--border-clr)] bg-inputbg overflow-hidden transition-all duration-200"
       style={{ animation: `fadeUp 0.3s ease ${index * 0.06}s both` }}
     >
       {/* Row header */}
@@ -415,7 +415,7 @@ const DocumentRow = ({ doc, file, onFile, onRemove, color, index }) => {
         {/* Status indicator */}
         <div
           className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 mt-0.5 transition-all duration-300
-          ${uploaded ? `${c.dot} border-transparent` : "border-white/[0.15]"}`}
+          ${uploaded ? `${c.dot} border-transparent` : " border-[var(--border-clr)]"}`}
         >
           {uploaded && (
             <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none">
@@ -432,7 +432,7 @@ const DocumentRow = ({ doc, file, onFile, onRemove, color, index }) => {
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <p className={`text-sm font-medium transition-colors ${uploaded ? "text-white" : "text-white/70"}`}>
+            <p className={`text-sm font-medium transition-colors ${uploaded ? "text-primary" : "text-primary/70"}`}>
               {doc.label}
             </p>
             {doc.required ? (
@@ -440,12 +440,12 @@ const DocumentRow = ({ doc, file, onFile, onRemove, color, index }) => {
                 Required
               </span>
             ) : (
-              <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-white/[0.06] text-white/30">
+              <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-inputbg text-primary/50">
                 Optional
               </span>
             )}
           </div>
-          <p className="text-white/28 text-xs mt-0.5 leading-relaxed">{doc.hint}</p>
+          <p className="text-primary/28 text-xs mt-0.5 leading-relaxed">{doc.hint}</p>
         </div>
       </div>
 
@@ -482,12 +482,12 @@ const PurposeSelector = ({ value, onChange }) => (
             "flex items-center gap-3 px-4 py-3.5 rounded-xl border text-left transition-all duration-200",
             active
               ? `${c.ring} border`
-              : "border-white/[0.07] bg-white/[0.03] hover:border-white/[0.13] hover:bg-white/[0.05]",
+              : " border-[var(--border-clr)] bg-inputbg hover: border-[var(--border-clr)] hover:bg-inputbg",
           ].join(" ")}
         >
           <span className="text-xl leading-none shrink-0">{p.icon}</span>
           <div className="flex-1 min-w-0">
-            <p className={`text-xs font-semibold truncate ${active ? "text-white" : "text-white/60"}`}>{p.label}</p>
+            <p className={`text-xs font-semibold truncate ${active ? "text-primary" : "text-primary/60"}`}>{p.label}</p>
           </div>
           {active && (
             <div className={`w-4 h-4 rounded-full ${c.dot} flex items-center justify-center shrink-0`}>
@@ -521,11 +521,11 @@ const ProgressHeader = ({ docs, uploads, color }) => {
 
   return (
     <div
-      className={`rounded-xl border p-4 mb-2 transition-all duration-500 ${allDone ? c.ring + " border" : "border-white/[0.06] bg-white/[0.02]"}`}
+      className={`rounded-xl border p-4 mb-2 transition-all duration-500 ${allDone ? c.ring + " border" : " border-[var(--border-clr)] bg-inputbg"}`}
     >
       <div className="flex items-center justify-between mb-2.5">
         <div className="flex items-center gap-2">
-          <span className="text-white/55 text-sm font-medium">
+          <span className="text-primary/55 text-sm font-medium">
             {doneReq.length}/{required.length} required uploaded
           </span>
           {allDone && (
@@ -534,11 +534,11 @@ const ProgressHeader = ({ docs, uploads, color }) => {
             </span>
           )}
         </div>
-        <span className="text-white/30 text-xs font-mono">
+        <span className="text-primary/50 text-xs font-mono">
           {doneAll.length} / {docs.length} total
         </span>
       </div>
-      <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+      <div className="h-1.5 bg-inputbg rounded-full overflow-hidden">
         <div
           className={`h-full rounded-full ${c.dot} transition-all duration-700 ease-out`}
           style={{ width: `${pct}%` }}
@@ -604,30 +604,30 @@ export default function DocumentUploadPage() {
   // ── Success ───────────────────────────────────────────────
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[#0b0d12] flex items-center justify-center p-4">
-        <div className="w-full max-w-md rounded-2xl bg-[#0f1117] border border-white/[0.07] overflow-hidden shadow-2xl">
-          <div className={`h-px w-full bg-gradient-to-r from-transparent ${c.glow} to-transparent`} />
+      <div className="min-h-screen bg-base flex items-center justify-center p-4">
+        <div className="w-full max-w-md rounded-2xl bg-card border  border-[var(--border-clr)] overflow-hidden shadow-md">
+          <div className={`h-px w-full bg-gradient-to-r from-bg-card ${c.glow} from-bg-card`} />
           <div className="p-8 flex flex-col items-center text-center gap-5">
             <div className={`w-16 h-16 rounded-2xl ${c.ring} border flex items-center justify-center text-3xl`}>
               {cfg?.icon}
             </div>
             <div>
-              <h2 className="text-white text-xl font-semibold">Documents Submitted</h2>
-              <p className="text-white/40 text-sm mt-1.5">
+              <h2 className="text-primary text-xl font-semibold">Documents Submitted</h2>
+              <p className="text-primary/40 text-sm mt-1.5">
                 Your documents are under review. We'll notify you within 24–48 hours.
               </p>
             </div>
-            <div className="w-full bg-white/[0.03] rounded-xl border border-white/[0.05] divide-y divide-white/[0.04] text-left">
+            <div className="w-full bg-inputbg rounded-xl border  border-[var(--border-clr)] divide-y divide-white/[0.04] text-left">
               <div className="flex justify-between px-4 py-3">
-                <span className="text-white/35 text-sm">Purpose</span>
-                <span className="text-white/70 text-sm font-medium">{cfg?.label}</span>
+                <span className="text-primary/50 text-sm">Purpose</span>
+                <span className="text-primary/70 text-sm font-medium">{cfg?.label}</span>
               </div>
               <div className="flex justify-between px-4 py-3">
-                <span className="text-white/35 text-sm">Documents uploaded</span>
-                <span className="text-white/70 text-sm font-mono font-medium">{uploadedCount} files</span>
+                <span className="text-primary/50 text-sm">Documents uploaded</span>
+                <span className="text-primary/70 text-sm font-mono font-medium">{uploadedCount} files</span>
               </div>
               <div className="flex justify-between px-4 py-3">
-                <span className="text-white/35 text-sm">Status</span>
+                <span className="text-primary/50 text-sm">Status</span>
                 <span className="text-amber-400 text-sm font-medium flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse inline-block" />
                   Under review
@@ -641,7 +641,7 @@ export default function DocumentUploadPage() {
                 setUploads({});
                 setErrors({});
               }}
-              className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-sm transition-all shadow-lg shadow-emerald-500/20"
+              className="w-full py-3 rounded-xl bg-accent hover:bg-accent/80 text-white font-semibold text-sm transition-all shadow-md shadow-accent/30"
             >
               Upload for Another Purpose
             </button>
@@ -652,15 +652,15 @@ export default function DocumentUploadPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0b0d12] p-4 md:p-8">
+    <div className="min-h-screen bg-base p-4 md:p-8">
       <div className="max-w-[660px] mx-auto">
         {/* ── Page header ── */}
         <div className="fade-up mb-6">
           <div className="flex items-center gap-3 mb-1">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-accent/10 border  border-[var(--border-clr)] flex items-center justify-center">
               <svg
                 viewBox="0 0 20 20"
-                className="w-4 h-4 text-emerald-400"
+                className="w-4 h-4 text-accent"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.7"
@@ -672,24 +672,24 @@ export default function DocumentUploadPage() {
                 />
               </svg>
             </div>
-            <h1 className="text-white font-semibold text-lg tracking-tight">Upload Documents</h1>
+            <h1 className="text-primary font-semibold text-lg tracking-tight">Upload Documents</h1>
           </div>
-          <p className="text-white/30 text-sm ml-11">Required documents vary by transfer purpose</p>
+          <p className="text-primary/50 text-sm ml-11">Required documents vary by transfer purpose</p>
         </div>
 
         <form onSubmit={handleSubmit}>
           {/* ── SECTION 1: Purpose ── */}
           <div
-            className="rounded-2xl bg-[#0f1117] border border-white/[0.07] overflow-hidden shadow-xl mb-4 fade-up"
+            className="rounded-2xl bg-card border  border-[var(--border-clr)] overflow-hidden shadow-xl mb-4 fade-up"
             style={{ animationDelay: "0.05s" }}
           >
-            <div className="h-px w-full bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
+            <div className="h-px w-full bg-gradient-to-r from-bg-card via-emerald-500/40 from-bg-card" />
             <div className="px-6 pt-6 pb-5">
               <div className="flex items-center gap-2 mb-4">
-                <span className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center shrink-0">
+                <span className="w-6 h-6 rounded-full bg-accent text-primary text-xs font-bold flex items-center justify-center shrink-0">
                   1
                 </span>
-                <h2 className="text-white font-semibold text-[15px]">Select transfer purpose</h2>
+                <h2 className="text-primary font-semibold text-[15px]">Select transfer purpose</h2>
               </div>
               <PurposeSelector
                 value={purpose}
@@ -713,18 +713,18 @@ export default function DocumentUploadPage() {
 
           {/* ── SECTION 2: Documents (dynamic) ── */}
           {purpose && cfg && (
-            <div className="rounded-2xl bg-[#0f1117] border border-white/[0.07] overflow-hidden shadow-xl mb-4 slide-down">
-              <div className={`h-px w-full bg-gradient-to-r from-transparent ${c.glow} to-transparent`} />
+            <div className="rounded-2xl bg-card border  border-[var(--border-clr)] overflow-hidden shadow-xl mb-4 slide-down">
+              <div className={`h-px w-full bg-gradient-to-r from-bg-card ${c.glow} from-bg-card`} />
               <div className="px-6 pt-6 pb-5">
                 {/* Section header */}
                 <div className="flex items-start justify-between gap-4 mb-5">
                   <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center shrink-0">
+                    <span className="w-6 h-6 rounded-full bg-accent text-primary text-xs font-bold flex items-center justify-center shrink-0">
                       2
                     </span>
                     <div>
-                      <h2 className="text-white font-semibold text-[15px]">Upload documents</h2>
-                      <p className="text-white/30 text-xs mt-0.5">
+                      <h2 className="text-primary font-semibold text-[15px]">Upload documents</h2>
+                      <p className="text-primary/50 text-xs mt-0.5">
                         for{" "}
                         <span
                           className={`font-medium ${colorMap[color]?.pill.split(" ").find((c) => c.startsWith("text-"))}`}
@@ -774,10 +774,10 @@ export default function DocumentUploadPage() {
                 </div>
 
                 {/* Info note */}
-                <div className="flex gap-3 mt-5 rounded-xl bg-white/[0.03] border border-white/[0.06] p-3.5">
+                <div className="flex gap-3 mt-5 rounded-xl bg-inputbg border  border-[var(--border-clr)] p-3.5">
                   <svg
                     viewBox="0 0 16 16"
-                    className="w-4 h-4 text-white/25 shrink-0 mt-0.5"
+                    className="w-4 h-4 text-primary/70 shrink-0 mt-0.5"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.5"
@@ -785,16 +785,16 @@ export default function DocumentUploadPage() {
                     <circle cx="8" cy="8" r="6.5" />
                     <path strokeLinecap="round" d="M8 7v4M8 5.5h.01" />
                   </svg>
-                  <div className="text-white/30 text-xs leading-relaxed space-y-1">
+                  <div className="text-primary/50 text-xs leading-relaxed space-y-1">
                     <p>
-                      Max file size: <span className="text-white/50 font-medium">10 MB</span> per document
+                      Max file size: <span className="text-primary/75 font-medium">10 MB</span> per document
                     </p>
                     <p>
-                      Accepted formats: <span className="text-white/50 font-medium">PDF, JPG, PNG</span>
+                      Accepted formats: <span className="text-primary/75 font-medium">PDF, JPG, PNG</span>
                     </p>
                     <p>
-                      All documents are <span className="text-white/50 font-medium">encrypted</span> and stored securely
-                      per RBI guidelines.
+                      All documents are <span className="text-primary/75 font-medium">encrypted</span> and stored
+                      securely per RBI guidelines.
                     </p>
                   </div>
                 </div>
@@ -809,10 +809,10 @@ export default function DocumentUploadPage() {
               disabled={loading || !purpose}
               className={[
                 "w-full flex items-center justify-center gap-2.5 py-3.5 rounded-xl",
-                "text-white text-sm font-semibold transition-all duration-200",
+                "text-primary text-sm font-semibold transition-all duration-200",
                 canSubmit
-                  ? "bg-emerald-500 hover:bg-emerald-400 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40"
-                  : "bg-white/[0.07] border border-white/[0.08] text-white/35 cursor-not-allowed",
+                  ? "bg-accent hover:bg-accent/80 shadow-md shadow-accent/20 hover:shadow-accent/20"
+                  : "bg-inputbg border  border-[var(--border-clr)] text-primary/50 cursor-not-allowed",
                 loading ? "opacity-70 cursor-not-allowed" : "",
               ].join(" ")}
             >
@@ -849,7 +849,7 @@ export default function DocumentUploadPage() {
             </button>
 
             {purpose && !canSubmit && (
-              <p className="text-center text-white/20 text-xs mt-3">
+              <p className="text-center text-primary/20 text-xs mt-3">
                 {requiredDone.length}/{requiredDocs.length} required documents uploaded
               </p>
             )}

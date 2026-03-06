@@ -35,8 +35,8 @@ const RemitterDetail = ({ _id = null }) => {
     <div>
       <>
         <div className="flex-1 px-6 py-4 space-y-5 overflow-y-auto max-w-2xl mx-auto">
-          <h1 className="text-white text-sm mb-3">Remitter Details</h1>
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] divide-y divide-white/[0.04] overflow-hidden">
+          <h1 className="text-primary text-sm mb-3">Remitter Details</h1>
+          <div className="rounded-xl border  border-[var(--border-clr)] bg-inputbg divide-y divide-white/[0.04] overflow-hidden">
             {[
               [
                 "KYC Status",
@@ -46,23 +46,23 @@ const RemitterDetail = ({ _id = null }) => {
               ["Email Address", userData?.email],
             ].map(([k, v]) => (
               <div key={k} className="flex items-center justify-between px-4 py-3">
-                <span className="text-white/35 text-sm capitalize">{k}</span>
-                <span className="text-white/75 text-sm font-medium mono">{v}</span>
+                <span className="text-primary/50 text-sm capitalize">{k}</span>
+                <span className="text-primary/75 text-sm font-medium mono">{v}</span>
               </div>
             ))}
           </div>
 
           {/* Passport details */}
-          <h1 className="text-white text-sm mb-3">Passport Details</h1>
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] divide-y divide-white/[0.04] overflow-hidden">
+          <h1 className="text-primary text-sm mb-3">Passport Details</h1>
+          <div className="rounded-xl border  border-[var(--border-clr)] bg-inputbg divide-y divide-white/[0.04] overflow-hidden">
             {[
               ["passport Number", `${userData?.passport?.passportNumber}`],
               ["passport File No.", `${userData?.passport?.fileNumber}`],
               ["D.O.B", `${userData?.passport?.dob}`],
             ].map(([k, v]) => (
               <div key={k} className="flex items-center justify-between px-4 py-3">
-                <span className="text-white/35 text-sm capitalize">{k}</span>
-                <span className="text-white/75 text-sm font-medium mono">{v}</span>
+                <span className="text-primary/50 text-sm capitalize">{k}</span>
+                <span className="text-primary/75 text-sm font-medium mono">{v}</span>
               </div>
             ))}
 
@@ -73,8 +73,8 @@ const RemitterDetail = ({ _id = null }) => {
           {/* PAN details */}
           {isPasportVerified && (
             <>
-              <h1 className="text-white text-sm mb-3">PAN Details</h1>
-              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] divide-y divide-white/[0.04] overflow-hidden">
+              <h1 className="text-primary text-sm mb-3">PAN Details</h1>
+              <div className="rounded-xl border  border-[var(--border-clr)] bg-inputbg divide-y divide-white/[0.04] overflow-hidden">
                 {/* PAN Verification */}
                 <PANVerification isVerified={isPanVerified} user={userData} />
               </div>
@@ -87,7 +87,7 @@ const RemitterDetail = ({ _id = null }) => {
               onClick={() => {
                 router.push("/app/send-money/recipient");
               }}
-              className="w-full relative overflow-hidden py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm tracking-wide transition-all duration-200 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 flex items-center justify-center gap-2"
+              className="w-full relative overflow-hidden py-3.5 rounded-xl bg-accent hover:bg-accent/80 disabled:opacity-60 disabled:cursor-not-allowed text-primary font-semibold text-sm tracking-wide transition-all duration-200 shadow-md shadow-accent/20 hover:shadow-accent/20 flex items-center justify-center gap-2"
             >
               <>Confirm & Proceed</>
             </button>
@@ -117,14 +117,14 @@ const PANVerification = ({ isVerified = false, user = null }) => {
       <>
         {[["PAN", `${user?.pan?.panNumber}`]].map(([k, v]) => (
           <div key={k} className="flex items-center justify-between px-4 py-3">
-            <span className="text-white/35 text-sm capitalize">{k}</span>
-            <span className="text-white/75 text-sm font-medium mono">{v}</span>
+            <span className="text-primary/50 text-sm capitalize">{k}</span>
+            <span className="text-primary/75 text-sm font-medium mono">{v}</span>
           </div>
         ))}
 
-        <div className="flex items-center justify-between px-4 py-3 bg-emerald-400/10">
-          <span className="text-white/35 text-sm capitalize">Verfication Status</span>
-          <span className="text-white/75 text-sm font-medium mono flex gap-2">
+        <div className="flex items-center justify-between px-4 py-3 bg-accent/10">
+          <span className="text-primary/50 text-sm capitalize">Verfication Status</span>
+          <span className="text-primary/75 text-sm font-medium mono flex gap-2">
             PAN Verfied <Icon path={ICONS.shield} />
           </span>
         </div>
@@ -162,7 +162,7 @@ const PANVerification = ({ isVerified = false, user = null }) => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full relative overflow-hidden py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm tracking-wide transition-all duration-200 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 flex items-center justify-center gap-2"
+              className="w-full relative overflow-hidden py-3.5 rounded-xl bg-accent hover:bg-accent/80 disabled:opacity-60 disabled:cursor-not-allowed text-primary font-semibold text-sm tracking-wide transition-all duration-200 shadow-md shadow-accent/20 hover:shadow-accent/20 flex items-center justify-center gap-2"
             >
               {isSubmitting || isPending ? (
                 <>
@@ -220,9 +220,9 @@ const PassportVerification = ({ isVerified = false, userData = null }) => {
 
   if (isVerified)
     return (
-      <div className="flex items-center justify-between px-4 py-3 bg-emerald-400/10">
-        <span className="text-white/35 text-sm capitalize">Verfication Status</span>
-        <span className="text-white/75 text-sm font-medium mono flex gap-2">
+      <div className="flex items-center justify-between px-4 py-3 bg-accent/10">
+        <span className="text-primary/50 text-sm capitalize">Verfication Status</span>
+        <span className="text-primary/75 text-sm font-medium mono flex gap-2">
           Passport Verfied <Icon path={ICONS.shield} />
         </span>
       </div>
@@ -232,7 +232,7 @@ const PassportVerification = ({ isVerified = false, userData = null }) => {
     <>
       <div className="flex items-center justify-between px-4 py-3">
         <span className="text-red-400 text-sm capitalize">{userData?.passport?.verified ? "" : "Action Required"}</span>
-        <span className="text-white/75 text-sm font-medium mono flex gap-2">
+        <span className="text-primary/75 text-sm font-medium mono flex gap-2">
           Passport Not Verfied <Icon path={ICONS.eyeOff} />
         </span>
       </div>
@@ -345,7 +345,7 @@ const PassportVerification = ({ isVerified = false, userData = null }) => {
             />
 
             <div className="flex items-center justify-between px-4 py-3">
-              <span className="text-white/75 text-sm">
+              <span className="text-primary/75 text-sm">
                 Note : Please ensure all entered details are accurate and confirmed before continuing. Once submitted,
                 the information cannot be modified.
               </span>
@@ -354,7 +354,7 @@ const PassportVerification = ({ isVerified = false, userData = null }) => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full relative overflow-hidden py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm tracking-wide transition-all duration-200 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 flex items-center justify-center gap-2"
+              className="w-full relative overflow-hidden py-3.5 rounded-xl bg-accent hover:bg-accent/80 disabled:opacity-60 disabled:cursor-not-allowed text-primary font-semibold text-sm tracking-wide transition-all duration-200 shadow-md shadow-accent/20 hover:shadow-accent/20 flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <>

@@ -17,7 +17,7 @@ export const Avatar = ({ user, size = "md" }) => {
         <img src={user.avatar} alt={user.name} className={`${sz} rounded-full object-cover ring-2 ring-white/[0.06]`} />
       ) : (
         <div
-          className={`${sz} rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center font-semibold text-white ring-2 ring-white/[0.06]`}
+          className={`${sz} rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center font-semibold text-primary ring-2 ring-white/[0.06]`}
         >
           {getInitials(user.name)}
         </div>

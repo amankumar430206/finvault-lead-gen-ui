@@ -80,9 +80,9 @@ const STEPS = [
 // ─────────────────────────────────────────────────────────────
 
 const Label = ({ children, required }) => (
-  <label className="block text-[11px] font-semibold text-white/40 uppercase tracking-widest mb-1.5">
+  <label className="block text-[11px] font-semibold text-primary/40 uppercase tracking-widest mb-1.5">
     {children}
-    {required && <span className="text-emerald-400 ml-0.5">*</span>}
+    {required && <span className="text-accent ml-0.5">*</span>}
   </label>
 );
 
@@ -102,11 +102,11 @@ const FieldWrap = ({ error, children }) => (
 );
 
 const inputBase = (err) =>
-  `w-full bg-white/[0.04] border rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/20 outline-none transition-all duration-200
+  `w-full bg-inputbg border rounded-xl px-4 py-3 text-sm text-primary placeholder:text-[var(--text-muted)] outline-none transition-all duration-200
   ${
     err
       ? "border-red-500/50 focus:border-red-500/70"
-      : "border-white/[0.08] focus:border-emerald-500/45 focus:bg-emerald-500/[0.03]"
+      : " border-[var(--border-clr)] focus: border-[var(--border-clr)] focus:bg-accent/[0.03]"
   }`;
 
 const Field = ({ label, required, error, children }) => (
@@ -127,13 +127,13 @@ const SelectField = ({ value, onChange, onBlur, options, placeholder, error }) =
         onBlur={onBlur}
         onClick={() => setOpen((v) => !v)}
         className={`w-full flex items-center justify-between px-4 py-3 rounded-xl border text-sm text-left transition-all duration-200
-          ${error ? "border-red-500/50 bg-red-500/5" : open ? "border-emerald-500/45 bg-emerald-500/[0.03]" : "border-white/[0.08] bg-white/[0.04] hover:border-white/[0.15]"}
-          ${selected ? "text-white" : "text-white/25"}`}
+          ${error ? "border-red-500/50 bg-red-500/5" : open ? "border-emerald-500/45 bg-accent/[0.03]" : " border-[var(--border-clr)] bg-inputbg hover: border-[var(--border-clr)]"}
+          ${selected ? "text-primary" : "text-primary/70"}`}
       >
         {selected?.label ?? placeholder}
         <svg
           viewBox="0 0 10 6"
-          className={`w-3 h-1.5 text-white/25 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`w-3 h-1.5 text-primary/70 transition-transform ${open ? "rotate-180" : ""}`}
           fill="none"
           stroke="currentColor"
           strokeWidth="1.5"
@@ -142,7 +142,7 @@ const SelectField = ({ value, onChange, onBlur, options, placeholder, error }) =
         </svg>
       </button>
       {open && (
-        <div className="absolute left-0 right-0 top-full mt-1.5 z-50 rounded-xl border border-white/[0.08] bg-[#13161f] shadow-2xl overflow-hidden max-h-52 overflow-y-auto">
+        <div className="absolute left-0 right-0 top-full mt-1.5 z-50 rounded-xl border  border-[var(--border-clr)] bg-card2 shadow-md overflow-hidden max-h-52 overflow-y-auto">
           {options.map((opt) => (
             <button
               key={opt.value}
@@ -152,10 +152,10 @@ const SelectField = ({ value, onChange, onBlur, options, placeholder, error }) =
                 setOpen(false);
               }}
               className={`w-full text-left px-4 py-2.5 text-sm transition-colors flex items-center justify-between
-                ${opt.value === value ? "text-emerald-400 bg-emerald-500/10" : "text-white/65 hover:text-white hover:bg-white/[0.05]"}`}
+                ${opt.value === value ? "text-accent bg-accent/10" : "text-primary/65 hover:text-primary hover:bg-inputbg"}`}
             >
               {opt.label}
-              {opt.value === value && <span className="text-emerald-400 text-xs">✓</span>}
+              {opt.value === value && <span className="text-accent text-xs">✓</span>}
             </button>
           ))}
         </div>
@@ -178,9 +178,9 @@ const StepIndicator = ({ current }) => (
           <div className="flex flex-col items-center gap-1.5">
             <div
               className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all duration-300
-              ${done ? "bg-emerald-500 border-emerald-500 text-white" : ""}
-              ${active ? "bg-emerald-500/10 border-emerald-500 text-emerald-400" : ""}
-              ${upcoming ? "bg-transparent border-white/[0.12] text-white/25" : ""}`}
+              ${done ? "bg-accent border-emerald-500 text-primary" : ""}
+              ${active ? "bg-accent/10 border-emerald-500 text-accent" : ""}
+              ${upcoming ? "bg-transparent  border-[var(--border-clr)] text-primary/70" : ""}`}
             >
               {done ? (
                 <svg viewBox="0 0 14 14" className="w-3.5 h-3.5" fill="none" stroke="white" strokeWidth="2">
@@ -191,14 +191,14 @@ const StepIndicator = ({ current }) => (
               )}
             </div>
             <span
-              className={`text-[10px] font-medium hidden sm:block ${active ? "text-emerald-400" : done ? "text-white/45" : "text-white/20"}`}
+              className={`text-[10px] font-medium hidden sm:block ${active ? "text-accent" : done ? "text-primary/45" : "text-primary/20"}`}
             >
               {step.label}
             </span>
           </div>
           {i < STEPS.length - 1 && (
             <div
-              className={`w-12 sm:w-16 h-px mx-1 mb-5 transition-all duration-500 ${done ? "bg-emerald-500/60" : "bg-white/[0.08]"}`}
+              className={`w-12 sm:w-16 h-px mx-1 mb-5 transition-all duration-500 ${done ? "bg-accent/60" : "bg-inputbg"}`}
             />
           )}
         </div>
@@ -211,9 +211,9 @@ const StepIndicator = ({ current }) => (
 // REVIEW ROW
 // ─────────────────────────────────────────────────────────────
 const ReviewRow = ({ label, value, mono }) => (
-  <div className="flex items-start justify-between py-3 border-b border-white/[0.04] last:border-0 gap-4 px-3">
-    <span className="text-white/35 text-sm shrink-0">{label}</span>
-    <span className={`text-sm font-medium text-right ${mono ? "font-mono text-white/70" : "text-white/75"}`}>
+  <div className="flex items-start justify-between py-3 border-b  border-[var(--border-clr)] last:border-0 gap-4 px-3">
+    <span className="text-primary/50 text-sm shrink-0">{label}</span>
+    <span className={`text-sm font-medium text-right ${mono ? "font-mono text-primary/70" : "text-primary/75"}`}>
       {value || "—"}
     </span>
   </div>
@@ -221,8 +221,8 @@ const ReviewRow = ({ label, value, mono }) => (
 
 const ReviewSection = ({ title, children }) => (
   <div className="mb-5 last:mb-0">
-    <p className="text-[10px] font-bold text-white/25 uppercase tracking-widest mb-2">{title}</p>
-    <div className="bg-white/[0.02] rounded-xl border border-white/[0.05] px-4 overflow-hidden">{children}</div>
+    <p className="text-[10px] font-bold text-primary/70 uppercase tracking-widest mb-2">{title}</p>
+    <div className="bg-inputbg rounded-xl border  border-[var(--border-clr)] px-4 overflow-hidden">{children}</div>
   </div>
 );
 
@@ -286,14 +286,14 @@ export default function AddRecipientPage() {
   // ── Success screen ────────────────────────────────────────
   if (done) {
     return (
-      <div className="min-h-screen bg-[#0b0d12] flex items-center justify-center p-4">
-        <div className="w-full max-w-md rounded-2xl bg-[#0f1117] border border-white/[0.07] overflow-hidden shadow-2xl">
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
+      <div className="min-h-screen bg-base flex items-center justify-center p-4">
+        <div className="w-full max-w-md rounded-2xl bg-card border  border-[var(--border-clr)] overflow-hidden shadow-md">
+          <div className="h-px w-full bg-gradient-to-r from-bg-card via-accent/80 from-bg-card" />
           <div className="p-8 flex flex-col items-center text-center gap-5">
-            <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center">
+            <div className="w-16 h-16 rounded-2xl bg-accent/10 border border-emerald-500/25 flex items-center justify-center">
               <svg
                 viewBox="0 0 24 24"
-                className="w-8 h-8 text-emerald-400"
+                className="w-8 h-8 text-accent"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.8"
@@ -306,20 +306,20 @@ export default function AddRecipientPage() {
               </svg>
             </div>
             <div>
-              <h2 className="text-white text-xl font-semibold">Recipient Saved</h2>
-              <p className="text-white/40 text-sm mt-1.5">
-                <span className="text-white/65 font-medium">{allValues.recipientName}</span> has been added to your
+              <h2 className="text-primary text-xl font-semibold">Recipient Saved</h2>
+              <p className="text-primary/40 text-sm mt-1.5">
+                <span className="text-primary/65 font-medium">{allValues.recipientName}</span> has been added to your
                 recipients.
               </p>
             </div>
-            <div className="w-full bg-white/[0.03] rounded-xl border border-white/[0.05] divide-y divide-white/[0.04] text-left">
+            <div className="w-full bg-inputbg rounded-xl border  border-[var(--border-clr)] divide-y divide-white/[0.04] text-left">
               <ReviewRow label="Category" value={CATEGORIES.find((c) => c.id === allValues.category)?.label} />
               <ReviewRow label="Country" value={allValues.country} />
               <ReviewRow label="SWIFT / BIC" value={allValues.swift} mono />
             </div>
             <button
               onClick={() => {}}
-              className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-sm transition-all shadow-lg shadow-emerald-500/20"
+              className="w-full py-3 rounded-xl bg-accent hover:bg-accent/80 text-white font-semibold text-sm transition-all shadow-md shadow-accent/30"
             >
               Upload Documents
             </button>
@@ -328,7 +328,7 @@ export default function AddRecipientPage() {
                 setDone(false);
                 setStep(1);
               }}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white/55 hover:text-white hover:bg-white/[0.09] text-sm font-medium transition-all"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-inputbg border  border-[var(--border-clr)] text-primary/55 hover:text-primary hover:bg-inputbg text-sm font-medium transition-all"
             >
               Edit Recipient
             </button>
@@ -339,15 +339,15 @@ export default function AddRecipientPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0b0d12] flex items-start justify-center p-4 md:p-8">
+    <div className="min-h-screen bg-base flex items-start justify-center p-4 md:p-8">
       <div className="w-full max-w-[560px] mt-4">
         {/* Page heading */}
         <div className="mb-6 fade-up">
           <div className="flex items-center gap-3 mb-1">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-accent/10 border  border-[var(--border-clr)] flex items-center justify-center">
               <svg
                 viewBox="0 0 20 20"
-                className="w-4 h-4 text-emerald-400"
+                className="w-4 h-4 text-accent"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.7"
@@ -359,17 +359,17 @@ export default function AddRecipientPage() {
                 />
               </svg>
             </div>
-            <h1 className="text-white font-semibold text-lg tracking-tight">Add Recipient</h1>
+            <h1 className="text-primary font-semibold text-lg tracking-tight">Add Recipient</h1>
           </div>
-          <p className="text-white/30 text-sm ml-11">Set up a new international transfer recipient</p>
+          <p className="text-primary/50 text-sm ml-11">Set up a new international transfer recipient</p>
         </div>
 
         {/* Card */}
         <div
-          className="rounded-2xl bg-[#0f1117] border border-white/[0.07] overflow-hidden shadow-2xl fade-up"
+          className="rounded-2xl bg-card border  border-[var(--border-clr)] overflow-hidden shadow-md fade-up"
           style={{ animationDelay: "0.05s" }}
         >
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-emerald-500/45 to-transparent" />
+          <div className="h-px w-full bg-gradient-to-r from-bg-card via-[var(--accent-glow)] from-bg-card" />
 
           <div className="px-7 pt-7 pb-6">
             <StepIndicator current={step} />
@@ -378,8 +378,8 @@ export default function AddRecipientPage() {
             {step === 1 && (
               <div className="fade-up flex flex-col gap-5">
                 <div>
-                  <h2 className="text-white font-semibold text-[16px]">Recipient details</h2>
-                  <p className="text-white/30 text-sm mt-0.5">Who are you sending money to?</p>
+                  <h2 className="text-primary font-semibold text-[16px]">Recipient details</h2>
+                  <p className="text-primary/50 text-sm mt-0.5">Who are you sending money to?</p>
                 </div>
 
                 {/* Name */}
@@ -415,17 +415,17 @@ export default function AddRecipientPage() {
                               className={[
                                 "flex flex-col items-center gap-2.5 p-4 rounded-xl border text-center transition-all duration-200",
                                 active
-                                  ? "border-emerald-500/50 bg-emerald-500/[0.08] text-emerald-400"
-                                  : "border-white/[0.07] bg-white/[0.03] text-white/40 hover:border-white/[0.15] hover:bg-white/[0.06] hover:text-white/70",
+                                  ? " border-[var(--border-clr)] bg-accent/[0.08] text-accent"
+                                  : " border-[var(--border-clr)] bg-inputbg text-primary/40 hover: border-[var(--border-clr)] hover:bg-inputbg hover:text-primary/70",
                               ].join(" ")}
                             >
-                              <span className={active ? "text-emerald-400" : ""}>{cat.icon}</span>
+                              <span className={active ? "text-accent" : ""}>{cat.icon}</span>
                               <div>
-                                <p className={`text-xs font-semibold ${active ? "text-white" : ""}`}>{cat.label}</p>
-                                <p className="text-[10px] text-white/25 mt-0.5 leading-tight">{cat.description}</p>
+                                <p className={`text-xs font-semibold ${active ? "text-primary" : ""}`}>{cat.label}</p>
+                                <p className="text-[10px] text-primary/70 mt-0.5 leading-tight">{cat.description}</p>
                               </div>
                               {active && (
-                                <div className="w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center">
+                                <div className="w-4 h-4 rounded-full bg-accent flex items-center justify-center">
                                   <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none">
                                     <path
                                       d="M2 5l2.5 2.5 3.5-4.5"
@@ -451,8 +451,8 @@ export default function AddRecipientPage() {
             {step === 2 && (
               <div className="fade-up flex flex-col gap-4">
                 <div>
-                  <h2 className="text-white font-semibold text-[16px]">Address</h2>
-                  <p className="text-white/30 text-sm mt-0.5">Recipient's registered address</p>
+                  <h2 className="text-primary font-semibold text-[16px]">Address</h2>
+                  <p className="text-primary/50 text-sm mt-0.5">Recipient's registered address</p>
                 </div>
 
                 <Field label="Address line 1" required error={errors.addressLine1?.message}>
@@ -514,8 +514,8 @@ export default function AddRecipientPage() {
             {step === 3 && (
               <div className="fade-up flex flex-col gap-4">
                 <div>
-                  <h2 className="text-white font-semibold text-[16px]">Bank information</h2>
-                  <p className="text-white/30 text-sm mt-0.5">
+                  <h2 className="text-primary font-semibold text-[16px]">Bank information</h2>
+                  <p className="text-primary/50 text-sm mt-0.5">
                     {category === "individual" ? "Personal bank account details" : "Institution banking details"}
                   </p>
                 </div>
@@ -532,10 +532,10 @@ export default function AddRecipientPage() {
                 <Field label="SWIFT / BIC code" required={category !== "individual"} error={errors.swift?.message}>
                   <div
                     className={`flex items-stretch rounded-xl border overflow-hidden transition-all duration-200
-                    ${errors.swift ? "border-red-500/50" : "border-white/[0.08] focus-within:border-emerald-500/45"}`}
+                    ${errors.swift ? "border-red-500/50" : " border-[var(--border-clr)] focus-within:border-emerald-500/45"}`}
                   >
-                    <div className="flex items-center bg-white/[0.04] border-r border-white/[0.08] px-3.5">
-                      <span className="text-white/30 text-xs font-mono font-semibold">SWIFT</span>
+                    <div className="flex items-center bg-inputbg border-r  border-[var(--border-clr)] px-3.5">
+                      <span className="text-primary/50 text-xs font-mono font-semibold">SWIFT</span>
                     </div>
                     <input
                       placeholder="e.g. CTBAAU2S"
@@ -547,7 +547,7 @@ export default function AddRecipientPage() {
                         },
                         setValueAs: (v) => v.toUpperCase(),
                       })}
-                      className="flex-1 bg-transparent outline-none text-white placeholder:text-white/20 text-sm px-4 py-3 mono"
+                      className="flex-1 bg-transparent outline-none text-primary placeholder:text-[var(--text-muted)] text-sm px-4 py-3 mono"
                     />
                   </div>
                   {errors.swift && (
@@ -565,10 +565,10 @@ export default function AddRecipientPage() {
                 <Field label="IBAN" error={errors.iban?.message}>
                   <div
                     className={`flex items-stretch rounded-xl border overflow-hidden transition-all duration-200
-                    ${errors.iban ? "border-red-500/50" : "border-white/[0.08] focus-within:border-emerald-500/45"}`}
+                    ${errors.iban ? "border-red-500/50" : " border-[var(--border-clr)] focus-within:border-emerald-500/45"}`}
                   >
-                    <div className="flex items-center bg-white/[0.04] border-r border-white/[0.08] px-3.5">
-                      <span className="text-white/30 text-xs font-mono font-semibold">IBAN</span>
+                    <div className="flex items-center bg-inputbg border-r  border-[var(--border-clr)] px-3.5">
+                      <span className="text-primary/50 text-xs font-mono font-semibold">IBAN</span>
                     </div>
                     <input
                       placeholder="e.g. GB29 NWBK 6016 1331 9268 19"
@@ -579,7 +579,7 @@ export default function AddRecipientPage() {
                         },
                         setValueAs: (v) => v.replace(/\s/g, "").toUpperCase(),
                       })}
-                      className="flex-1 bg-transparent outline-none text-white placeholder:text-white/20 text-sm px-4 py-3 mono"
+                      className="flex-1 bg-transparent outline-none text-primary placeholder:text-[var(--text-muted)] text-sm px-4 py-3 mono"
                     />
                   </div>
                   {errors.iban && <p className="text-red-400 text-xs mt-1.5">{errors.iban.message}</p>}
@@ -632,8 +632,8 @@ export default function AddRecipientPage() {
             {step === 4 && (
               <div className="fade-up flex flex-col gap-5">
                 <div>
-                  <h2 className="text-white font-semibold text-[16px]">Review & confirm</h2>
-                  <p className="text-white/30 text-sm mt-0.5">Check the details before saving</p>
+                  <h2 className="text-primary font-semibold text-[16px]">Review & confirm</h2>
+                  <p className="text-primary/50 text-sm mt-0.5">Check the details before saving</p>
                 </div>
 
                 <ReviewSection title="Recipient">
@@ -660,10 +660,10 @@ export default function AddRecipientPage() {
                   )}
                 </ReviewSection>
 
-                <div className="flex gap-3 rounded-xl bg-emerald-500/[0.06] border border-emerald-500/20 p-3.5">
+                <div className="flex gap-3 rounded-xl bg-accent/[0.06] border  border-[var(--border-clr)] p-3.5">
                   <svg
                     viewBox="0 0 16 16"
-                    className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"
+                    className="w-4 h-4 text-accent shrink-0 mt-0.5"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.6"
@@ -688,7 +688,7 @@ export default function AddRecipientPage() {
                 <button
                   type="button"
                   onClick={() => setStep((s) => s - 1)}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white/55 hover:text-white hover:bg-white/[0.09] text-sm font-medium transition-all"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-inputbg border  border-[var(--border-clr)] text-primary/55 hover:text-primary hover:bg-inputbg text-sm font-medium transition-all"
                 >
                   <svg viewBox="0 0 14 14" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M11 7H3M6 4L3 7l3 3" />
@@ -701,7 +701,7 @@ export default function AddRecipientPage() {
                 <button
                   type="button"
                   onClick={advance}
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white text-sm font-semibold transition-all shadow-lg shadow-emerald-500/20"
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-accent hover:bg-accent/80 text-white text-sm font-semibold transition-all shadow-md shadow-accent/30"
                 >
                   Continue
                   <svg viewBox="0 0 14 14" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2">
@@ -713,7 +713,7 @@ export default function AddRecipientPage() {
                   type="button"
                   onClick={handleSubmit(onSubmit)}
                   disabled={loading}
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-60 text-white text-sm font-semibold transition-all shadow-lg shadow-emerald-500/20"
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-accent hover:bg-accent/80 disabled:opacity-60 text-primary text-sm font-semibold transition-all shadow-md shadow-accent/30"
                 >
                   {loading ? (
                     <>
@@ -744,7 +744,7 @@ export default function AddRecipientPage() {
         </div>
 
         {/* Step label */}
-        <p className="text-center text-white/20 text-xs mt-4">
+        <p className="text-center text-primary/20 text-xs mt-4">
           Step {step} of {STEPS.length} — {STEPS[step - 1].label}
         </p>
       </div>

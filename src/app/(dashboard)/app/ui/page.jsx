@@ -34,8 +34,8 @@ import { useState, useRef, useEffect } from "react";
 // ─────────────────────────────────────────────────────────────
 const SectionLabel = ({ children }) => (
   <div className="flex items-center gap-3 mb-5">
-    <p className="text-white/70 font-semibold text-sm tracking-tight">{children}</p>
-    <div className="flex-1 h-px bg-white/[0.05]" />
+    <p className="text-primary/70 font-semibold text-sm tracking-tight">{children}</p>
+    <div className="flex-1 h-px bg-inputbg" />
   </div>
 );
 
@@ -79,9 +79,9 @@ export default function ComponentLibrary() {
       key: "amount",
       label: "Amount",
       align: "right",
-      render: (v) => <span className="font-mono text-emerald-400">{v}</span>,
+      render: (v) => <span className="font-mono text-accent">{v}</span>,
     },
-    { key: "date", label: "Date", render: (v) => <span className="text-white/40">{v}</span> },
+    { key: "date", label: "Date", render: (v) => <span className="text-primary/40">{v}</span> },
   ];
   const tableRows = [
     { name: "Stripe Payout", status: "Active", amount: "$4,200.00", date: "Feb 24, 2026" },
@@ -91,17 +91,17 @@ export default function ComponentLibrary() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0b0d12] text-white p-6 md:p-10">
+    <div className="min-h-screen bg-base text-primary p-6 md:p-10">
       {/* Header */}
-      <div className="mb-10 pb-8 border-b border-white/[0.06]">
+      <div className="mb-10 pb-8 border-b  border-[var(--border-clr)]">
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-9 h-9 rounded-xl bg-emerald-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-emerald-500/30">
+          <div className="w-9 h-9 rounded-xl bg-accent flex items-center justify-center text-primary font-bold text-sm shadow-md shadow-emerald-500/30">
             F
           </div>
-          <h1 className="text-white text-2xl font-semibold tracking-tight">FinVault UI</h1>
+          <h1 className="text-primary text-2xl font-semibold tracking-tight">FinVault UI</h1>
           <Badge variant="info">v1.0</Badge>
         </div>
-        <p className="text-white/35 text-sm mt-1">
+        <p className="text-primary/50 text-sm mt-1">
           25 components · Dark fintech theme · Tailwind CSS · Zero dependencies
         </p>
         <div className="flex flex-wrap gap-2 mt-4">
@@ -133,7 +133,7 @@ export default function ComponentLibrary() {
           ].map((c) => (
             <span
               key={c}
-              className="text-[10px] font-medium font-mono text-white/30 bg-white/[0.04] border border-white/[0.06] px-2 py-0.5 rounded-md"
+              className="text-[10px] font-medium font-mono text-primary/50 bg-inputbg border  border-[var(--border-clr)] px-2 py-0.5 rounded-md"
             >
               {c}
             </span>
@@ -377,8 +377,8 @@ export default function ComponentLibrary() {
                   { id: "settings", label: "Settings" },
                 ]}
               />
-              <p className="mt-3 text-white/30 text-xs">
-                Active: <span className="text-emerald-400">{tab}</span>
+              <p className="mt-3 text-primary/50 text-xs">
+                Active: <span className="text-accent">{tab}</span>
               </p>
             </div>
             <Tabs
@@ -489,7 +489,7 @@ export default function ComponentLibrary() {
               <Avatar name="Clara Kent" size="xl" />
             </div>
             <div>
-              <p className="text-white/35 text-xs uppercase tracking-wider mb-2">Group</p>
+              <p className="text-primary/50 text-xs uppercase tracking-wider mb-2">Group</p>
               <AvatarGroup names={["Jane D", "John S", "Alice W", "Bob M", "Clara K", "Dev T"]} max={4} />
             </div>
           </div>
@@ -502,10 +502,10 @@ export default function ComponentLibrary() {
           <SectionLabel>Card</SectionLabel>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <Card title="Default Card" subtitle="Standard container">
-              <p className="text-white/40 text-sm">Card body content. Use for any grouped information.</p>
+              <p className="text-primary/40 text-sm">Card body content. Use for any grouped information.</p>
             </Card>
             <Card title="Accent Card" subtitle="Top highlight" accent>
-              <p className="text-white/40 text-sm">This card has an emerald top accent to draw focus.</p>
+              <p className="text-primary/40 text-sm">This card has an emerald top accent to draw focus.</p>
             </Card>
             <Card
               title="Hoverable"
@@ -517,7 +517,7 @@ export default function ComponentLibrary() {
                 </Button>
               }
             >
-              <p className="text-white/40 text-sm">Hover to see border brighten effect.</p>
+              <p className="text-primary/40 text-sm">Hover to see border brighten effect.</p>
             </Card>
           </div>
         </section>
@@ -568,13 +568,13 @@ export default function ComponentLibrary() {
         <section>
           <SectionLabel>Skeleton & Empty State</SectionLabel>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="flex flex-col gap-3 p-5 bg-[#13161f] rounded-2xl border border-white/[0.06]">
+            <div className="flex flex-col gap-3 p-5 bg-card2 rounded-2xl border  border-[var(--border-clr)]">
               <Skeleton height="h-4" width="55%" />
               <Skeleton height="h-3" />
               <Skeleton height="h-3" width="75%" />
               <Skeleton height="h-10" rounded="rounded-xl" />
             </div>
-            <div className="bg-[#13161f] rounded-2xl border border-white/[0.06]">
+            <div className="bg-card2 rounded-2xl border  border-[var(--border-clr)]">
               <EmptyState
                 icon="◎"
                 title="No transactions yet"
@@ -611,7 +611,7 @@ export default function ComponentLibrary() {
                 title="One-time action"
                 message="This transfer cannot be reversed once processed."
               />
-              <div className="bg-white/[0.03] rounded-xl border border-white/[0.06] divide-y divide-white/[0.05]">
+              <div className="bg-inputbg rounded-xl border  border-[var(--border-clr)] divide-y divide-white/[0.05]">
                 {[
                   ["Recipient", "Stripe Inc."],
                   ["Amount", "$4,200.00"],
@@ -620,8 +620,8 @@ export default function ComponentLibrary() {
                   ["Reference", "INV-2026-0842"],
                 ].map(([k, v]) => (
                   <div key={k} className="flex justify-between px-4 py-3">
-                    <span className="text-white/40 text-sm">{k}</span>
-                    <span className="text-white text-sm font-medium font-mono">{v}</span>
+                    <span className="text-primary/40 text-sm">{k}</span>
+                    <span className="text-primary text-sm font-medium font-mono">{v}</span>
                   </div>
                 ))}
               </div>

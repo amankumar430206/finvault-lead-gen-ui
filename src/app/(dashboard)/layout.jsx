@@ -20,7 +20,7 @@ export const DashboardLayout = ({ children, title, defaultCollapsed = false, def
 
   return (
     <LayoutContext.Provider value={{ sidebarOpen, sidebarCollapsed, toggleSidebar, toggleCollapsed }}>
-      <div className="min-h-screen bg-[#0b0d12] font-sans">
+      <div className="min-h-screen bg-base font-sans">
         <Sidebar />
         <Navbar title={title} />
         <main

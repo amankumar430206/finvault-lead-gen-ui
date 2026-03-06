@@ -1,15 +1,71 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ── Custom theme tokens ── */
+@theme {
+  --font-sans: "DM Sans", sans-serif;
+  --font-mono: "DM Mono", monospace;
+
+  /* Map CSS variables → Tailwind color tokens */
+  --color-base: var(--bg-base);
+  --color-card: var(--bg-card);
+  --color-card2: var(--bg-card-2);
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
+  --color-inputbg: var(--input-bg);
+
+  /* accent set */
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-muted: var(--accent-muted);
+  --color-accent-border: var(--accent-border); /* ← dedicated border token */
+  --color-accent-text: var(--accent-text);
+  --color-accent-shadow: var(--accent-shadow);
+  --color-accent-glow: var(--accent-glow);
+
+  /* ui border */
+  --color-border: var(--border-clr); /* ← for regular borders */
 }
 
-@layer base {
-  input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px theme("colors.gray.900") inset !important;
-    -webkit-text-fill-color: theme("colors.white") !important;
-  }
+/* ── Dark theme (default) ── */
+:root,
+:root.dark {
+  --bg-base: #080809;
+  --bg-card: #0e0e10;
+  --bg-card-2: #141416;
+  --border-clr: rgba(255, 255, 255, 0.06);
+  --text-primary: rgba(255, 255, 255, 0.92);
+  --text-secondary: rgba(255, 255, 255, 0.45);
+  --text-muted: rgba(255, 255, 255, 0.22);
+  --input-bg: rgba(255, 255, 255, 0.04);
+
+  --accent: #10b981;
+  --accent-hover: #34d399;
+  --accent-muted: rgba(16, 185, 129, 0.09);
+  --accent-border: rgba(16, 185, 129, 0.28);
+  --accent-text: #34d399;
+  --accent-shadow: rgba(16, 185, 129, 0.25);
+  --accent-glow: rgba(16, 185, 129, 0.45);
+}
+
+/* ── Light theme ── */
+:root.light {
+  --bg-base: #f5f5f7;
+  --bg-card: #ffffff;
+  --bg-card-2: #ebebed;
+  --border-clr: rgba(0, 0, 0, 0.07);
+  --text-primary: rgba(0, 0, 0, 0.9);
+  --text-secondary: rgba(0, 0, 0, 0.48);
+  --text-muted: rgba(0, 0, 0, 0.28);
+  --input-bg: rgba(0, 0, 0, 0.04);
+
+  --accent: #059669;
+  --accent-hover: #10b981;
+  --accent-muted: rgba(5, 150, 105, 0.08);
+  --accent-border: rgba(5, 150, 105, 0.28);
+  --accent-text: #059669;
+  --accent-shadow: rgba(5, 150, 105, 0.2);
+  --accent-glow: rgba(5, 150, 105, 0.35);
 }
 
 @theme inline {
@@ -17,13 +73,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {

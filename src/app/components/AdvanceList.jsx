@@ -79,7 +79,7 @@ export const highlight = (text = "", query = "") => {
   return (
     <>
       {str.slice(0, idx)}
-      <mark className="bg-emerald-500/25 text-emerald-300 rounded-sm px-0.5 not-italic">
+      <mark className="bg-accent/25 text-emerald-300 rounded-sm px-0.5 not-italic">
         {str.slice(idx, idx + query.length)}
       </mark>
       {str.slice(idx + query.length)}
@@ -97,12 +97,12 @@ export const SearchBar = ({ value, onChange, placeholder, chips, onRemoveChip })
   }, []);
 
   return (
-    <div className="px-4 py-3 border-b border-white/[0.06]">
+    <div className="px-4 py-3 border-b  border-[var(--border-clr)]">
       {chips?.length > 0 && <div className="flex flex-wrap gap-1.5 mb-2.5">{chips}</div>}
-      <div className="flex items-center gap-2.5 bg-white/[0.04] border border-white/[0.07] rounded-xl px-3.5 py-2.5 focus-within:border-emerald-500/40 transition-all">
+      <div className="flex items-center gap-2.5 bg-inputbg border  border-[var(--border-clr)] rounded-xl px-3.5 py-2.5 focus-within:border-accent/50 transition-all">
         <svg
           viewBox="0 0 16 16"
-          className="w-3.5 h-3.5 text-white/25 shrink-0"
+          className="w-3.5 h-3.5 text-primary/70 shrink-0"
           fill="none"
           stroke="currentColor"
           strokeWidth="1.8"
@@ -115,12 +115,12 @@ export const SearchBar = ({ value, onChange, placeholder, chips, onRemoveChip })
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="flex-1 bg-transparent outline-none text-sm text-white placeholder:text-white/25"
+          className="flex-1 bg-transparent outline-none text-sm text-primary placeholder:text-primary/70"
         />
         {value && (
           <button
             onClick={() => onChange("")}
-            className="text-white/25 hover:text-white/60 transition-colors leading-none"
+            className="text-primary/70 hover:text-primary/60 transition-colors leading-none"
           >
             <svg viewBox="0 0 10 10" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path strokeLinecap="round" d="M2 2l6 6M8 2L2 8" />
@@ -136,10 +136,10 @@ export const SearchBar = ({ value, onChange, placeholder, chips, onRemoveChip })
 // FILTER BAR
 // ─────────────────────────────────────────────────────────────
 export const FilterBar = ({ filters, activeFilters, onChange }) => (
-  <div className="px-4 py-2.5 border-b border-white/[0.05] flex items-center gap-4 overflow-x-auto scrollbar-none">
+  <div className="px-4 py-2.5 border-b  border-[var(--border-clr)] flex items-center gap-4 overflow-x-auto scrollbar-none">
     {filters.map((f) => (
       <div key={f.key} className="flex items-center gap-1.5 shrink-0">
-        <span className="text-white/25 text-[11px] font-semibold uppercase tracking-wider shrink-0">{f.label}:</span>
+        <span className="text-primary/70 text-[11px] font-semibold uppercase tracking-wider shrink-0">{f.label}:</span>
         <div className="flex gap-1">
           {f.options.map((opt) => {
             const active = (activeFilters[f.key] ?? "all") === opt.value;
@@ -150,15 +150,13 @@ export const FilterBar = ({ filters, activeFilters, onChange }) => (
                 className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all border whitespace-nowrap
                   ${
                     active
-                      ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/25"
-                      : "bg-white/[0.03] text-white/40 border-white/[0.06] hover:text-white/65 hover:bg-white/[0.06]"
+                      ? "bg-accent/10 text-accent border-emerald-500/25"
+                      : "bg-inputbg text-primary/40  border-[var(--border-clr)] hover:text-primary/65 hover:bg-inputbg"
                   }`}
               >
                 {opt.label}
                 {opt.count != null && (
-                  <span
-                    className={`ml-1.5 text-[10px] rounded-full px-1 ${active ? "bg-emerald-500/20" : "bg-white/[0.08]"}`}
-                  >
+                  <span className={`ml-1.5 text-[10px] rounded-full px-1 ${active ? "bg-accent/20" : "bg-inputbg"}`}>
                     {opt.count}
                   </span>
                 )}
@@ -175,8 +173,8 @@ export const FilterBar = ({ filters, activeFilters, onChange }) => (
 // SORT BAR
 // ─────────────────────────────────────────────────────────────
 export const SortBar = ({ options, sortKey, sortDir, onChange }) => (
-  <div className="px-4 py-2 border-b border-white/[0.05] flex items-center gap-2 overflow-x-auto">
-    <span className="text-white/25 text-[11px] font-semibold uppercase tracking-wider shrink-0">Sort:</span>
+  <div className="px-4 py-2 border-b  border-[var(--border-clr)] flex items-center gap-2 overflow-x-auto">
+    <span className="text-primary/70 text-[11px] font-semibold uppercase tracking-wider shrink-0">Sort:</span>
     {options.map((opt) => {
       const active = sortKey === opt.key;
       return (
@@ -186,8 +184,8 @@ export const SortBar = ({ options, sortKey, sortDir, onChange }) => (
           className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all border whitespace-nowrap
             ${
               active
-                ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/25"
-                : "bg-white/[0.03] text-white/40 border-white/[0.06] hover:text-white/65"
+                ? "bg-accent/10 text-accent border-emerald-500/25"
+                : "bg-inputbg text-primary/40  border-[var(--border-clr)] hover:text-primary/65"
             }`}
         >
           {opt.label}
@@ -218,10 +216,10 @@ export const Pagination = ({ page, total, pageSize, pageSizeOptions, onPage, onP
   }, [page, totalPages]);
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-3 border-t border-white/[0.05]">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-3 border-t  border-[var(--border-clr)]">
       <div className="flex items-center gap-3">
-        <span className="text-white/30 text-xs font-mono">
-          {from}–{to} <span className="text-white/20">of</span> {total}
+        <span className="text-primary/50 text-xs font-mono">
+          {from}–{to} <span className="text-primary/20">of</span> {total}
         </span>
         {pageSizeOptions?.length > 1 && (
           <div className="flex gap-1">
@@ -230,7 +228,7 @@ export const Pagination = ({ page, total, pageSize, pageSizeOptions, onPage, onP
                 key={s}
                 onClick={() => onPageSize(s)}
                 className={`w-7 h-6 rounded text-xs font-medium transition-all
-                  ${pageSize === s ? "bg-emerald-500/15 text-emerald-400" : "text-white/30 hover:text-white/55 hover:bg-white/[0.05]"}`}
+                  ${pageSize === s ? "bg-accent/15 text-accent" : "text-primary/50 hover:text-primary/55 hover:bg-inputbg"}`}
               >
                 {s}
               </button>
@@ -242,13 +240,13 @@ export const Pagination = ({ page, total, pageSize, pageSizeOptions, onPage, onP
         <button
           onClick={() => onPage(page - 1)}
           disabled={page === 1}
-          className="w-7 h-7 rounded-lg text-sm text-white/30 hover:text-white hover:bg-white/[0.06] disabled:opacity-25 disabled:cursor-not-allowed transition-all"
+          className="w-7 h-7 rounded-lg text-sm text-primary/50 hover:text-primary hover:bg-inputbg disabled:opacity-25 disabled:cursor-not-allowed transition-all"
         >
           ‹
         </button>
         {pages.map((p, i) =>
           p === "…" ? (
-            <span key={`e${i}`} className="w-7 h-7 flex items-center justify-center text-white/20 text-xs">
+            <span key={`e${i}`} className="w-7 h-7 flex items-center justify-center text-primary/20 text-xs">
               …
             </span>
           ) : (
@@ -256,7 +254,7 @@ export const Pagination = ({ page, total, pageSize, pageSizeOptions, onPage, onP
               key={p}
               onClick={() => onPage(p)}
               className={`w-7 h-7 rounded-lg text-xs font-medium transition-all
-                  ${p === page ? "bg-emerald-500 text-white shadow shadow-emerald-500/25" : "text-white/40 hover:text-white hover:bg-white/[0.06]"}`}
+                  ${p === page ? "bg-accent text-primary shadow shadow-accent/20" : "text-primary/40 hover:text-primary hover:bg-inputbg"}`}
             >
               {p}
             </button>
@@ -265,7 +263,7 @@ export const Pagination = ({ page, total, pageSize, pageSizeOptions, onPage, onP
         <button
           onClick={() => onPage(page + 1)}
           disabled={page === totalPages}
-          className="w-7 h-7 rounded-lg text-sm text-white/30 hover:text-white hover:bg-white/[0.06] disabled:opacity-25 disabled:cursor-not-allowed transition-all"
+          className="w-7 h-7 rounded-lg text-sm text-primary/50 hover:text-primary hover:bg-inputbg disabled:opacity-25 disabled:cursor-not-allowed transition-all"
         >
           ›
         </button>
@@ -278,10 +276,10 @@ export const Pagination = ({ page, total, pageSize, pageSizeOptions, onPage, onP
 // SELECT-ALL BAR
 // ─────────────────────────────────────────────────────────────
 export const SelectAllBar = ({ count, total, onSelectAll, onClear }) => (
-  <div className="mx-3 mb-2 px-4 py-2.5 rounded-xl bg-emerald-500/[0.07] border border-emerald-500/20 flex items-center gap-3">
+  <div className="mx-3 mb-2 px-4 py-2.5 rounded-xl bg-accent/[0.07] border  border-[var(--border-clr)] flex items-center gap-3">
     <div
       onClick={onSelectAll}
-      className="w-4 h-4 rounded border-2 border-emerald-500 bg-emerald-500 flex items-center justify-center cursor-pointer shrink-0"
+      className="w-4 h-4 rounded border-2 border-emerald-500 bg-accent flex items-center justify-center cursor-pointer shrink-0"
     >
       <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none">
         <path
@@ -293,14 +291,14 @@ export const SelectAllBar = ({ count, total, onSelectAll, onClear }) => (
         />
       </svg>
     </div>
-    <span className="text-white/50 text-xs flex-1">
-      <span className="text-emerald-400 font-semibold">{count}</span> of {total} selected
+    <span className="text-primary/75 text-xs flex-1">
+      <span className="text-accent font-semibold">{count}</span> of {total} selected
     </span>
-    <button onClick={onSelectAll} className="text-xs text-white/35 hover:text-white/65 transition-colors">
+    <button onClick={onSelectAll} className="text-xs text-primary/50 hover:text-primary/65 transition-colors">
       Select all {total}
     </button>
-    <span className="text-white/15">·</span>
-    <button onClick={onClear} className="text-xs text-white/35 hover:text-white/65 transition-colors">
+    <span className="text-primary/15">·</span>
+    <button onClick={onClear} className="text-xs text-primary/50 hover:text-primary/65 transition-colors">
       Clear
     </button>
   </div>
@@ -312,9 +310,9 @@ export const SelectAllBar = ({ count, total, onSelectAll, onClear }) => (
 export const DefaultEmpty = ({ query, onClear }) => (
   <div className="flex flex-col items-center justify-center py-12 text-center gap-2 px-6">
     <span className="text-3xl opacity-15">◎</span>
-    <p className="text-white/30 text-sm">{query ? `No results for "${query}"` : "Nothing here yet"}</p>
+    <p className="text-primary/50 text-sm">{query ? `No results for "${query}"` : "Nothing here yet"}</p>
     {query && (
-      <button onClick={onClear} className="text-emerald-400/70 hover:text-emerald-400 text-xs transition-colors mt-1">
+      <button onClick={onClear} className="text-accent/70 hover:text-accent text-xs transition-colors mt-1">
         Clear search
       </button>
     )}
@@ -500,7 +498,7 @@ export const AdvancedList = ({
             ) : (
               <span
                 key={getItemId(item)}
-                className="inline-flex items-center gap-1.5 pl-2 pr-1.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs font-medium"
+                className="inline-flex items-center gap-1.5 pl-2 pr-1.5 py-0.5 rounded-full bg-accent/10 border border-emerald-500/25 text-accent text-xs font-medium"
               >
                 {searchKeys[0] ? String(get(item, searchKeys[0])).split(" ")[0] : getItemId(item)}
                 <button onClick={() => handleSelect(item)} className="opacity-60 hover:opacity-100 transition-opacity">
@@ -517,9 +515,11 @@ export const AdvancedList = ({
   const showSelectAll = mode === "multi" && selectable && ctx.selectedCount > 0 && ctx.selectedCount < totalItems;
 
   return (
-    <div className={`flex flex-col bg-[#0f1117] rounded-2xl border border-white/[0.07] overflow-hidden ${className}`}>
+    <div
+      className={`flex flex-col bg-card rounded-2xl border  border-[var(--border-clr)] overflow-hidden ${className}`}
+    >
       {/* Top accent */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent shrink-0" />
+      <div className="h-px w-full bg-gradient-to-r from-bg-card via-emerald-500/40 from-bg-card shrink-0" />
 
       {/* Header slot */}
       {renderHeader?.()}
@@ -557,9 +557,11 @@ export const AdvancedList = ({
                   (renderGroupHeader ? (
                     renderGroupHeader(group, groupItems)
                   ) : (
-                    <div className="px-4 py-2 bg-white/[0.02] border-y border-white/[0.04] flex items-center gap-2 sticky top-0 z-10 backdrop-blur-sm">
-                      <span className="text-[11px] font-semibold text-white/35 uppercase tracking-wider">{group}</span>
-                      <span className="text-[10px] text-white/20 bg-white/[0.05] rounded-full px-1.5 py-0.5">
+                    <div className="px-4 py-2 bg-inputbg border-y  border-[var(--border-clr)] flex items-center gap-2 sticky top-0 z-10 backdrop-blur-sm">
+                      <span className="text-[11px] font-semibold text-primary/50 uppercase tracking-wider">
+                        {group}
+                      </span>
+                      <span className="text-[10px] text-primary/20 bg-inputbg rounded-full px-1.5 py-0.5">
                         {groupItems.length}
                       </span>
                     </div>
@@ -575,15 +577,15 @@ export const AdvancedList = ({
                       <div
                         key={getItemId(item)}
                         onClick={() => selectable && handleSelect(item)}
-                        className={`flex items-center gap-3 px-4 py-3 border-b border-white/[0.04] last:border-0 transition-all
-                            ${selectable && !isDisabled?.(item) ? "cursor-pointer hover:bg-white/[0.03]" : ""}
-                            ${isSelected(item) ? "bg-emerald-500/[0.06]" : ""}
+                        className={`flex items-center gap-3 px-4 py-3 border-b  border-[var(--border-clr)] last:border-0 transition-all
+                            ${selectable && !isDisabled?.(item) ? "cursor-pointer hover:bg-inputbg" : ""}
+                            ${isSelected(item) ? "bg-accent/[0.06]" : ""}
                             ${isDisabled?.(item) ? "opacity-40 pointer-events-none" : ""}`}
                       >
                         {selectable && mode === "multi" && (
                           <div
                             className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-all
-                              ${isSelected(item) ? "bg-emerald-500 border-emerald-500" : "border-white/20"}`}
+                              ${isSelected(item) ? "bg-accent border-emerald-500" : "border-white/20"}`}
                           >
                             {isSelected(item) && (
                               <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none">
@@ -599,12 +601,12 @@ export const AdvancedList = ({
                           </div>
                         )}
                         <div className="flex-1 min-w-0">
-                          <p className="text-white/75 text-sm truncate">{getItemId(item)}</p>
+                          <p className="text-primary/75 text-sm truncate">{getItemId(item)}</p>
                         </div>
                         {selectable && mode === "single" && isSelected(item) && (
                           <svg
                             viewBox="0 0 16 16"
-                            className="w-4 h-4 text-emerald-400 shrink-0"
+                            className="w-4 h-4 text-accent shrink-0"
                             fill="none"
                             stroke="currentColor"
                             strokeWidth="2"
@@ -648,7 +650,7 @@ export const AdvancedList = ({
 // ── Demo data ─────────────────────────────────────────────
 
 export const statusColor = {
-  online: "bg-emerald-400",
+  online: "bg-accent",
   busy: "bg-amber-400",
   away: "bg-orange-400",
   offline: "bg-white/20",
@@ -877,7 +879,7 @@ export const langColor = {
   "React Native": "bg-sky-500/15 text-sky-400",
 };
 export const txStatus = {
-  completed: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+  completed: "bg-accent/10 text-accent  border-[var(--border-clr)]",
   pending: "bg-amber-500/10 text-amber-400 border-amber-500/20",
   failed: "bg-red-500/10 text-red-400 border-red-500/20",
 };
@@ -885,7 +887,7 @@ export const roleColor = {
   Admin: "bg-violet-500/10 text-violet-400 border-violet-500/20",
   Owner: "bg-amber-500/10 text-amber-400 border-amber-500/20",
   Agent: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-  User: "bg-white/[0.07] text-white/45 border-white/[0.08]",
+  User: "bg-inputbg text-primary/45  border-[var(--border-clr)]",
 };
 export const getInit = (n = "") =>
   n
@@ -908,25 +910,25 @@ export default function Demo() {
 
   const SectionLabel = ({ title, sub }) => (
     <div className="mb-4">
-      <h2 className="text-white font-semibold text-base">{title}</h2>
-      <p className="text-white/30 text-xs mt-0.5">{sub}</p>
+      <h2 className="text-primary font-semibold text-base">{title}</h2>
+      <p className="text-primary/50 text-xs mt-0.5">{sub}</p>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-[#0b0d12] p-6 md:p-10">
+    <div className="min-h-screen bg-base p-6 md:p-10">
       {/* Header */}
       <div className="mb-10">
         <div className="flex items-center gap-3 mb-1">
-          <div className="w-9 h-9 rounded-xl bg-emerald-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-emerald-500/30">
+          <div className="w-9 h-9 rounded-xl bg-accent flex items-center justify-center text-primary font-bold text-sm shadow-md shadow-emerald-500/30">
             F
           </div>
-          <h1 className="text-white text-2xl font-semibold tracking-tight">AdvancedList</h1>
-          <span className="text-xs font-medium bg-white/[0.07] text-white/45 px-2 py-0.5 rounded-full">
+          <h1 className="text-primary text-2xl font-semibold tracking-tight">AdvancedList</h1>
+          <span className="text-xs font-medium bg-inputbg text-primary/45 px-2 py-0.5 rounded-full">
             Generic Component
           </span>
         </div>
-        <p className="text-white/35 text-sm ml-12">
+        <p className="text-primary/50 text-sm ml-12">
           One component · any data shape · render props · search · filter · sort · group · paginate · select
         </p>
       </div>
@@ -951,13 +953,13 @@ export default function Demo() {
               onSelectMany={(us) => setSelUsers(us.map((u) => u.id))}
               groupBy={(u) => u.role}
               renderGroupHeader={(group, items) => (
-                <div className="px-4 py-2 bg-white/[0.02] border-y border-white/[0.04] flex items-center gap-2 sticky top-0 backdrop-blur-sm z-10">
+                <div className="px-4 py-2 bg-inputbg border-y  border-[var(--border-clr)] flex items-center gap-2 sticky top-0 backdrop-blur-sm z-10">
                   <span
                     className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${roleColor[group] ?? roleColor.User}`}
                   >
                     {group}
                   </span>
-                  <span className="text-white/20 text-xs">{items.length}</span>
+                  <span className="text-primary/20 text-xs">{items.length}</span>
                 </div>
               )}
               renderItem={(user, ctx) => {
@@ -966,12 +968,12 @@ export default function Demo() {
                   <div
                     key={user.id}
                     onClick={() => ctx.handleSelect(user)}
-                    className={`flex items-center gap-3 px-4 py-3 border-b border-white/[0.04] last:border-0 cursor-pointer transition-all
-                      ${sel ? "bg-emerald-500/[0.07]" : "hover:bg-white/[0.03]"}`}
+                    className={`flex items-center gap-3 px-4 py-3 border-b  border-[var(--border-clr)] last:border-0 cursor-pointer transition-all
+                      ${sel ? "bg-accent/[0.07]" : "hover:bg-inputbg"}`}
                   >
                     <div
                       className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-all
-                      ${sel ? "bg-emerald-500 border-emerald-500" : "border-white/20 hover:border-white/40"}`}
+                      ${sel ? "bg-accent border-emerald-500" : "border-white/20 hover:border-white/40"}`}
                     >
                       {sel && (
                         <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none">
@@ -986,7 +988,7 @@ export default function Demo() {
                       )}
                     </div>
                     <div className="relative shrink-0">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center text-xs font-semibold text-white">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center text-xs font-semibold text-primary">
                         {getInit(user.name)}
                       </div>
                       <span
@@ -994,24 +996,24 @@ export default function Demo() {
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className={`text-sm font-medium truncate ${sel ? "text-white" : "text-white/75"}`}>
+                      <p className={`text-sm font-medium truncate ${sel ? "text-primary" : "text-primary/75"}`}>
                         {highlight(user.name, ctx.query)}
                       </p>
-                      <p className="text-xs text-white/30 truncate">{highlight(user.email, ctx.query)}</p>
+                      <p className="text-xs text-primary/50 truncate">{highlight(user.email, ctx.query)}</p>
                     </div>
-                    <span className="text-xs text-white/25 shrink-0">{user.dept}</span>
+                    <span className="text-xs text-primary/70 shrink-0">{user.dept}</span>
                   </div>
                 );
               }}
               renderFooter={(ctx) =>
                 ctx.selectedCount > 0 && (
-                  <div className="px-4 py-3 border-t border-white/[0.06] flex items-center justify-between">
-                    <span className="text-white/35 text-xs">
-                      <span className="text-emerald-400 font-semibold">{ctx.selectedCount}</span> selected
+                  <div className="px-4 py-3 border-t  border-[var(--border-clr)] flex items-center justify-between">
+                    <span className="text-primary/50 text-xs">
+                      <span className="text-accent font-semibold">{ctx.selectedCount}</span> selected
                     </span>
                     <button
                       onClick={() => setSelUsers([])}
-                      className="text-xs text-white/30 hover:text-white/60 transition-colors"
+                      className="text-xs text-primary/50 hover:text-primary/60 transition-colors"
                     >
                       Clear
                     </button>
@@ -1022,19 +1024,22 @@ export default function Demo() {
             />
 
             {/* Selection result panel */}
-            <div className="bg-[#13161f] border border-white/[0.06] rounded-2xl p-5 flex flex-col gap-3">
-              <p className="text-white/45 text-xs uppercase tracking-wider font-semibold">Selected Users</p>
+            <div className="bg-card2 border  border-[var(--border-clr)] rounded-2xl p-5 flex flex-col gap-3">
+              <p className="text-primary/45 text-xs uppercase tracking-wider font-semibold">Selected Users</p>
               {selUsers.length === 0 ? (
-                <p className="text-white/20 text-sm flex-1 flex items-center">None selected yet</p>
+                <p className="text-primary/20 text-sm flex-1 flex items-center">None selected yet</p>
               ) : (
                 USERS.filter((u) => selUsers.includes(u.id)).map((u) => (
-                  <div key={u.id} className="flex items-center gap-2.5 py-2 border-b border-white/[0.04] last:border-0">
-                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center text-[10px] font-bold text-white shrink-0">
+                  <div
+                    key={u.id}
+                    className="flex items-center gap-2.5 py-2 border-b  border-[var(--border-clr)] last:border-0"
+                  >
+                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center text-[10px] font-bold text-primary shrink-0">
                       {getInit(u.name)}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-white text-sm font-medium truncate">{u.name}</p>
-                      <p className="text-white/30 text-xs truncate">{u.email}</p>
+                      <p className="text-primary text-sm font-medium truncate">{u.name}</p>
+                      <p className="text-primary/50 text-xs truncate">{u.email}</p>
                     </div>
                     <span
                       className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full border ${roleColor[u.role] ?? roleColor.User}`}
@@ -1110,27 +1115,27 @@ export default function Demo() {
                 <div
                   key={tx.id}
                   onClick={() => ctx.handleSelect(tx)}
-                  className={`flex items-center gap-4 px-5 py-3.5 border-b border-white/[0.04] last:border-0 cursor-pointer transition-all
-                    ${sel ? "bg-emerald-500/[0.07]" : "hover:bg-white/[0.03]"}`}
+                  className={`flex items-center gap-4 px-5 py-3.5 border-b  border-[var(--border-clr)] last:border-0 cursor-pointer transition-all
+                    ${sel ? "bg-accent/[0.07]" : "hover:bg-inputbg"}`}
                 >
                   <div className="flex-1 min-w-0">
-                    <p className={`text-sm font-medium ${sel ? "text-white" : "text-white/75"}`}>
+                    <p className={`text-sm font-medium ${sel ? "text-primary" : "text-primary/75"}`}>
                       {highlight(tx.name, ctx.query)}
                     </p>
-                    <p className="text-xs text-white/30 font-mono">
+                    <p className="text-xs text-primary/50 font-mono">
                       {tx.id} · {tx.date}
                     </p>
                   </div>
                   <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full border ${txStatus[tx.status]}`}>
                     {tx.status}
                   </span>
-                  <span className={`text-sm font-semibold font-mono ${isCredit ? "text-emerald-400" : "text-red-400"}`}>
+                  <span className={`text-sm font-semibold font-mono ${isCredit ? "text-accent" : "text-red-400"}`}>
                     {isCredit ? "+" : "–"}${tx.amount.toLocaleString()}
                   </span>
                   {sel && (
                     <svg
                       viewBox="0 0 16 16"
-                      className="w-4 h-4 text-emerald-400 shrink-0"
+                      className="w-4 h-4 text-accent shrink-0"
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="2"
@@ -1143,13 +1148,13 @@ export default function Demo() {
             }}
             renderFooter={(ctx) =>
               selTx && (
-                <div className="px-5 py-3 border-t border-white/[0.06] bg-white/[0.01] flex items-center justify-between">
-                  <span className="text-white/40 text-xs">
-                    Selected: <span className="text-white/70 font-medium">{selTx.name}</span>
+                <div className="px-5 py-3 border-t  border-[var(--border-clr)] bg-inputbg flex items-center justify-between">
+                  <span className="text-primary/40 text-xs">
+                    Selected: <span className="text-primary/70 font-medium">{selTx.name}</span>
                   </span>
                   <button
                     onClick={() => setSelTx(null)}
-                    className="text-xs text-white/25 hover:text-white/55 transition-colors"
+                    className="text-xs text-primary/70 hover:text-primary/55 transition-colors"
                   >
                     ✕ Clear
                   </button>
@@ -1213,19 +1218,21 @@ export default function Demo() {
                 <div
                   key={repo.id}
                   onClick={() => ctx.handleSelect(repo)}
-                  className={`flex flex-col gap-3 p-4 border border-white/[0.05] m-1.5 rounded-xl cursor-pointer transition-all
-                    ${sel ? "bg-emerald-500/[0.08] border-emerald-500/25" : "bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/[0.10]"}`}
+                  className={`flex flex-col gap-3 p-4 border  border-[var(--border-clr)] m-1.5 rounded-xl cursor-pointer transition-all
+                    ${sel ? "bg-accent/[0.08] border-emerald-500/25" : "bg-inputbg hover:bg-inputbg hover: border-[var(--border-clr)]"}`}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
-                      <p className={`text-sm font-semibold font-mono truncate ${sel ? "text-white" : "text-white/75"}`}>
+                      <p
+                        className={`text-sm font-semibold font-mono truncate ${sel ? "text-primary" : "text-primary/75"}`}
+                      >
                         {highlight(repo.name, ctx.query)}
                       </p>
-                      <p className="text-white/25 text-xs mt-0.5">{repo.updated}</p>
+                      <p className="text-primary/70 text-xs mt-0.5">{repo.updated}</p>
                     </div>
                     <div
                       className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-all
-                      ${sel ? "bg-emerald-500 border-emerald-500" : "border-white/20"}`}
+                      ${sel ? "bg-accent border-emerald-500" : "border-white/20"}`}
                     >
                       {sel && (
                         <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none">
@@ -1242,16 +1249,16 @@ export default function Demo() {
                   </div>
                   <div className="flex items-center gap-2 flex-wrap">
                     <span
-                      className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${langColor[repo.lang] ?? "bg-white/[0.07] text-white/45"}`}
+                      className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${langColor[repo.lang] ?? "bg-inputbg text-primary/45"}`}
                     >
                       {repo.lang}
                     </span>
                     {repo.status === "archived" && (
-                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-white/[0.06] text-white/35">
+                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-inputbg text-primary/50">
                         archived
                       </span>
                     )}
-                    <span className="ml-auto flex items-center gap-2 text-white/30 text-xs">
+                    <span className="ml-auto flex items-center gap-2 text-primary/50 text-xs">
                       <span>⭐ {repo.stars}</span>
                       <span>⑂ {repo.forks}</span>
                     </span>
@@ -1261,13 +1268,13 @@ export default function Demo() {
             }}
             renderFooter={(ctx) =>
               ctx.selectedCount > 0 && (
-                <div className="px-4 py-3 border-t border-white/[0.06] flex items-center justify-between">
-                  <span className="text-white/35 text-xs">
-                    <span className="text-emerald-400 font-semibold">{ctx.selectedCount}</span> repos selected
+                <div className="px-4 py-3 border-t  border-[var(--border-clr)] flex items-center justify-between">
+                  <span className="text-primary/50 text-xs">
+                    <span className="text-accent font-semibold">{ctx.selectedCount}</span> repos selected
                   </span>
                   <button
                     onClick={() => setSelRepos([])}
-                    className="text-xs text-white/30 hover:text-white/60 transition-colors"
+                    className="text-xs text-primary/50 hover:text-primary/60 transition-colors"
                   >
                     Clear
                   </button>
@@ -1367,7 +1374,7 @@ const getInitials = (name = "") =>
     .toUpperCase();
 
 const statusDot = {
-  online: "bg-emerald-400",
+  online: "bg-accent",
   busy: "bg-amber-400",
   away: "bg-orange-400",
   offline: "bg-white/20",
@@ -1377,14 +1384,14 @@ export const roleStyle = {
   ADMIN: "bg-violet-500/10 text-violet-400 border-violet-500/20",
   AGENT: "bg-amber-500/10  text-amber-400  border-amber-500/20",
   STUDENT: "bg-blue-500/10   text-blue-400   border-blue-500/20",
-  USER: "bg-white/[0.07]  text-white/45   border-white/[0.08]",
+  USER: "bg-inputbg  text-primary/45    border-[var(--border-clr)]",
 };
 
 export const KYC_STATUS_STYLE = {
-  ACTIVE: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+  ACTIVE: "bg-accent/10 text-accent  border-[var(--border-clr)]",
   PENDING: "bg-amber-500/10  text-amber-400  border-amber-500/20",
   COMPLETED: "bg-blue-500/10   text-blue-400   border-blue-500/20",
-  USER: "bg-white/[0.07]  text-white/45   border-white/[0.08]",
+  USER: "bg-inputbg  text-primary/45    border-[var(--border-clr)]",
 };
 
 // ─────────────────────────────────────────────────────────────
@@ -1395,12 +1402,12 @@ export function SingleSelectExample() {
   const [selectedUser, setSelectedUser] = useState(null);
 
   return (
-    <div className="min-h-screen bg-[#0b0d12] flex items-center justify-center p-6">
+    <div className="min-h-screen bg-base flex items-center justify-center p-6">
       <div className="w-full max-w-2xl flex flex-col gap-5">
         {/* Page title */}
         <div>
-          <h1 className="text-white text-xl font-semibold tracking-tight">Assign to Member</h1>
-          <p className="text-white/35 text-sm mt-0.5">Select one team member to assign this task.</p>
+          <h1 className="text-primary text-xl font-semibold tracking-tight">Assign to Member</h1>
+          <p className="text-primary/50 text-sm mt-0.5">Select one team member to assign this task.</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 items-start">
@@ -1443,14 +1450,14 @@ export function SingleSelectExample() {
                   onClick={() => ctx.handleSelect(user)}
                   className={[
                     "flex items-center gap-3 px-4 py-3",
-                    "border-b border-white/[0.04] last:border-0",
+                    "border-b  border-[var(--border-clr)] last:border-0",
                     "cursor-pointer transition-all duration-150",
-                    selected ? "bg-emerald-500/[0.08]" : "hover:bg-white/[0.035]",
+                    selected ? "bg-accent/[0.08]" : "hover:bg-inputbg",
                   ].join(" ")}
                 >
                   {/* Avatar */}
                   <div className="relative shrink-0">
-                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center text-xs font-semibold text-white ring-2 ring-white/[0.06]">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center text-xs font-semibold text-primary ring-2 ring-white/[0.06]">
                       {getInitials(user.name)}
                     </div>
                     <span
@@ -1461,13 +1468,13 @@ export function SingleSelectExample() {
                   {/* Info */}
                   <div className="flex-1 min-w-0">
                     <p
-                      className={`text-sm font-medium truncate transition-colors ${selected ? "text-white" : "text-white/75"}`}
+                      className={`text-sm font-medium truncate transition-colors ${selected ? "text-primary" : "text-primary/75"}`}
                     >
                       {highlight(user.name, ctx.query)}
                     </p>
-                    <p className="text-xs text-white/30 truncate">
+                    <p className="text-xs text-primary/50 truncate">
                       {highlight(user.email, ctx.query)}
-                      <span className="text-white/20"> · {user.dept}</span>
+                      <span className="text-primary/20"> · {user.dept}</span>
                     </p>
                   </div>
 
@@ -1482,7 +1489,7 @@ export function SingleSelectExample() {
                   {selected && (
                     <svg
                       viewBox="0 0 16 16"
-                      className="w-4 h-4 text-emerald-400 shrink-0"
+                      className="w-4 h-4 text-accent shrink-0"
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="2.2"
@@ -1496,11 +1503,11 @@ export function SingleSelectExample() {
             // --- footer: clear button when someone is selected ---
             renderFooter={() =>
               selectedUser && (
-                <div className="px-4 py-3 border-t border-white/[0.06] flex items-center justify-between">
-                  <span className="text-white/30 text-xs">1 member selected</span>
+                <div className="px-4 py-3 border-t  border-[var(--border-clr)] flex items-center justify-between">
+                  <span className="text-primary/50 text-xs">1 member selected</span>
                   <button
                     onClick={() => setSelectedUser(null)}
-                    className="text-xs text-white/30 hover:text-white/60 transition-colors"
+                    className="text-xs text-primary/50 hover:text-primary/60 transition-colors"
                   >
                     ✕ Clear
                   </button>
@@ -1511,10 +1518,10 @@ export function SingleSelectExample() {
           />
 
           {/* ── Selected user card ── */}
-          <div className="bg-[#0f1117] border border-white/[0.07] rounded-2xl overflow-hidden">
-            <div className="h-px w-full bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
-            <div className="px-5 py-4 border-b border-white/[0.06]">
-              <p className="text-white/45 text-xs font-semibold uppercase tracking-wider">Selected assignee</p>
+          <div className="bg-card border  border-[var(--border-clr)] rounded-2xl overflow-hidden">
+            <div className="h-px w-full bg-gradient-to-r from-bg-card via-emerald-500/40 from-bg-card" />
+            <div className="px-5 py-4 border-b  border-[var(--border-clr)]">
+              <p className="text-primary/45 text-xs font-semibold uppercase tracking-wider">Selected assignee</p>
             </div>
 
             {selectedUser ? (
@@ -1522,7 +1529,7 @@ export function SingleSelectExample() {
                 {/* Avatar + name */}
                 <div className="flex items-center gap-3.5">
                   <div className="relative">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center text-sm font-bold text-white ring-2 ring-white/[0.08]">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center text-sm font-bold text-primary ring-2 ring-white/[0.08]">
                       {getInitials(selectedUser.name)}
                     </div>
                     <span
@@ -1530,13 +1537,13 @@ export function SingleSelectExample() {
                     />
                   </div>
                   <div>
-                    <p className="text-white font-semibold text-[15px]">{selectedUser.name}</p>
-                    <p className="text-white/35 text-xs mt-0.5">{selectedUser.email}</p>
+                    <p className="text-primary font-semibold text-[15px]">{selectedUser.name}</p>
+                    <p className="text-primary/50 text-xs mt-0.5">{selectedUser.email}</p>
                   </div>
                 </div>
 
                 {/* Details */}
-                <div className="bg-white/[0.03] rounded-xl border border-white/[0.05] divide-y divide-white/[0.04]">
+                <div className="bg-inputbg rounded-xl border  border-[var(--border-clr)] divide-y divide-white/[0.04]">
                   {[
                     [
                       "Role",
@@ -1547,11 +1554,11 @@ export function SingleSelectExample() {
                       </span>,
                     ],
                     ["Department", selectedUser.dept],
-                    ["Status", <span className="capitalize text-white/60">{selectedUser.status}</span>],
-                    ["ID", <span className="font-mono text-white/50">#{selectedUser.id}</span>],
+                    ["Status", <span className="capitalize text-primary/60">{selectedUser.status}</span>],
+                    ["ID", <span className="font-mono text-primary/75">#{selectedUser.id}</span>],
                   ].map(([label, value]) => (
                     <div key={label} className="flex items-center justify-between px-4 py-2.5">
-                      <span className="text-white/35 text-sm">{label}</span>
+                      <span className="text-primary/50 text-sm">{label}</span>
                       <span className="text-sm">{value}</span>
                     </div>
                   ))}
@@ -1560,14 +1567,14 @@ export function SingleSelectExample() {
                 {/* Confirm button */}
                 <button
                   onClick={() => alert(`Assigned to ${selectedUser.name}`)}
-                  className="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white text-sm font-semibold transition-all shadow-lg shadow-emerald-500/20"
+                  className="w-full py-2.5 rounded-xl bg-accent hover:bg-accent/80 text-white text-sm font-semibold transition-all shadow-md shadow-accent/30"
                 >
                   Confirm Assignment →
                 </button>
 
                 <button
                   onClick={() => setSelectedUser(null)}
-                  className="w-full py-2 rounded-xl text-white/35 hover:text-white/60 text-sm transition-colors"
+                  className="w-full py-2 rounded-xl text-primary/50 hover:text-primary/60 text-sm transition-colors"
                 >
                   Clear selection
                 </button>
@@ -1575,8 +1582,8 @@ export function SingleSelectExample() {
             ) : (
               <div className="px-5 py-12 flex flex-col items-center text-center gap-2">
                 <span className="text-3xl opacity-10">👤</span>
-                <p className="text-white/25 text-sm">No one selected yet</p>
-                <p className="text-white/15 text-xs">Pick a member from the list</p>
+                <p className="text-primary/70 text-sm">No one selected yet</p>
+                <p className="text-primary/15 text-xs">Pick a member from the list</p>
               </div>
             )}
           </div>

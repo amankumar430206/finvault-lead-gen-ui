@@ -39,9 +39,9 @@ const ROLE_ICONS = {
 
 const ROLE_COLORS = {
   emerald: {
-    ring: "border-emerald-500/50 bg-emerald-500/[0.07]",
-    text: "text-emerald-400",
-    badge: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    ring: " border-[var(--border-clr)] bg-accent/[0.07]",
+    text: "text-accent",
+    badge: "bg-accent/10 text-accent  border-[var(--border-clr)]",
   },
 };
 
@@ -49,9 +49,9 @@ const ROLE_COLORS = {
 // PRIMITIVES
 // ─────────────────────────────────────────────────────────────
 const Label = ({ children, required }) => (
-  <label className="block text-[11px] font-semibold text-white/38 uppercase tracking-widest mb-1.5">
+  <label className="block text-[11px] font-semibold text-primary/38 uppercase tracking-widest mb-1.5">
     {children}
-    {required && <span className="text-emerald-400 ml-0.5">*</span>}
+    {required && <span className="text-accent ml-0.5">*</span>}
   </label>
 );
 
@@ -67,8 +67,8 @@ const Err = ({ msg }) =>
   ) : null;
 
 const inp = (err) =>
-  `w-full bg-white/[0.04] border rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/20 outline-none transition-all duration-150
-  ${err ? "border-red-500/45 focus:border-red-500/60" : "border-white/[0.08] focus:border-emerald-500/45 focus:bg-emerald-500/[0.03]"}`;
+  `w-full bg-inputbg border rounded-xl px-4 py-3 text-sm text-primary placeholder:text-[var(--text-muted)] outline-none transition-all duration-150
+  ${err ? "border-red-500/45 focus:border-red-500/60" : " border-[var(--border-clr)] focus: border-[var(--border-clr)] focus:bg-accent/[0.03]"}`;
 
 const Field = ({ label, required, error, children, className = "" }) => (
   <div className={className}>
@@ -160,21 +160,21 @@ export default function AddUserForm() {
     const rc2 = ROLE_COLORS[ROLES.find((r) => r.id === lastUser.role)?.color ?? "emerald"];
     const fakeId = "$oid: " + Math.random().toString(36).slice(2, 18).padEnd(24, "0");
     return (
-      <div className="min-h-screen bg-[#0b0d12] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-base flex items-center justify-center p-4">
         <div
-          className="w-full max-w-sm rounded-2xl bg-[#0f1117] border border-white/[0.07] overflow-hidden shadow-2xl"
+          className="w-full max-w-sm rounded-2xl bg-card border  border-[var(--border-clr)] overflow-hidden shadow-md"
           style={{ animation: "fadeUp .3s ease" }}
         >
           <div
-            className={`h-px w-full bg-gradient-to-r from-transparent ${rc2?.ring.includes("violet") ? "via-violet-500/45" : rc2?.ring.includes("emerald") ? "via-emerald-500/45" : "via-blue-500/45"} to-transparent`}
+            className={`h-px w-full bg-gradient-to-r from-bg-card ${rc2?.ring.includes("violet") ? "via-violet-500/45" : rc2?.ring.includes("emerald") ? "via-[var(--accent-glow)]" : "via-blue-500/45"} from-bg-card`}
           />
           <div className="p-7 flex flex-col items-center text-center gap-4">
             <div className="relative">
-              <div className="absolute inset-0 rounded-full bg-emerald-500/10 animate-ping opacity-30" />
-              <div className="relative w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+              <div className="absolute inset-0 rounded-full bg-accent/10 animate-ping opacity-30" />
+              <div className="relative w-14 h-14 rounded-2xl bg-accent/10 border  border-[var(--border-clr)] flex items-center justify-center">
                 <svg
                   viewBox="0 0 20 20"
-                  className="w-7 h-7 text-emerald-400"
+                  className="w-7 h-7 text-accent"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.6"
@@ -188,9 +188,9 @@ export default function AddUserForm() {
               </div>
             </div>
             <div>
-              <h2 className="text-white text-lg font-semibold">User Created!</h2>
-              <p className="text-white/38 text-sm mt-1">
-                <span className="text-white/65 font-medium">
+              <h2 className="text-primary text-lg font-semibold">User Created!</h2>
+              <p className="text-primary/38 text-sm mt-1">
+                <span className="text-primary/65 font-medium">
                   {lastUser.firstName} {lastUser.lastName}
                 </span>{" "}
                 has been added as <span className={`font-semibold ${rc2?.text}`}>{lastUser.role}</span>.
@@ -200,7 +200,7 @@ export default function AddUserForm() {
             <div className="flex gap-2.5 w-full">
               <button
                 onClick={handleAddAnother}
-                className="flex-1 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white text-sm font-semibold transition-all shadow-lg shadow-emerald-500/20"
+                className="flex-1 py-2.5 rounded-xl bg-accent hover:bg-accent/80 text-white text-sm font-semibold transition-all shadow-md shadow-accent/30"
               >
                 Add Another
               </button>
@@ -212,14 +212,14 @@ export default function AddUserForm() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0b0d12] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-base flex items-center justify-center p-4">
       <div className="w-full max-w-lg fu">
         {/* Page title */}
         <div className="flex items-center gap-3 mb-5">
-          <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-accent/10 border  border-[var(--border-clr)] flex items-center justify-center shrink-0">
             <svg
               viewBox="0 0 20 20"
-              className="w-4 h-4 text-emerald-400"
+              className="w-4 h-4 text-accent"
               fill="none"
               stroke="currentColor"
               strokeWidth="1.7"
@@ -232,15 +232,15 @@ export default function AddUserForm() {
             </svg>
           </div>
           <div>
-            <h1 className="text-white font-semibold text-lg tracking-tight">Add New User</h1>
-            <p className="text-white/30 text-xs mt-0.5">Create an Admin, Agent or Student account</p>
+            <h1 className="text-primary font-semibold text-lg tracking-tight">Add New User</h1>
+            <p className="text-primary/50 text-xs mt-0.5">Create an Admin, Agent or Student account</p>
           </div>
         </div>
 
         {/* Card */}
-        <div className="rounded-2xl bg-[#0f1117] border border-white/[0.07] overflow-hidden shadow-2xl">
+        <div className="rounded-2xl bg-card border  border-[var(--border-clr)] overflow-hidden shadow-md">
           <div
-            className={`h-px w-full bg-gradient-to-r from-transparent ${rc ? (roleCfg?.color === "violet" ? "via-violet-500/45" : roleCfg?.color === "blue" ? "via-blue-500/45" : "via-emerald-500/45") : "via-emerald-500/30"} to-transparent transition-all duration-500`}
+            className={`h-px w-full bg-gradient-to-r from-bg-card ${rc ? (roleCfg?.color === "violet" ? "via-violet-500/45" : roleCfg?.color === "blue" ? "via-blue-500/45" : "via-[var(--accent-glow)]") : "via-emerald-500/30"} from-bg-card transition-all duration-500`}
           />
 
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -263,20 +263,20 @@ export default function AddUserForm() {
                             type="button"
                             onClick={() => field.onChange(r.id)}
                             className={`flex flex-col items-center gap-2 p-3.5 rounded-xl border text-center transition-all duration-200
-                              ${active ? `${rclr.ring} border` : "border-white/[0.07] bg-white/[0.03] hover:border-white/[0.15] hover:bg-white/[0.05]"}`}
+                              ${active ? `${rclr.ring} border` : " border-[var(--border-clr)] bg-inputbg hover: border-[var(--border-clr)] hover:bg-inputbg"}`}
                           >
-                            <span className={active ? rclr.text : "text-white/30"}>{r.icon}</span>
+                            <span className={active ? rclr.text : "text-primary/50"}>{r.icon}</span>
                             <div>
-                              <p className={`text-xs font-bold ${active ? "text-white" : "text-white/50"}`}>
+                              <p className={`text-xs font-bold ${active ? "text-primary" : "text-primary/75"}`}>
                                 {r.label}
                               </p>
-                              <p className="text-[9px] text-white/22 mt-0.5 leading-tight hidden sm:block">
+                              <p className="text-[9px] text-primary/22 mt-0.5 leading-tight hidden sm:block">
                                 {r.desc.split("·")[0].trim()}
                               </p>
                             </div>
                             {active && (
                               <div
-                                className={`w-4 h-4 rounded-full ${r.color === "violet" ? "bg-violet-500" : r.color === "blue" ? "bg-blue-500" : "bg-emerald-500"} flex items-center justify-center`}
+                                className={`w-4 h-4 rounded-full ${r.color === "violet" ? "bg-violet-500" : r.color === "blue" ? "bg-blue-500" : "bg-accent"} flex items-center justify-center`}
                               >
                                 <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none">
                                   <path
@@ -309,9 +309,9 @@ export default function AddUserForm() {
 
               {/* ── DIVIDER ── */}
               <div className="flex items-center gap-3">
-                <div className="flex-1 h-px bg-white/[0.05]" />
-                <span className="text-white/20 text-[10px] uppercase tracking-widest font-semibold">User info</span>
-                <div className="flex-1 h-px bg-white/[0.05]" />
+                <div className="flex-1 h-px bg-inputbg" />
+                <span className="text-primary/20 text-[10px] uppercase tracking-widest font-semibold">User info</span>
+                <div className="flex-1 h-px bg-inputbg" />
               </div>
 
               {/* ── NAME ── */}
@@ -350,15 +350,15 @@ export default function AddUserForm() {
                 <button
                   type="button"
                   onClick={() => reset()}
-                  className="px-5 py-3 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white/45 hover:text-white/70 text-sm font-medium transition-all"
+                  className="px-5 py-3 rounded-xl bg-inputbg border  border-[var(--border-clr)] text-primary/45 hover:text-primary/70 text-sm font-medium transition-all"
                 >
                   Reset
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className={`flex-1 flex items-center justify-center gap-2.5 py-3 rounded-xl text-white text-sm font-semibold transition-all shadow-lg
-                    ${loading ? "bg-emerald-500/60 cursor-not-allowed" : "bg-emerald-500 hover:bg-emerald-400 shadow-emerald-500/25"}`}
+                  className={`flex-1 flex items-center justify-center gap-2.5 py-3 rounded-xl text-primary text-sm font-semibold transition-all shadow-md
+                    ${loading ? "bg-accent/60 cursor-not-allowed" : "bg-accent hover:bg-accent/80 shadow-accent/20"}`}
                 >
                   {loading ? (
                     <>
@@ -383,7 +383,7 @@ export default function AddUserForm() {
         </div>
 
         {/* Footer note */}
-        <p className="text-center text-white/18 text-xs mt-4 flex items-center justify-center gap-1.5">
+        <p className="text-center text-primary/18 text-xs mt-4 flex items-center justify-center gap-1.5">
           <svg viewBox="0 0 12 12" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="1.4">
             <rect x="2" y="5" width="8" height="6" rx="1" />
             <path strokeLinecap="round" d="M4 5V3.5a2 2 0 014 0V5" />

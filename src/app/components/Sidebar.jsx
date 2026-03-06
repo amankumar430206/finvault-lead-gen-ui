@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useSendMoneyForm } from "@/store/form.store";
 import { useAuthStore } from "@/store/auth.store";
 import Image from "next/image";
+import { useTheme } from "@/context/ThemeContext";
 
 // ─────────────────────────────────────────────
 // SIDEBAR COMPONENT
@@ -21,6 +22,9 @@ const ROUTES = {
 };
 
 export const Sidebar = () => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   const user = useAuthStore((s) => s.user);
   const isAgent = user?.role === "AGENT";
   const isAdmin = user?.role === "ADMIN";
@@ -69,7 +73,7 @@ export const Sidebar = () => {
       <aside
         className={[
           "fixed top-0 left-0 h-full z-30 flex flex-col",
-          "bg-[#0f1117] border-r border-white/[0.06]",
+          "bg-card border-r  border-[var(--border-clr)]",
           "transition-all duration-300 ease-in-out",
           sidebarCollapsed ? "w-[70px]" : "w-[230px]",
           // Mobile: slide in/out
@@ -77,11 +81,15 @@ export const Sidebar = () => {
         ].join(" ")}
       >
         {/* Logo */}
-        <div className="flex items-center gap-3 px-4 h-16 border-b border-white/[0.06] shrink-0">
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center">
-            <Image src="/icons/logo-white.png" width={25} height={25} alt="Logo" />
+        <div className="flex gap-2 items-center align-center px-6 h-16 border-b  border-[var(--border-clr)] shrink-0">
+          <div className="rounded-xl flex items-center justify-center">
+            {isDark ? (
+              <Image src="/icons/logo-white.png" width={25} height={25} alt="Logo" />
+            ) : (
+              <Image src="/icons/logo-dark.png" width={25} height={25} alt="Logo" />
+            )}
           </div>
-          {!sidebarCollapsed && <span className="text-white font-semibold tracking-tight text-[15px]">Myntpe</span>}
+          {!sidebarCollapsed && <span className="text-accent font-semibold tracking-tight text-[15px]">Myntpe</span>}
         </div>
 
         {/* Nav */}
@@ -91,7 +99,7 @@ export const Sidebar = () => {
               <Link
                 className="
               flex items-center justify-center gap-2 w-full py-2.5 px-4
-              bg-[#00D4A1] hover:bg-[#00bfa0] text-slate-900 text-sm font-bold
+              bg-accent hover:bg-accent/80 text-white text-sm font-bold
               rounded-xl transition-all duration-200 active:scale-95 cursor-pointer
             "
                 href={ROUTES["send-money"]}
@@ -103,7 +111,7 @@ export const Sidebar = () => {
           )}
 
           <p
-            className={`text-[10px] font-semibold text-white/30 uppercase tracking-widest mb-2 px-2 ${
+            className={`text-[10px] font-semibold text-primary/50 uppercase tracking-widest mb-2 px-2 ${
               sidebarCollapsed ? "hidden" : ""
             }`}
           >
@@ -119,22 +127,20 @@ export const Sidebar = () => {
                 title={sidebarCollapsed ? item.label : undefined}
                 className={[
                   "w-full flex items-center gap-3 px-3 py-2.5 cursor-pointer rounded-lg mb-0.5 text-sm font-medium transition-all",
-                  isActive
-                    ? "bg-emerald-500/10 text-emerald-400"
-                    : "text-white/50 hover:text-white/90 hover:bg-white/[0.05]",
+                  isActive ? "bg-accent/10 text-accent" : "text-primary/75 hover:text-primary/90 hover:bg-inputbg",
                 ].join(" ")}
               >
                 <Icon path={ICONS[item.icon]} className="w-[18px] h-[18px] shrink-0" />
                 {!sidebarCollapsed && <span>{item.label}</span>}
-                {isActive && !sidebarCollapsed && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-emerald-400" />}
+                {isActive && !sidebarCollapsed && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-accent" />}
               </Link>
             );
           })}
         </nav>
 
         {/* Bottom section */}
-        <div className="px-2 pb-4 border-t border-white/[0.06] pt-3">
-          <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-white/50 hover:text-white/90 hover:bg-white/[0.05] transition-all">
+        <div className="px-2 pb-4 border-t  border-[var(--border-clr)] pt-3">
+          <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary/75 hover:text-primary/90 hover:bg-inputbg transition-all">
             <Icon path={ICONS.settings} className="w-[18px] h-[18px] shrink-0" />
             {!sidebarCollapsed && <span>Settings</span>}
           </button>
@@ -149,7 +155,7 @@ export const Sidebar = () => {
           {/* Collapse toggle — desktop only */}
           <button
             onClick={toggleCollapsed}
-            className="hidden lg:flex w-full items-center justify-center mt-2 py-2 rounded-lg text-white/20 hover:text-white/50 hover:bg-white/[0.04] transition-all text-xs gap-1"
+            className="hidden lg:flex w-full items-center justify-center mt-2 py-2 rounded-lg text-primary/20 hover:text-primary/75 hover:bg-inputbg transition-all text-xs gap-1"
           >
             <Icon
               path={sidebarCollapsed ? "M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" : "M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"}

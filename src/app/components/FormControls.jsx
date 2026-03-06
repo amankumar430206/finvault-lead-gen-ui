@@ -4,7 +4,7 @@ export const FormField = ({ label, error, helperText, children, required }) => {
   return (
     <div className="w-full">
       {label && (
-        <label className="block mb-1.5 text-sm font-medium text-white/70">
+        <label className="block mb-1.5 text-sm font-medium text-primary/70">
           {label}
           {required && <span className="text-red-400 ml-1">*</span>}
         </label>
@@ -12,7 +12,7 @@ export const FormField = ({ label, error, helperText, children, required }) => {
 
       {children}
 
-      {helperText && !error && <p className="mt-1 text-xs text-white/40">{helperText}</p>}
+      {helperText && !error && <p className="mt-1 text-xs text-primary/40">{helperText}</p>}
 
       {error && <p className="mt-1 text-xs text-red-400">{error}</p>}
     </div>
@@ -41,10 +41,10 @@ export const Input = ({ value, onChange, onBlur, placeholder, type = "text", err
         ${
           error
             ? "border-red-500/50 bg-red-500/5 focus:border-red-500"
-            : "border-white/[0.08] bg-white/[0.04] hover:border-white/[0.15] focus:border-emerald-500/40 focus:bg-emerald-500/[0.03]"
+            : " border-[var(--border-clr)] bg-inputbg hover: border-[var(--border-clr)] focus:border-accent/50 focus:bg-accent/[0.03]"
         }
 
-        text-white placeholder:text-white/25
+        text-primary placeholder:text-primary/70
         ${disabled ? "opacity-50 cursor-not-allowed" : ""}
         ${className}
       `}
@@ -77,26 +77,26 @@ export const Select = ({
           ${
             error
               ? "border-red-500/50 bg-red-500/5 focus:border-red-500"
-              : "border-white/[0.08] bg-white/[0.04] hover:border-white/[0.15] focus:border-emerald-500/40 focus:bg-emerald-500/[0.03]"
+              : " border-[var(--border-clr)] bg-inputbg hover: border-[var(--border-clr)] focus:border-accent/50 focus:bg-accent/[0.03]"
           }
 
-          text-white
+          text-primary
           ${disabled ? "opacity-50 cursor-not-allowed" : ""}
         `}
       >
-        <option value="" disabled className="bg-[#13161f] text-white/60">
+        <option value="" disabled className="bg-card2 text-primary/60">
           {placeholder}
         </option>
 
         {options.map((opt) => (
-          <option key={getOptionValue(opt)} value={getOptionValue(opt)} className="bg-[#13161f] text-white">
+          <option key={getOptionValue(opt)} value={getOptionValue(opt)} className="bg-card2 text-primary">
             {getOptionLabel(opt)}
           </option>
         ))}
       </select>
 
       <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-        <svg className="w-4 h-4 text-white/30" viewBox="0 0 12 12" fill="none">
+        <svg className="w-4 h-4 text-primary/50" viewBox="0 0 12 12" fill="none">
           <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
@@ -118,10 +118,10 @@ export const Textarea = ({ value, onChange, placeholder, rows = 4, error }) => {
         ${
           error
             ? "border-red-500/50 bg-red-500/5 focus:border-red-500"
-            : "border-white/[0.08] bg-white/[0.04] hover:border-white/[0.15] focus:border-emerald-500/40 focus:bg-emerald-500/[0.03]"
+            : " border-[var(--border-clr)] bg-inputbg hover: border-[var(--border-clr)] focus:border-accent/50 focus:bg-accent/[0.03]"
         }
 
-        text-white placeholder:text-white/25
+        text-primary placeholder:text-primary/70
       `}
     />
   );
@@ -136,7 +136,7 @@ export const Checkbox = ({ checked, onChange, label }) => {
         onChange={(e) => onChange?.(e.target.checked)}
         className="w-4 h-4 accent-emerald-500"
       />
-      <span className="text-sm text-white/70">{label}</span>
+      <span className="text-sm text-primary/70">{label}</span>
     </label>
   );
 };
@@ -153,7 +153,7 @@ export const RadioGroup = ({ value, onChange, options = [] }) => {
             onChange={() => onChange(opt)}
             className="accent-emerald-500"
           />
-          <span className="text-sm text-white/70">{opt}</span>
+          <span className="text-sm text-primary/70">{opt}</span>
         </label>
       ))}
     </div>

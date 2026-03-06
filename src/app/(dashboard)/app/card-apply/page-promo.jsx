@@ -186,9 +186,9 @@ const TESTIMONIALS = [
 const accentCls = {
   emerald: {
     border: "border-emerald-500/30",
-    bg: "bg-emerald-500/10",
-    text: "text-emerald-400",
-    glow: "shadow-emerald-500/20",
+    bg: "bg-accent/10",
+    text: "text-accent",
+    glow: "shadow-accent/30",
   },
   cyan: { border: "border-cyan-500/30", bg: "bg-cyan-500/10", text: "text-cyan-400", glow: "shadow-cyan-500/20" },
   violet: {
@@ -200,7 +200,7 @@ const accentCls = {
   amber: { border: "border-amber-500/30", bg: "bg-amber-500/10", text: "text-amber-400", glow: "shadow-amber-500/20" },
   rose: { border: "border-rose-500/30", bg: "bg-rose-500/10", text: "text-rose-400", glow: "shadow-rose-500/20" },
   teal: { border: "border-teal-500/30", bg: "bg-teal-500/10", text: "text-teal-400", glow: "shadow-teal-500/20" },
-  white: { border: "border-white/[0.12]", bg: "bg-white/[0.05]", text: "text-white/70", glow: "" },
+  white: { border: " border-[var(--border-clr)]", bg: "bg-inputbg", text: "text-primary/70", glow: "" },
 };
 
 // ─────────────────────────────────────────────────────────────
@@ -237,10 +237,10 @@ const ForexCard = ({ plan = "pro", name = "YOUR NAME", rotate = 0 }) => {
       <div
         className={`absolute inset-0 opacity-30 ${
           isElite
-            ? "bg-gradient-to-tr from-transparent via-amber-400/20 to-transparent"
+            ? "bg-gradient-to-tr from-bg-card via-amber-400/20 from-bg-card"
             : isPro
-              ? "bg-gradient-to-tr from-transparent via-emerald-400/15 to-transparent"
-              : "bg-gradient-to-tr from-transparent via-white/10 to-transparent"
+              ? "bg-gradient-to-tr from-bg-card via-emerald-400/15 from-bg-card"
+              : "bg-gradient-to-tr from-bg-card via-white/10 from-bg-card"
         }`}
       />
 
@@ -258,16 +258,16 @@ const ForexCard = ({ plan = "pro", name = "YOUR NAME", rotate = 0 }) => {
         {/* Top row */}
         <div className="flex items-start justify-between">
           <div>
-            <p className="font-syne text-white/30 text-[9px] tracking-[0.2em] uppercase">FinVault</p>
+            <p className="font-syne text-primary/50 text-[9px] tracking-[0.2em] uppercase">FinVault</p>
             <p
-              className={`font-syne font-bold text-base mt-0.5 ${isElite ? "text-amber-400" : isPro ? "text-emerald-400" : "text-white/80"}`}
+              className={`font-syne font-bold text-base mt-0.5 ${isElite ? "text-amber-400" : isPro ? "text-accent" : "text-primary/80"}`}
             >
               {isElite ? "ELITE" : isPro ? "PRO" : "CLASSIC"}
             </p>
           </div>
           {/* Chip */}
           <div
-            className={`w-10 h-7 rounded-md border ${isElite ? "bg-amber-500/20 border-amber-500/30" : isPro ? "bg-emerald-500/20 border-emerald-500/30" : "bg-white/10 border-white/20"} flex items-center justify-center`}
+            className={`w-10 h-7 rounded-md border ${isElite ? "bg-amber-500/20 border-amber-500/30" : isPro ? "bg-accent/20 border-emerald-500/30" : "bg-white/10 border-white/20"} flex items-center justify-center`}
           >
             <div className="w-6 h-5 rounded-sm border border-white/20 grid grid-cols-2 gap-px p-0.5">
               {[...Array(4)].map((_, i) => (
@@ -279,23 +279,23 @@ const ForexCard = ({ plan = "pro", name = "YOUR NAME", rotate = 0 }) => {
 
         {/* Card number */}
         <div>
-          <p className="text-white/30 text-xs mono tracking-[0.25em]">•••• •••• •••• 4821</p>
+          <p className="text-primary/50 text-xs mono tracking-[0.25em]">•••• •••• •••• 4821</p>
         </div>
 
         {/* Bottom row */}
         <div className="flex items-end justify-between">
           <div>
-            <p className="text-white/25 text-[8px] uppercase tracking-widest">Card holder</p>
-            <p className="text-white/70 text-xs font-medium mono mt-0.5">{name}</p>
+            <p className="text-primary/70 text-[8px] uppercase tracking-widest">Card holder</p>
+            <p className="text-primary/70 text-xs font-medium mono mt-0.5">{name}</p>
           </div>
           <div className="text-right">
-            <p className="text-white/25 text-[8px] uppercase tracking-widest">Valid thru</p>
-            <p className="text-white/70 text-xs mono mt-0.5">03 / 28</p>
+            <p className="text-primary/70 text-[8px] uppercase tracking-widest">Valid thru</p>
+            <p className="text-primary/70 text-xs mono mt-0.5">03 / 28</p>
           </div>
           {/* Network logo */}
           <div className="flex items-center gap-1 opacity-60">
             <div
-              className={`w-6 h-6 rounded-full ${isElite ? "bg-amber-400/70" : isPro ? "bg-emerald-400/70" : "bg-white/40"}`}
+              className={`w-6 h-6 rounded-full ${isElite ? "bg-amber-400/70" : isPro ? "bg-accent/70" : "bg-white/40"}`}
             />
             <div
               className={`w-6 h-6 rounded-full -ml-3 ${isElite ? "bg-amber-600/70" : isPro ? "bg-emerald-600/70" : "bg-white/25"}`}
@@ -328,16 +328,16 @@ const ApplyModal = ({ plan, onClose, onSuccess }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-black/65 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-sm rounded-2xl bg-[#0f1117] border border-white/[0.08] shadow-2xl overflow-hidden z-10">
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
+      <div className="relative w-full max-w-sm rounded-2xl bg-card border  border-[var(--border-clr)] shadow-md overflow-hidden z-10">
+        <div className="h-px w-full bg-gradient-to-r from-bg-card via-accent/80 from-bg-card" />
         <div className="px-6 pt-6 pb-5">
           {/* Header */}
           <div className="flex items-start justify-between mb-5">
             <div>
-              <h3 className="font-syne text-white font-bold text-lg">Apply for {plan?.name}</h3>
-              <p className="text-white/35 text-xs mt-0.5">Takes less than 2 minutes</p>
+              <h3 className="font-syne text-primary font-bold text-lg">Apply for {plan?.name}</h3>
+              <p className="text-primary/75 text-xs mt-0.5">Takes less than 2 minutes</p>
             </div>
-            <button onClick={onClose} className="text-white/25 hover:text-white/60 transition-colors p-1">
+            <button onClick={onClose} className="text-primary/70 hover:text-primary/60 transition-colors p-1">
               <svg viewBox="0 0 14 14" className="w-4 h-4" fill="currentColor">
                 <path d="M3.293 3.293a1 1 0 011.414 0L7 5.586l2.293-2.293a1 1 0 111.414 1.414L8.414 7l2.293 2.293a1 1 0 01-1.414 1.414L7 8.414l-2.293 2.293a1 1 0 01-1.414-1.414L5.586 7 3.293 4.707a1 1 0 010-1.414z" />
               </svg>
@@ -350,12 +350,12 @@ const ApplyModal = ({ plan, onClose, onSuccess }) => {
               <div key={s} className="flex items-center gap-2">
                 <div
                   className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold border
-                  ${i + 1 < step ? "bg-emerald-500 border-emerald-500 text-white" : i + 1 === step ? "border-emerald-500 text-emerald-400" : "border-white/15 text-white/20"}`}
+                  ${i + 1 < step ? "bg-accent border-emerald-500 text-primary" : i + 1 === step ? "border-emerald-500 text-accent" : "border-white/15 text-primary/20"}`}
                 >
                   {i + 1 < step ? "✓" : i + 1}
                 </div>
-                <span className={`text-xs ${i + 1 === step ? "text-white/60" : "text-white/20"}`}>{s}</span>
-                {i < 1 && <div className={`w-6 h-px ${i + 1 < step ? "bg-emerald-500/50" : "bg-white/[0.08]"}`} />}
+                <span className={`text-xs ${i + 1 === step ? "text-primary/60" : "text-primary/20"}`}>{s}</span>
+                {i < 1 && <div className={`w-6 h-px ${i + 1 < step ? "bg-accent/50" : "bg-inputbg"}`} />}
               </div>
             ))}
           </div>
@@ -373,13 +373,13 @@ const ApplyModal = ({ plan, onClose, onSuccess }) => {
                   value={form[k]}
                   onChange={(e) => update(k, e.target.value)}
                   placeholder={p}
-                  className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/25 outline-none focus:border-emerald-500/45 transition-all"
+                  className="w-full bg-inputbg border  border-[var(--border-clr)] rounded-xl px-4 py-3 text-sm text-primary placeholder:text-primary/70 outline-none focus: border-[var(--border-clr)] transition-all"
                 />
               ))}
               <button
                 onClick={() => setStep(2)}
                 disabled={!form.name || !form.email || !form.mobile}
-                className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold transition-all mt-1 shadow-lg shadow-emerald-500/20"
+                className="w-full py-3 rounded-xl bg-accent hover:bg-accent/80 disabled:opacity-40 disabled:cursor-not-allowed text-primary text-sm font-semibold transition-all mt-1 shadow-md shadow-accent/30"
               >
                 Continue →
               </button>
@@ -388,14 +388,14 @@ const ApplyModal = ({ plan, onClose, onSuccess }) => {
 
           {step === 2 && (
             <div className="flex flex-col gap-3">
-              <p className="text-white/35 text-xs">Enter your PAN for KYC verification</p>
+              <p className="text-primary/75 text-xs">Enter your PAN for KYC verification</p>
               <input
                 type="text"
                 value={form.pan}
                 onChange={(e) => update("pan", e.target.value.toUpperCase())}
                 placeholder="ABCDE1234F"
                 maxLength={10}
-                className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/25 outline-none focus:border-emerald-500/45 transition-all font-mono uppercase tracking-widest"
+                className="w-full bg-inputbg border  border-[var(--border-clr)] rounded-xl px-4 py-3 text-sm text-primary placeholder:text-primary/70 outline-none focus: border-[var(--border-clr)] transition-all font-mono uppercase tracking-widest"
               />
               <div className="flex gap-2.5 rounded-xl bg-blue-500/[0.07] border border-blue-500/20 p-3">
                 <svg
@@ -415,7 +415,7 @@ const ApplyModal = ({ plan, onClose, onSuccess }) => {
               <button
                 onClick={submit}
                 disabled={form.pan.length < 10 || loading}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold transition-all shadow-lg shadow-emerald-500/20"
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-accent hover:bg-accent/80 disabled:opacity-40 disabled:cursor-not-allowed text-primary text-sm font-semibold transition-all shadow-md shadow-accent/30"
               >
                 {loading ? (
                   <>
@@ -444,25 +444,25 @@ const SuccessScreen = ({ plan, onReset }) => (
   <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
     <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
     <div
-      className="relative w-full max-w-sm rounded-2xl bg-[#0f1117] border border-white/[0.08] shadow-2xl overflow-hidden z-10"
+      className="relative w-full max-w-sm rounded-2xl bg-card border  border-[var(--border-clr)] shadow-md overflow-hidden z-10"
       style={{ animation: "modalPop .35s cubic-bezier(.32,.72,0,1)" }}
     >
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
+      <div className="h-px w-full bg-gradient-to-r from-bg-card via-accent/80 from-bg-card" />
       <div className="p-8 flex flex-col items-center text-center gap-5">
         <div className="relative flex items-center justify-center w-20 h-20">
-          <div className="absolute inset-0 rounded-full bg-emerald-500/10 animate-ping opacity-30" />
-          <div className="relative w-14 h-14 rounded-2xl bg-emerald-500/12 border border-emerald-500/25 flex items-center justify-center text-3xl">
+          <div className="absolute inset-0 rounded-full bg-accent/10 animate-ping opacity-30" />
+          <div className="relative w-14 h-14 rounded-2xl bg-accent/12 border border-emerald-500/25 flex items-center justify-center text-3xl">
             💳
           </div>
         </div>
         <div>
-          <h3 className="font-syne text-white text-xl font-bold">You're on the list!</h3>
-          <p className="text-white/40 text-sm mt-1.5 leading-relaxed">
-            Your <span className="text-white/65 font-medium">FinVault {plan?.name} Forex Card</span> application is
-            received. Expect a call within <span className="text-white/65 font-medium">24 hours</span>.
+          <h3 className="font-syne text-primary text-xl font-bold">You're on the list!</h3>
+          <p className="text-primary/40 text-sm mt-1.5 leading-relaxed">
+            Your <span className="text-primary/65 font-medium">FinVault {plan?.name} Forex Card</span> application is
+            received. Expect a call within <span className="text-primary/65 font-medium">24 hours</span>.
           </p>
         </div>
-        <div className="w-full bg-white/[0.03] rounded-xl border border-white/[0.05] divide-y divide-white/[0.04] text-left">
+        <div className="w-full bg-inputbg rounded-xl border  border-[var(--border-clr)] divide-y divide-white/[0.04] text-left">
           {[
             ["Card type", plan?.name],
             ["Issuance fee", plan?.price],
@@ -470,7 +470,7 @@ const SuccessScreen = ({ plan, onReset }) => (
           ].map(([k, v], i) =>
             k === "Status" ? (
               <div key={i} className="flex justify-between px-4 py-3">
-                <span className="text-white/35 text-sm">{k}</span>
+                <span className="text-primary/75 text-sm">{k}</span>
                 <span className="flex items-center gap-1.5 text-amber-400 text-sm font-medium">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
                   Under review
@@ -478,15 +478,15 @@ const SuccessScreen = ({ plan, onReset }) => (
               </div>
             ) : (
               <div key={i} className="flex justify-between px-4 py-3">
-                <span className="text-white/35 text-sm">{k}</span>
-                <span className="text-white/65 text-sm font-medium">{v}</span>
+                <span className="text-primary/75 text-sm">{k}</span>
+                <span className="text-primary/65 text-sm font-medium">{v}</span>
               </div>
             ),
           )}
         </div>
         <button
           onClick={onReset}
-          className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-sm transition-all shadow-lg shadow-emerald-500/20"
+          className="w-full py-3 rounded-xl bg-accent hover:bg-accent/80 text-white font-semibold text-sm transition-all shadow-md shadow-accent/30"
         >
           Back to Home
         </button>
@@ -503,7 +503,7 @@ export default function ForexCardPage() {
   const [showSuccess, setShowSuccess] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#080a0e] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#080a0e] text-primary overflow-x-hidden">
       <style>
         {FONTS}
         {`
@@ -526,23 +526,23 @@ export default function ForexCardPage() {
       </style>
 
       {/* ── NAV ── */}
-      <nav className="flex items-center justify-between px-6 md:px-12 py-5 border-b border-white/[0.05] backdrop-blur-md sticky top-0 z-30 bg-[#080a0e]/80">
+      <nav className="flex items-center justify-between px-6 md:px-12 py-5 border-b  border-[var(--border-clr)] backdrop-blur-md sticky top-0 z-30 bg-[#080a0e]/80">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-emerald-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-emerald-500/30">
+          <div className="w-7 h-7 rounded-lg bg-accent flex items-center justify-center text-primary font-bold text-sm shadow-md shadow-emerald-500/30">
             F
           </div>
-          <span className="syne text-white font-bold text-base">FinVault</span>
+          <span className="syne text-primary font-bold text-base">FinVault</span>
         </div>
-        <div className="hidden md:flex items-center gap-8 text-white/40 text-sm">
+        <div className="hidden md:flex items-center gap-8 text-primary/40 text-sm">
           {["Features", "How it works", "Pricing", "Reviews"].map((l) => (
-            <a key={l} href="#" className="hover:text-white/75 transition-colors">
+            <a key={l} href="#" className="hover:text-primary/75 transition-colors">
               {l}
             </a>
           ))}
         </div>
         <button
           onClick={() => setActivePlan(PLANS[1])}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white text-sm font-semibold transition-all shadow-lg shadow-emerald-500/20"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent hover:bg-accent/80 text-white text-sm font-semibold transition-all shadow-md shadow-accent/30"
         >
           Get Card
         </button>
@@ -552,16 +552,16 @@ export default function ForexCardPage() {
       <section className="relative px-6 md:px-12 pt-20 pb-24 overflow-hidden">
         {/* Background glow */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-[600px] h-[400px] bg-emerald-500/[0.07] rounded-full blur-[120px]" />
+          <div className="absolute top-0 left-1/4 w-[600px] h-[400px] bg-accent/[0.07] rounded-full blur-[120px]" />
           <div className="absolute bottom-0 right-1/4 w-[400px] h-[300px] bg-cyan-500/[0.05] rounded-full blur-[100px]" />
         </div>
 
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
           {/* Left — copy */}
           <div>
-            <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-4 py-1.5 mb-6 fu">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-emerald-400 text-xs font-semibold">Limited time — Zero issuance fee for Pro</span>
+            <div className="inline-flex items-center gap-2 bg-accent/10 border border-emerald-500/25 rounded-full px-4 py-1.5 mb-6 fu">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+              <span className="text-accent text-xs font-semibold">Limited time — Zero issuance fee for Pro</span>
             </div>
 
             <h1 className="syne text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight mb-5 fu fu1">
@@ -572,7 +572,7 @@ export default function ForexCardPage() {
               </span>
             </h1>
 
-            <p className="text-white/45 text-lg leading-relaxed mb-8 max-w-md fu fu2">
+            <p className="text-primary/45 text-lg leading-relaxed mb-8 max-w-md fu fu2">
               One card. 16 currencies. Zero forex markup. Travel smarter with the FinVault Forex Card — built for
               students, professionals, and explorers.
             </p>
@@ -580,25 +580,25 @@ export default function ForexCardPage() {
             <div className="flex flex-wrap gap-3 mb-8 fu fu3">
               <button
                 onClick={() => setActivePlan(PLANS[1])}
-                className="relative overflow-hidden flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold transition-all shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/45 group"
+                className="relative overflow-hidden flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-accent hover:bg-accent/80 text-white font-semibold transition-all shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/45 group"
               >
-                <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+                <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-bg-card via-white/15 from-bg-card" />
                 Apply now — it's free
                 <svg viewBox="0 0 14 14" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 7h8M8 4l3 3-3 3" />
                 </svg>
               </button>
-              <button className="flex items-center gap-2 px-6 py-3.5 rounded-2xl border border-white/[0.12] bg-white/[0.04] hover:bg-white/[0.07] text-white/65 hover:text-white text-sm font-medium transition-all">
+              <button className="flex items-center gap-2 px-6 py-3.5 rounded-2xl border  border-[var(--border-clr)] bg-inputbg hover:bg-inputbg text-primary/65 hover:text-primary text-sm font-medium transition-all">
                 Compare plans
               </button>
             </div>
 
-            <div className="flex flex-wrap items-center gap-5 text-white/35 text-xs fu fu4">
+            <div className="flex flex-wrap items-center gap-5 text-primary/75 text-xs fu fu4">
               {["No annual fee", "RBI regulated", "Delivered in 5 days"].map((t) => (
                 <span key={t} className="flex items-center gap-1.5">
                   <svg
                     viewBox="0 0 12 12"
-                    className="w-3 h-3 text-emerald-400"
+                    className="w-3 h-3 text-accent"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.5"
@@ -632,16 +632,16 @@ export default function ForexCardPage() {
       </section>
 
       {/* ══ LIVE RATES TICKER ════════════════════════════════ */}
-      <div className="border-y border-white/[0.05] bg-white/[0.02] py-3 overflow-hidden">
+      <div className="border-y  border-[var(--border-clr)] bg-inputbg py-3 overflow-hidden">
         <div className="flex gap-8 animate-none" style={{ animation: "none" }}>
           <div className="flex gap-8 shrink-0" style={{ animation: "ticker 20s linear infinite" }}>
             {[...CURRENCIES, ...CURRENCIES].map((c, i) => (
               <div key={i} className="flex items-center gap-2 shrink-0">
                 <span>{c.flag}</span>
-                <span className="text-white/55 text-sm font-medium mono">{c.code}</span>
-                <span className="text-emerald-400 text-sm mono">{c.rate}</span>
-                <span className="text-white/20 text-xs">₹</span>
-                <span className="text-white/10">·</span>
+                <span className="text-primary/55 text-sm font-medium mono">{c.code}</span>
+                <span className="text-accent text-sm mono">{c.rate}</span>
+                <span className="text-primary/20 text-xs">₹</span>
+                <span className="text-primary/10">·</span>
               </div>
             ))}
           </div>
@@ -653,7 +653,7 @@ export default function ForexCardPage() {
       <section className="px-6 md:px-12 py-20">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-3">Why FinVault</p>
+            <p className="text-accent text-xs font-semibold uppercase tracking-widest mb-3">Why FinVault</p>
             <h2 className="syne text-3xl md:text-4xl font-bold">
               Everything you need,
               <br className="hidden sm:block" /> nothing you don't
@@ -665,15 +665,15 @@ export default function ForexCardPage() {
               return (
                 <div
                   key={i}
-                  className={`rounded-2xl border ${c.border} bg-white/[0.02] p-5 hover:bg-white/[0.04] transition-all group`}
+                  className={`rounded-2xl border ${c.border} bg-inputbg p-5 hover:bg-inputbg transition-all group`}
                 >
                   <div
                     className={`w-10 h-10 rounded-xl border ${c.border} ${c.bg} ${c.text} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}
                   >
                     {f.icon}
                   </div>
-                  <p className="text-white font-semibold text-sm mb-1.5">{f.title}</p>
-                  <p className="text-white/38 text-sm leading-relaxed">{f.desc}</p>
+                  <p className="text-primary font-semibold text-sm mb-1.5">{f.title}</p>
+                  <p className="text-primary/38 text-sm leading-relaxed">{f.desc}</p>
                 </div>
               );
             })}
@@ -682,7 +682,7 @@ export default function ForexCardPage() {
       </section>
 
       {/* ══ HOW IT WORKS ═════════════════════════════════════ */}
-      <section className="px-6 md:px-12 py-20 border-t border-white/[0.05]">
+      <section className="px-6 md:px-12 py-20 border-t  border-[var(--border-clr)]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-14">
             <p className="text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-3">Simple process</p>
@@ -693,14 +693,14 @@ export default function ForexCardPage() {
             <div className="hidden md:block absolute top-9 left-[calc(16.6%+1rem)] right-[calc(16.6%+1rem)] h-px bg-gradient-to-r from-emerald-500/30 via-cyan-500/30 to-violet-500/30" />
             {STEPS.map((s, i) => (
               <div key={i} className="flex flex-col items-center text-center gap-4 relative">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] border border-white/[0.10] flex items-center justify-center relative z-10">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.03] border  border-[var(--border-clr)] flex items-center justify-center relative z-10">
                   <span className="syne text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-emerald-400 to-cyan-400">
                     {s.n}
                   </span>
                 </div>
                 <div>
-                  <p className="text-white font-semibold text-sm mb-1">{s.title}</p>
-                  <p className="text-white/38 text-sm leading-relaxed">{s.desc}</p>
+                  <p className="text-primary font-semibold text-sm mb-1">{s.title}</p>
+                  <p className="text-primary/38 text-sm leading-relaxed">{s.desc}</p>
                 </div>
               </div>
             ))}
@@ -709,12 +709,12 @@ export default function ForexCardPage() {
       </section>
 
       {/* ══ PRICING ══════════════════════════════════════════ */}
-      <section className="px-6 md:px-12 py-20 border-t border-white/[0.05]">
+      <section className="px-6 md:px-12 py-20 border-t  border-[var(--border-clr)]">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-violet-400 text-xs font-semibold uppercase tracking-widest mb-3">Pricing</p>
             <h2 className="syne text-3xl md:text-4xl font-bold">Pick your card</h2>
-            <p className="text-white/38 text-base mt-3">One-time issuance fee. No annual charges. No hidden costs.</p>
+            <p className="text-primary/38 text-base mt-3">One-time issuance fee. No annual charges. No hidden costs.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {PLANS.map((plan) => {
@@ -726,21 +726,21 @@ export default function ForexCardPage() {
                   className={`relative rounded-2xl border overflow-hidden transition-all duration-300 hover:-translate-y-1
                     ${
                       isPro
-                        ? "border-emerald-500/35 bg-emerald-500/[0.05] shadow-xl shadow-emerald-500/10"
+                        ? "border-emerald-500/35 bg-accent/[0.05] shadow-xl shadow-emerald-500/10"
                         : isElite
                           ? "border-amber-500/30  bg-amber-500/[0.04]  shadow-xl shadow-amber-500/8"
-                          : "border-white/[0.08]  bg-white/[0.02]"
+                          : " border-[var(--border-clr)]  bg-inputbg"
                     }`}
                 >
                   {/* Top accent */}
                   <div
-                    className={`h-px w-full bg-gradient-to-r from-transparent ${isPro ? "via-emerald-500/60" : isElite ? "via-amber-500/50" : "via-white/20"} to-transparent`}
+                    className={`h-px w-full bg-gradient-to-r from-bg-card ${isPro ? "via-emerald-500/60" : isElite ? "via-amber-500/50" : "via-white/20"} from-bg-card`}
                   />
 
                   {plan.tag && (
                     <div
                       className={`absolute top-4 right-4 text-[10px] font-bold px-2.5 py-1 rounded-full
-                      ${isPro ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/25" : "bg-amber-500/15 text-amber-400 border border-amber-500/25"}`}
+                      ${isPro ? "bg-accent/15 text-accent border border-emerald-500/25" : "bg-amber-500/15 text-amber-400 border border-amber-500/25"}`}
                     >
                       {plan.tag}
                     </div>
@@ -753,13 +753,13 @@ export default function ForexCardPage() {
                     </div>
 
                     <p
-                      className={`syne text-lg font-bold mt-6 ${isPro ? "text-emerald-400" : isElite ? "text-amber-400" : "text-white/70"}`}
+                      className={`syne text-lg font-bold mt-6 ${isPro ? "text-accent" : isElite ? "text-amber-400" : "text-primary/70"}`}
                     >
                       {plan.name}
                     </p>
                     <div className="flex items-baseline gap-1.5 mt-1 mb-4">
-                      <span className="text-white text-2xl font-bold mono">{plan.price}</span>
-                      <span className="text-white/30 text-xs">{plan.period}</span>
+                      <span className="text-primary text-2xl font-bold mono">{plan.price}</span>
+                      <span className="text-primary/50 text-xs">{plan.period}</span>
                     </div>
 
                     <div className="flex flex-col gap-2 mb-6">
@@ -767,14 +767,14 @@ export default function ForexCardPage() {
                         <div key={i} className="flex items-center gap-2">
                           <svg
                             viewBox="0 0 12 12"
-                            className={`w-3 h-3 shrink-0 ${isPro ? "text-emerald-400" : isElite ? "text-amber-400" : "text-white/30"}`}
+                            className={`w-3 h-3 shrink-0 ${isPro ? "text-accent" : isElite ? "text-amber-400" : "text-primary/50"}`}
                             fill="none"
                             stroke="currentColor"
                             strokeWidth="1.6"
                           >
                             <path d="M2 6l2.5 2.5 5.5-5" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
-                          <span className="text-white/55 text-xs">{f}</span>
+                          <span className="text-primary/55 text-xs">{f}</span>
                         </div>
                       ))}
                     </div>
@@ -784,10 +784,10 @@ export default function ForexCardPage() {
                       className={`w-full py-3 rounded-xl text-sm font-semibold transition-all
                         ${
                           isPro
-                            ? "bg-emerald-500 hover:bg-emerald-400 text-white shadow-lg shadow-emerald-500/20"
+                            ? "bg-accent hover:bg-accent/80 text-white shadow-md shadow-accent/30"
                             : isElite
                               ? "bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 border border-amber-500/30"
-                              : "bg-white/[0.07] hover:bg-white/[0.11] text-white/60 border border-white/[0.09]"
+                              : "bg-inputbg hover:bg-inputbg text-primary/60 border  border-[var(--border-clr)]"
                         }`}
                     >
                       Apply for {plan.name}
@@ -801,7 +801,7 @@ export default function ForexCardPage() {
       </section>
 
       {/* ══ TESTIMONIALS ═════════════════════════════════════ */}
-      <section className="px-6 md:px-12 py-20 border-t border-white/[0.05]">
+      <section className="px-6 md:px-12 py-20 border-t  border-[var(--border-clr)]">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-amber-400 text-xs font-semibold uppercase tracking-widest mb-3">Reviews</p>
@@ -811,7 +811,7 @@ export default function ForexCardPage() {
             {TESTIMONIALS.map((t, i) => (
               <div
                 key={i}
-                className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5 hover:bg-white/[0.04] transition-all"
+                className="rounded-2xl border  border-[var(--border-clr)] bg-inputbg p-5 hover:bg-inputbg transition-all"
               >
                 <div className="flex gap-0.5 mb-4">
                   {[...Array(t.rating)].map((_, j) => (
@@ -820,10 +820,10 @@ export default function ForexCardPage() {
                     </svg>
                   ))}
                 </div>
-                <p className="text-white/55 text-sm leading-relaxed mb-4">"{t.text}"</p>
+                <p className="text-primary/55 text-sm leading-relaxed mb-4">"{t.text}"</p>
                 <div>
-                  <p className="text-white/70 text-sm font-semibold">{t.name}</p>
-                  <p className="text-white/28 text-xs mt-0.5">{t.role}</p>
+                  <p className="text-primary/70 text-sm font-semibold">{t.name}</p>
+                  <p className="text-primary/28 text-xs mt-0.5">{t.role}</p>
                 </div>
               </div>
             ))}
@@ -832,10 +832,10 @@ export default function ForexCardPage() {
       </section>
 
       {/* ══ BOTTOM CTA ═══════════════════════════════════════ */}
-      <section className="px-6 md:px-12 py-24 border-t border-white/[0.05] relative overflow-hidden">
+      <section className="px-6 md:px-12 py-24 border-t  border-[var(--border-clr)] relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/[0.06] to-transparent" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-emerald-500/[0.08] rounded-full blur-[100px]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/[0.06] from-bg-card" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-accent/[0.08] rounded-full blur-[100px]" />
         </div>
         <div className="max-w-2xl mx-auto text-center relative z-10">
           <h2 className="syne text-4xl md:text-5xl font-bold mb-4">
@@ -843,35 +843,37 @@ export default function ForexCardPage() {
             <br />
             without limits?
           </h2>
-          <p className="text-white/40 text-lg mb-8">Join 2 lakh+ cardholders who spend smarter abroad.</p>
+          <p className="text-primary/40 text-lg mb-8">Join 2 lakh+ cardholders who spend smarter abroad.</p>
           <button
             onClick={() => setActivePlan(PLANS[1])}
-            className="relative overflow-hidden inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-base transition-all shadow-2xl shadow-emerald-500/30 hover:shadow-emerald-500/50 group"
+            className="relative overflow-hidden inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-accent hover:bg-accent/80 text-white font-semibold text-base transition-all shadow-md shadow-emerald-500/30 hover:shadow-emerald-500/50 group"
           >
-            <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+            <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-bg-card via-white/15 from-bg-card" />
             Get your FinVault card
             <svg viewBox="0 0 16 16" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 8h10M9 4l4 4-4 4" />
             </svg>
           </button>
-          <p className="text-white/20 text-xs mt-4">2-minute application · No branch visit · Delivered to your door</p>
+          <p className="text-primary/20 text-xs mt-4">
+            2-minute application · No branch visit · Delivered to your door
+          </p>
         </div>
       </section>
 
       {/* ══ FOOTER ═══════════════════════════════════════════ */}
-      <footer className="border-t border-white/[0.05] px-6 md:px-12 py-8">
+      <footer className="border-t  border-[var(--border-clr)] px-6 md:px-12 py-8">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-emerald-500 flex items-center justify-center text-white font-bold text-xs">
+            <div className="w-6 h-6 rounded-md bg-accent flex items-center justify-center text-primary font-bold text-xs">
               F
             </div>
-            <span className="syne text-white/50 font-semibold text-sm">FinVault</span>
+            <span className="syne text-primary/75 font-semibold text-sm">FinVault</span>
           </div>
-          <p className="text-white/20 text-xs text-center">
+          <p className="text-primary/20 text-xs text-center">
             Regulated by RBI. Forex cards issued in partnership with licensed banking partners. © 2026 FinVault
             Technologies.
           </p>
-          <div className="flex items-center gap-1.5 text-white/25 text-xs">
+          <div className="flex items-center gap-1.5 text-primary/70 text-xs">
             <svg viewBox="0 0 12 12" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="1.4">
               <rect x="2" y="5" width="8" height="6" rx="1" />
               <path strokeLinecap="round" d="M4 5V3.5a2 2 0 014 0V5" />

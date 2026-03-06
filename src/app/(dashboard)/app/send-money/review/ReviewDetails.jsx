@@ -105,8 +105,8 @@ const TRANSFER_DATA = {
 const docStatus = {
   verified: {
     label: "Verified",
-    bg: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-    dot: "bg-emerald-400",
+    bg: "bg-accent/10 text-accent  border-[var(--border-clr)]",
+    dot: "bg-accent",
   },
   pending: { label: "Under review", bg: "bg-amber-500/10   text-amber-400   border-amber-500/20", dot: "bg-amber-400" },
   rejected: { label: "Rejected", bg: "bg-red-500/10     text-red-400     border-red-500/20", dot: "bg-red-400" },
@@ -116,7 +116,7 @@ const getFileIcon = (name = "") => {
   const ext = name.split(".").pop()?.toLowerCase();
   if (ext === "pdf") return { label: "PDF", cls: "bg-red-500/12 text-red-400" };
   if (["jpg", "jpeg", "png"].includes(ext)) return { label: "IMG", cls: "bg-blue-500/12 text-blue-400" };
-  return { label: "DOC", cls: "bg-white/[0.08] text-white/40" };
+  return { label: "DOC", cls: "bg-inputbg text-primary/40" };
 };
 
 // ─────────────────────────────────────────────────────────────
@@ -125,7 +125,7 @@ const getFileIcon = (name = "") => {
 
 const SectionCard = ({ title, subtitle, icon, accent = "emerald", action, children, delay = 0 }) => {
   const accentLine = {
-    emerald: "via-emerald-500/45",
+    emerald: "via-[var(--accent-glow)]",
     blue: "via-blue-500/45",
     violet: "via-violet-500/45",
     amber: "via-amber-500/45",
@@ -134,7 +134,7 @@ const SectionCard = ({ title, subtitle, icon, accent = "emerald", action, childr
 
   return (
     <div
-      className="rounded-2xl bg-[#0f1117] border border-white/[0.07] overflow-hidden shadow-xl"
+      className="rounded-2xl bg-card border  border-[var(--border-clr)] overflow-hidden shadow-xl"
       style={{ animation: `fadeUp 0.4s ease ${delay}s both` }}
     >
       <div className="px-6 pt-5 pb-2 flex items-start justify-between gap-3">
@@ -143,7 +143,7 @@ const SectionCard = ({ title, subtitle, icon, accent = "emerald", action, childr
             <div
               className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm shrink-0 ${
                 {
-                  emerald: "bg-emerald-500/10 text-emerald-400",
+                  emerald: "bg-accent/10 text-accent",
                   blue: "bg-blue-500/10 text-blue-400",
                   violet: "bg-violet-500/10 text-violet-400",
                   amber: "bg-amber-500/10 text-amber-400",
@@ -155,8 +155,8 @@ const SectionCard = ({ title, subtitle, icon, accent = "emerald", action, childr
             </div>
           )}
           <div>
-            <h2 className="text-white font-semibold text-[15px] leading-tight">{title}</h2>
-            {subtitle && <p className="text-white/30 text-xs mt-0.5">{subtitle}</p>}
+            <h2 className="text-primary font-semibold text-[15px] leading-tight">{title}</h2>
+            {subtitle && <p className="text-primary/50 text-xs mt-0.5">{subtitle}</p>}
           </div>
         </div>
         {action}
@@ -168,11 +168,11 @@ const SectionCard = ({ title, subtitle, icon, accent = "emerald", action, childr
 
 const Row = ({ label, value, mono = false, valueClass = "", highlight = false }) => (
   <div
-    className={`flex items-start justify-between py-2.5 border-b border-white/[0.04] last:border-0 gap-4 ${highlight ? "bg-emerald-500/[0.04] -mx-4 px-4 rounded-lg" : ""}`}
+    className={`flex items-start justify-between py-2.5 border-b  border-[var(--border-clr)] last:border-0 gap-4 ${highlight ? "bg-accent/[0.04] -mx-4 px-4 rounded-lg" : ""}`}
   >
-    <span className="text-white/35 text-sm shrink-0">{label}</span>
+    <span className="text-primary/50 text-sm shrink-0">{label}</span>
     <span
-      className={`text-sm font-medium text-right leading-snug ${mono ? "font-mono" : ""} ${valueClass || "text-white/72"}`}
+      className={`text-sm font-medium text-right leading-snug ${mono ? "font-mono" : ""} ${valueClass || "text-primary/72"}`}
     >
       {value}
     </span>
@@ -182,7 +182,7 @@ const Row = ({ label, value, mono = false, valueClass = "", highlight = false })
 const EditBtn = ({ onClick }) => (
   <button
     onClick={onClick}
-    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.05] border border-white/[0.08] text-white/40 hover:text-white/70 hover:bg-white/[0.08] text-xs font-medium transition-all shrink-0"
+    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-inputbg border  border-[var(--border-clr)] text-primary/40 hover:text-primary/70 hover:bg-inputbg text-xs font-medium transition-all shrink-0"
   >
     <svg viewBox="0 0 14 14" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="1.6">
       <path strokeLinecap="round" strokeLinejoin="round" d="M9.5 2.5l2 2L4 12H2v-2L9.5 2.5z" />
@@ -193,9 +193,9 @@ const EditBtn = ({ onClick }) => (
 
 const Divider = ({ label }) => (
   <div className="flex items-center gap-3 my-3">
-    <div className="flex-1 h-px bg-white/[0.05]" />
-    {label && <span className="text-white/18 text-[10px] uppercase tracking-widest font-semibold">{label}</span>}
-    <div className="flex-1 h-px bg-white/[0.05]" />
+    <div className="flex-1 h-px bg-inputbg" />
+    {label && <span className="text-primary/18 text-[10px] uppercase tracking-widest font-semibold">{label}</span>}
+    <div className="flex-1 h-px bg-inputbg" />
   </div>
 );
 
@@ -217,7 +217,7 @@ const Timeline = () => {
           <div className="flex flex-col items-center">
             <div
               className={`w-7 h-7 rounded-full border-2 flex items-center justify-center shrink-0 transition-all
-              ${s.done ? "bg-emerald-500 border-emerald-500" : s.active ? "bg-emerald-500/10 border-emerald-500" : "bg-white/[0.04] border-white/[0.12]"}`}
+              ${s.done ? "bg-accent border-emerald-500" : s.active ? "bg-accent/10 border-emerald-500" : "bg-inputbg  border-[var(--border-clr)]"}`}
             >
               {s.done ? (
                 <svg viewBox="0 0 12 12" className="w-3 h-3" fill="none">
@@ -230,23 +230,23 @@ const Timeline = () => {
                   />
                 </svg>
               ) : s.active ? (
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               ) : (
                 <span className="w-1.5 h-1.5 rounded-full bg-white/15" />
               )}
             </div>
             {i < steps.length - 1 && (
-              <div className={`w-px flex-1 min-h-[24px] my-0.5 ${s.done ? "bg-emerald-500/40" : "bg-white/[0.07]"}`} />
+              <div className={`w-px flex-1 min-h-[24px] my-0.5 ${s.done ? "bg-accent/40" : "bg-inputbg"}`} />
             )}
           </div>
           <div className="pb-5">
             <p
-              className={`text-sm font-medium ${s.done ? "text-white" : s.active ? "text-emerald-400" : "text-white/30"}`}
+              className={`text-sm font-medium ${s.done ? "text-primary" : s.active ? "text-accent" : "text-primary/50"}`}
             >
               {s.label}
             </p>
             <p
-              className={`text-xs mt-0.5 ${s.done ? "text-white/35" : s.active ? "text-emerald-400/60" : "text-white/20"}`}
+              className={`text-xs mt-0.5 ${s.done ? "text-primary/50" : s.active ? "text-accent/60" : "text-primary/20"}`}
             >
               {s.sub}
             </p>
@@ -280,21 +280,21 @@ export default function ReviewPage({ _id = null }) {
   // ── Success ───────────────────────────────────────────────
   if (confirmed) {
     return (
-      <div className="min-h-screen bg-[#0b0d12] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-base flex items-center justify-center p-4">
         <div
-          className="w-full max-w-md rounded-2xl bg-[#0f1117] border border-white/[0.07] overflow-hidden shadow-2xl"
+          className="w-full max-w-md rounded-2xl bg-card border  border-[var(--border-clr)] overflow-hidden shadow-md"
           style={{ animation: "fadeUp 0.35s ease" }}
         >
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
+          <div className="h-px w-full bg-gradient-to-r from-bg-card via-accent/80 from-bg-card" />
           <div className="p-8 flex flex-col items-center text-center gap-5">
             {/* Ripple icon */}
             <div className="relative flex items-center justify-center w-20 h-20">
-              <div className="absolute inset-0 rounded-full bg-emerald-500/10 animate-ping opacity-40" />
-              <div className="absolute inset-2 rounded-full bg-emerald-500/10" />
-              <div className="relative w-14 h-14 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center">
+              <div className="absolute inset-0 rounded-full bg-accent/10 animate-ping opacity-40" />
+              <div className="absolute inset-2 rounded-full bg-accent/10" />
+              <div className="relative w-14 h-14 rounded-full bg-accent/15 border border-emerald-500/30 flex items-center justify-center">
                 <svg
                   viewBox="0 0 24 24"
-                  className="w-7 h-7 text-emerald-400"
+                  className="w-7 h-7 text-accent"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.8"
@@ -309,14 +309,14 @@ export default function ReviewPage({ _id = null }) {
             </div>
 
             <div>
-              <h2 className="text-white text-xl font-semibold">Transfer Confirmed!</h2>
-              <p className="text-white/40 text-sm mt-1.5 leading-relaxed">
-                Your payment of <span className="text-white/65 font-medium">USD 1,201.00</span> to{" "}
-                <span className="text-white/65 font-medium">University of Melbourne</span> is being processed.
+              <h2 className="text-primary text-xl font-semibold">Transfer Confirmed!</h2>
+              <p className="text-primary/40 text-sm mt-1.5 leading-relaxed">
+                Your payment of <span className="text-primary/65 font-medium">USD 1,201.00</span> to{" "}
+                <span className="text-primary/65 font-medium">University of Melbourne</span> is being processed.
               </p>
             </div>
 
-            <div className="w-full bg-white/[0.03] rounded-xl border border-white/[0.05] divide-y divide-white/[0.04] text-left">
+            <div className="w-full bg-inputbg rounded-xl border  border-[var(--border-clr)] divide-y divide-white/[0.04] text-left">
               {[
                 ["Reference", transfer.ref, true],
                 ["Amount", `USD ${transfer.amount}`, true],
@@ -326,7 +326,7 @@ export default function ReviewPage({ _id = null }) {
               ].map(([k, v, mono], i) =>
                 k === "Status" ? (
                   <div key={i} className="flex justify-between px-4 py-3">
-                    <span className="text-white/35 text-sm">{k}</span>
+                    <span className="text-primary/50 text-sm">{k}</span>
                     <span className="flex items-center gap-1.5 text-amber-400 text-sm font-medium">
                       <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
                       Processing
@@ -334,8 +334,8 @@ export default function ReviewPage({ _id = null }) {
                   </div>
                 ) : (
                   <div key={i} className="flex justify-between px-4 py-3">
-                    <span className="text-white/35 text-sm">{k}</span>
-                    <span className={`text-white/70 text-sm font-medium ${mono ? "font-mono" : ""}`}>{v}</span>
+                    <span className="text-primary/50 text-sm">{k}</span>
+                    <span className={`text-primary/70 text-sm font-medium ${mono ? "font-mono" : ""}`}>{v}</span>
                   </div>
                 ),
               )}
@@ -347,7 +347,7 @@ export default function ReviewPage({ _id = null }) {
                   clearForm();
                   router.replace("/app/send-money");
                 }}
-                className="flex-1 py-2.5 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white/55 hover:text-white text-sm font-medium transition-all"
+                className="flex-1 py-2.5 rounded-xl bg-inputbg border  border-[var(--border-clr)] text-primary/55 hover:text-primary text-sm font-medium transition-all"
               >
                 Create New Transfer
               </button>
@@ -356,7 +356,7 @@ export default function ReviewPage({ _id = null }) {
                   clearForm();
                   router.replace("/app/transactions");
                 }}
-                className="flex-1 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white text-sm font-semibold transition-all shadow-lg shadow-emerald-500/20"
+                className="flex-1 py-2.5 rounded-xl bg-accent hover:bg-accent/80 text-white text-sm font-semibold transition-all shadow-md shadow-accent/30"
               >
                 View Transactions
               </button>
@@ -369,26 +369,26 @@ export default function ReviewPage({ _id = null }) {
 
   // ── Review page ───────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#0b0d12] p-4 md:p-8">
+    <div className="min-h-screen bg-base p-4 md:p-8">
       <div className="max-w-5xl mx-auto">
         {/* ── Page header ── */}
         <div className="mb-7" style={{ animation: "fadeUp 0.35s ease" }}>
           <div className="flex items-start justify-between gap-4">
             <div>
               <div className="flex items-center gap-3 mb-1">
-                <h1 className="text-white text-xl font-semibold tracking-tight">Review Transfer</h1>
+                <h1 className="text-primary text-xl font-semibold tracking-tight">Review Transfer</h1>
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
                   Pending
                 </span>
               </div>
-              <p className="text-white/30 text-sm">
+              <p className="text-primary/50 text-sm">
                 Check every detail carefully before confirming — transfers cannot be reversed.
               </p>
             </div>
             <div className="text-right shrink-0 hidden sm:block">
-              <p className="text-white/25 text-xs">Reference</p>
-              <p className="text-white/55 text-xs font-mono mt-0.5">{transfer.ref}</p>
+              <p className="text-primary/70 text-xs">Reference</p>
+              <p className="text-primary/55 text-xs font-mono mt-0.5">{transfer.ref}</p>
             </div>
           </div>
         </div>
@@ -415,17 +415,17 @@ export default function ReviewPage({ _id = null }) {
               action={<EditBtn />}
             >
               {/* Hero amount */}
-              <div className="flex items-end justify-between mb-5 py-3 px-4 bg-emerald-500/[0.06] rounded-xl border border-emerald-500/15">
+              <div className="flex items-end justify-between mb-5 py-3 px-4 bg-accent/[0.06] rounded-xl border border-emerald-500/15">
                 <div>
-                  <p className="text-white/35 text-xs mb-1">You send</p>
-                  <p className="text-white text-3xl font-semibold mono tracking-tight">
-                    <span className="text-white/40 text-lg mr-1">USD</span>
+                  <p className="text-primary/50 text-xs mb-1">You send</p>
+                  <p className="text-primary text-3xl font-semibold mono tracking-tight">
+                    <span className="text-primary/40 text-lg mr-1">USD</span>
                     {transfer.amount}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-white/35 text-xs mb-1">Recipient gets (indicative)</p>
-                  <p className="text-emerald-400 text-xl font-semibold mono">₹ {transfer.amountInr}</p>
+                  <p className="text-primary/50 text-xs mb-1">Recipient gets (indicative)</p>
+                  <p className="text-accent text-xl font-semibold mono">₹ {transfer.amountInr}</p>
                 </div>
               </div>
 
@@ -440,16 +440,16 @@ export default function ReviewPage({ _id = null }) {
               <Row label="Platform Fees" value={transfer.platformFees} mono />
               <Row label="FCCT" value={transfer.fcct} mono />
 
-              <div className="flex items-center justify-between mt-3 py-3.5 px-4 bg-white/[0.03] rounded-xl border border-white/[0.07]">
+              <div className="flex items-center justify-between mt-3 py-3.5 px-4 bg-inputbg rounded-xl border  border-[var(--border-clr)]">
                 <div className="flex items-center gap-2">
-                  <span className="text-white font-semibold text-sm">Total Payable</span>
-                  <span className="text-[10px] text-white/30 bg-white/[0.06] border border-white/[0.08] rounded-full px-2 py-0.5">
+                  <span className="text-primary font-semibold text-sm">Total Payable</span>
+                  <span className="text-[10px] text-primary/50 bg-inputbg border  border-[var(--border-clr)] rounded-full px-2 py-0.5">
                     incl. all charges
                   </span>
                 </div>
-                <span className="text-emerald-400 font-bold text-lg mono">{transfer.totalPayable}</span>
+                <span className="text-accent font-bold text-lg mono">{transfer.totalPayable}</span>
               </div>
-              <p className="text-white/22 text-[11px] mt-2 flex items-center gap-1.5">
+              <p className="text-primary/22 text-[11px] mt-2 flex items-center gap-1.5">
                 <svg
                   viewBox="0 0 12 12"
                   className="w-3 h-3 shrink-0"
@@ -484,14 +484,14 @@ export default function ReviewPage({ _id = null }) {
               {/* Recipient identity card */}
               <div className="flex items-center gap-4 p-4 bg-blue-500/[0.05] rounded-xl border border-blue-500/15 mb-5">
                 <div className="flex-1 min-w-0">
-                  <p className="text-white font-semibold text-[15px] truncate">{recipient.name}</p>
+                  <p className="text-primary font-semibold text-[15px] truncate">{recipient.name}</p>
                   <div className="flex items-center gap-2 mt-1 flex-wrap">
-                    <span className="text-xs text-white/35">{recipient.nickname}</span>
-                    <span className="text-white/15">·</span>
+                    <span className="text-xs text-primary/50">{recipient.nickname}</span>
+                    <span className="text-primary/15">·</span>
                     <span className="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded-full font-medium">
                       {recipient.category}
                     </span>
-                    <span className="text-xs text-white/30">
+                    <span className="text-xs text-primary/50">
                       {recipient.flag} {recipient.country}
                     </span>
                   </div>
@@ -508,7 +508,7 @@ export default function ReviewPage({ _id = null }) {
               <Divider label="Bank Details" />
               <Row label="Bank" value={recipient.bankName} />
               <Row label="Transfer method" value={recipient.method} />
-              <Row label="SWIFT / BIC" value={recipient.swift} mono valueClass="text-white/70" />
+              <Row label="SWIFT / BIC" value={recipient.swift} mono valueClass="text-primary/70" />
               <Row label="IBAN" value={recipient.iban} mono />
               <Row label="Account No." value={recipient.accountNumber} mono />
             </SectionCard>
@@ -537,7 +537,7 @@ export default function ReviewPage({ _id = null }) {
                   return (
                     <div
                       key={doc.id}
-                      className="flex items-center gap-3 p-3.5 rounded-xl border border-white/[0.05] bg-white/[0.02] hover:bg-white/[0.04] transition-all group"
+                      className="flex items-center gap-3 p-3.5 rounded-xl border  border-[var(--border-clr)] bg-inputbg hover:bg-inputbg transition-all group"
                       style={{ animation: `fadeUp 0.3s ease ${0.15 + i * 0.05}s both` }}
                     >
                       {/* File type badge */}
@@ -549,18 +549,18 @@ export default function ReviewPage({ _id = null }) {
                       {/* Info */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <p className="text-white/75 text-sm font-medium">{doc.label}</p>
+                          <p className="text-primary/75 text-sm font-medium">{doc.label}</p>
                           {doc.required ? (
                             <span className="text-[10px] text-red-400/70 bg-red-500/8 border border-red-500/15 px-1.5 py-0.5 rounded-full">
                               Required
                             </span>
                           ) : (
-                            <span className="text-[10px] text-white/25 bg-white/[0.05] border border-white/[0.07] px-1.5 py-0.5 rounded-full">
+                            <span className="text-[10px] text-primary/70 bg-inputbg border  border-[var(--border-clr)] px-1.5 py-0.5 rounded-full">
                               Optional
                             </span>
                           )}
                         </div>
-                        <p className="text-white/28 text-xs mt-0.5 mono truncate">
+                        <p className="text-primary/28 text-xs mt-0.5 mono truncate">
                           {doc.file} · {doc.size}
                         </p>
                       </div>
@@ -589,7 +589,7 @@ export default function ReviewPage({ _id = null }) {
               <Row label="Full name" value={sender.name} />
               <Row label="Email" value={sender.email} />
               <Row label="Phone" value={sender.phone} mono />
-              <Row label="PAN" value={sender.pan} mono valueClass="text-white/60" />
+              <Row label="PAN" value={sender.pan} mono valueClass="text-primary/60" />
               <Row label="Debit account" value={`${sender.bank} · ${sender.account}`} mono />
             </SectionCard>
           </div>
@@ -632,15 +632,15 @@ export default function ReviewPage({ _id = null }) {
               }
             >
               {[
-                { label: "Sending", value: `USD ${transfer.amount}`, valueClass: "text-white" },
-                { label: "Forex rate", value: transfer.forexRate, valueClass: "text-white/65", mono: true },
+                { label: "Sending", value: `USD ${transfer.amount}`, valueClass: "text-primary" },
+                { label: "Forex rate", value: transfer.forexRate, valueClass: "text-primary/65", mono: true },
                 {
                   label: "Total payable",
                   value: transfer.totalPayable,
-                  valueClass: "text-emerald-400 font-bold",
+                  valueClass: "text-accent font-bold",
                   mono: true,
                 },
-                { label: "To", value: recipient.name, valueClass: "text-white/75" },
+                { label: "To", value: recipient.name, valueClass: "text-primary/75" },
                 { label: "Country", value: `${recipient.flag} ${recipient.country}` },
                 { label: "Via", value: recipient.method, mono: true },
                 {
@@ -654,10 +654,10 @@ export default function ReviewPage({ _id = null }) {
 
             {/* Confirm block */}
             <div
-              className="rounded-2xl bg-[#0f1117] border border-white/[0.07] overflow-hidden shadow-xl"
+              className="rounded-2xl bg-card border  border-[var(--border-clr)] overflow-hidden shadow-xl"
               style={{ animation: "fadeUp 0.4s ease 0.18s both" }}
             >
-              <div className="h-px w-full bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
+              <div className="h-px w-full bg-gradient-to-r from-bg-card via-accent/80 from-bg-card" />
               <div className="px-6 py-5 flex flex-col gap-4">
                 {/* Warning note */}
                 <div className="flex gap-2.5 bg-amber-500/[0.07] border border-amber-500/20 rounded-xl p-3.5">
@@ -688,7 +688,7 @@ export default function ReviewPage({ _id = null }) {
                 >
                   <div
                     className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 mt-0.5 transition-all
-                    ${agreed ? "bg-emerald-500 border-emerald-500" : "border-white/20 group-hover:border-white/40"}`}
+                    ${agreed ? "bg-accent border-emerald-500" : "border-white/20 group-hover:border-white/40"}`}
                     style={{ minWidth: "16px" }}
                   >
                     {agreed && (
@@ -704,7 +704,7 @@ export default function ReviewPage({ _id = null }) {
                     )}
                   </div>
                   <p
-                    className={`text-xs leading-relaxed transition-colors ${agreed ? "text-white/55" : "text-white/30 group-hover:text-white/45"}`}
+                    className={`text-xs leading-relaxed transition-colors ${agreed ? "text-primary/55" : "text-primary/50 group-hover:text-primary/45"}`}
                   >
                     I confirm all recipient and transfer details are accurate, and I authorise FinVault to process this
                     remittance under LRS regulations.
@@ -718,8 +718,8 @@ export default function ReviewPage({ _id = null }) {
                   className={[
                     "w-full flex items-center justify-center gap-2.5 py-3.5 rounded-xl text-sm font-semibold transition-all duration-200",
                     agreed && !loading
-                      ? "bg-emerald-500 hover:bg-emerald-400 text-white shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40"
-                      : "bg-white/[0.06] border border-white/[0.08] text-white/30 cursor-not-allowed",
+                      ? "bg-accent hover:bg-accent/80 text-white shadow-md shadow-accent/20 hover:shadow-accent/20"
+                      : "bg-inputbg border  border-[var(--border-clr)] text-primary/50 cursor-not-allowed",
                   ].join(" ")}
                 >
                   {loading ? (
@@ -746,7 +746,7 @@ export default function ReviewPage({ _id = null }) {
                   )}
                 </button>
 
-                <p className="text-center text-white/18 text-[11px] flex items-center justify-center gap-1.5">
+                <p className="text-center text-primary/18 text-[11px] flex items-center justify-center gap-1.5">
                   <svg viewBox="0 0 12 12" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="1.4">
                     <rect x="2" y="5" width="8" height="6" rx="1" />
                     <path strokeLinecap="round" d="M4 5V3.5a2 2 0 014 0V5" />

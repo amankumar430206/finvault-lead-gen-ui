@@ -4,30 +4,30 @@ const PageLoader = ({ tableColumns = 5, tableRows = 7, listRows = 8, withToolbar
     {withToolbar && (
       <div className="flex items-center justify-between">
         <div>
-          <div className="h-8 bg-white/[0.08] rounded-lg w-48 mb-2" />
-          <div className="h-4 bg-white/[0.04] rounded w-32" />
+          <div className="h-8 bg-inputbg rounded-lg w-48 mb-2" />
+          <div className="h-4 bg-inputbg rounded w-32" />
         </div>
         <div className="flex items-center gap-2">
-          <div className="h-10 bg-white/[0.06] border border-white/[0.1] rounded-lg px-4 w-24" />
-          <div className="h-10 bg-white/[0.06] border border-white/[0.1] rounded-lg px-4 w-28 flex items-center justify-center">
-            <div className="w-5 h-5 bg-white/[0.15] rounded-full mx-auto" />
+          <div className="h-10 bg-inputbg border  border-[var(--border-clr)] rounded-lg px-4 w-24" />
+          <div className="h-10 bg-inputbg border  border-[var(--border-clr)] rounded-lg px-4 w-28 flex items-center justify-center">
+            <div className="w-5 h-5 bg-inputbg rounded-full mx-auto" />
           </div>
         </div>
       </div>
     )}
 
     {/* Filters/Search Bar */}
-    <div className="bg-white/[0.025] border border-white/[0.05] rounded-xl p-4">
+    <div className="bg-inputbg border  border-[var(--border-clr)] rounded-xl p-4">
       <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
         <div className="flex-1 relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <div className="w-4 h-4 bg-white/[0.15] rounded-full" />
+            <div className="w-4 h-4 bg-inputbg rounded-full" />
           </div>
-          <div className="h-11 bg-white/[0.06] border border-white/[0.1] rounded-lg pl-10 w-full" />
+          <div className="h-11 bg-inputbg border  border-[var(--border-clr)] rounded-lg pl-10 w-full" />
         </div>
         <div className="flex gap-2 flex-1 sm:flex-none">
-          <div className="h-11 bg-white/[0.06] border border-white/[0.1] rounded-lg px-4 flex-1" />
-          <div className="h-11 bg-white/[0.06] border border-white/[0.1] rounded-lg w-28 px-4" />
+          <div className="h-11 bg-inputbg border  border-[var(--border-clr)] rounded-lg px-4 flex-1" />
+          <div className="h-11 bg-inputbg border  border-[var(--border-clr)] rounded-lg w-28 px-4" />
         </div>
       </div>
     </div>
@@ -43,20 +43,20 @@ const PageLoader = ({ tableColumns = 5, tableRows = 7, listRows = 8, withToolbar
 
     {/* Pagination */}
     {withPagination && (
-      <div className="flex items-center justify-between pt-4 border-t border-white/[0.05]">
-        <div className="h-6 bg-white/[0.04] rounded w-24" />
+      <div className="flex items-center justify-between pt-4 border-t  border-[var(--border-clr)]">
+        <div className="h-6 bg-inputbg rounded w-24" />
         <div className="flex items-center gap-1">
           {Array.from({ length: 5 }, (_, i) => (
             <div
               key={i}
-              className={`h-2 w-2 rounded-full transition-all ${i === 2 ? "bg-emerald-500 w-6" : "bg-white/[0.2]"}`}
+              className={`h-2 w-2 rounded-full transition-all ${i === 2 ? "bg-accent w-6" : "bg-inputbg"}`}
             />
           ))}
         </div>
-        <div className="h-6 bg-white/[0.04] rounded w-28 flex items-center justify-end gap-1 pr-2">
-          <div className="w-6 h-6 bg-white/[0.1] rounded" />
-          <div className="w-8 h-6 bg-white/[0.08] rounded" />
-          <div className="w-6 h-6 bg-white/[0.1] rounded" />
+        <div className="h-6 bg-inputbg rounded w-28 flex items-center justify-end gap-1 pr-2">
+          <div className="w-6 h-6 bg-inputbg rounded" />
+          <div className="w-8 h-6 bg-inputbg rounded" />
+          <div className="w-6 h-6 bg-inputbg rounded" />
         </div>
       </div>
     )}
@@ -68,13 +68,13 @@ const TableSkeleton = ({ columns = 6, rows = 5 }) => (
   <div className="hidden md:block overflow-x-auto">
     <table className="w-full text-sm">
       <thead>
-        <tr className="border-b border-white/[0.05]">
+        <tr className="border-b  border-[var(--border-clr)]">
           <th className="px-5 py-3.5 w-10">
-            <div className="w-4 h-4 rounded border-2 border-white/20 bg-white/[0.06] animate-pulse" />
+            <div className="w-4 h-4 rounded border-2 border-white/20 bg-inputbg animate-pulse" />
           </th>
           {Array.from({ length: columns }, (_, i) => (
             <th key={i} className="px-4 py-3.5">
-              <div className="h-3 bg-white/[0.08] animate-pulse rounded w-16" />
+              <div className="h-3 bg-inputbg animate-pulse rounded w-16" />
             </th>
           ))}
           <th className="px-4 py-3.5 w-10" />
@@ -82,34 +82,34 @@ const TableSkeleton = ({ columns = 6, rows = 5 }) => (
       </thead>
       <tbody>
         {Array.from({ length: rows }, (_, rowIndex) => (
-          <tr key={rowIndex} className="border-b border-white/[0.04]">
+          <tr key={rowIndex} className="border-b  border-[var(--border-clr)]">
             <td className="px-5 py-3.5">
-              <div className="w-4 h-4 rounded border-2 border-white/15 bg-white/[0.06] animate-pulse" />
+              <div className="w-4 h-4 rounded border-2 border-white/15 bg-inputbg animate-pulse" />
             </td>
             <td className="px-4 py-3.5">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-white/[0.06] rounded-lg animate-pulse" />
+                <div className="w-8 h-8 bg-inputbg rounded-lg animate-pulse" />
                 <div className="space-y-1">
-                  <div className="h-4 bg-white/[0.08] animate-pulse rounded w-24" />
-                  <div className="h-3 bg-white/[0.04] animate-pulse rounded w-32" />
+                  <div className="h-4 bg-inputbg animate-pulse rounded w-24" />
+                  <div className="h-3 bg-inputbg animate-pulse rounded w-32" />
                 </div>
               </div>
             </td>
             <td className="px-4 py-3.5">
-              <div className="h-4 bg-white/[0.08] animate-pulse rounded w-20" />
-              <div className="h-3 bg-white/[0.04] animate-pulse rounded w-16 mt-1" />
+              <div className="h-4 bg-inputbg animate-pulse rounded w-20" />
+              <div className="h-3 bg-inputbg animate-pulse rounded w-16 mt-1" />
             </td>
             <td className="px-4 py-3.5">
-              <div className="h-6 bg-white/[0.06] border border-white/[0.07] inline-block px-2 py-1 rounded-md animate-pulse w-16" />
+              <div className="h-6 bg-inputbg border  border-[var(--border-clr)] inline-block px-2 py-1 rounded-md animate-pulse w-16" />
             </td>
             <td className="px-4 py-3.5">
-              <div className="flex items-center gap-1.5 h-6 bg-white/[0.06] border border-white/[0.1] inline-flex px-2.5 py-1 rounded-full animate-pulse w-20" />
+              <div className="flex items-center gap-1.5 h-6 bg-inputbg border  border-[var(--border-clr)] inline-flex px-2.5 py-1 rounded-full animate-pulse w-20" />
             </td>
             <td className="px-4 py-3.5 text-right">
-              <div className="h-4 bg-white/[0.1] animate-pulse rounded w-16 inline-block" />
+              <div className="h-4 bg-inputbg animate-pulse rounded w-16 inline-block" />
             </td>
             <td className="px-4 py-3.5">
-              <div className="w-2 h-3 bg-white/[0.15] animate-pulse rounded" />
+              <div className="w-2 h-3 bg-inputbg animate-pulse rounded" />
             </td>
           </tr>
         ))}
@@ -121,21 +121,21 @@ const TableSkeleton = ({ columns = 6, rows = 5 }) => (
 const ListSkeleton = ({ rows = 5 }) => (
   <div className="md:hidden space-y-3">
     {Array.from({ length: rows }, (_, i) => (
-      <div key={i} className="p-4 border-b border-white/[0.04] bg-white/[0.025] rounded-lg animate-pulse">
+      <div key={i} className="p-4 border-b  border-[var(--border-clr)] bg-inputbg rounded-lg animate-pulse">
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-12 h-12 bg-white/[0.06] rounded-xl" />
+          <div className="w-12 h-12 bg-inputbg rounded-xl" />
           <div className="flex-1 space-y-1">
-            <div className="h-5 bg-white/[0.08] rounded w-32" />
-            <div className="h-4 bg-white/[0.04] rounded w-48" />
+            <div className="h-5 bg-inputbg rounded w-32" />
+            <div className="h-4 bg-inputbg rounded w-48" />
           </div>
-          <div className="w-2 h-3 bg-white/[0.15] rounded" />
+          <div className="w-2 h-3 bg-inputbg rounded" />
         </div>
         <div className="flex items-center justify-between pt-2">
           <div className="flex items-center gap-2">
-            <div className="h-4 bg-white/[0.06] rounded-full w-3" />
-            <div className="h-5 bg-white/[0.08] rounded w-16" />
+            <div className="h-4 bg-inputbg rounded-full w-3" />
+            <div className="h-5 bg-inputbg rounded w-16" />
           </div>
-          <div className="h-6 bg-white/[0.06] border border-white/[0.1] inline-flex px-3 py-1 rounded-full w-20" />
+          <div className="h-6 bg-inputbg border  border-[var(--border-clr)] inline-flex px-3 py-1 rounded-full w-20" />
         </div>
       </div>
     ))}

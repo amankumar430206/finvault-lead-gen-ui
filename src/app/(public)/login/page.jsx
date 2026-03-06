@@ -32,7 +32,7 @@ const BackgroundGrid = () => (
       }}
     />
     <div
-      className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent"
+      className="absolute left-0 right-0 h-px bg-gradient-to-r from-bg-card via-emerald-500/20 from-bg-card"
       style={{ top: "38%" }}
     />
   </div>
@@ -40,24 +40,24 @@ const BackgroundGrid = () => (
 
 export const InputField = ({ label, type = "text", placeholder, icon, rightEl, error, register, name }) => (
   <div>
-    <label className="block text-xs font-medium text-white/50 mb-1.5 tracking-wide uppercase">{label}</label>
+    <label className="block text-xs font-medium text-primary/75 mb-1.5 tracking-wide uppercase">{label}</label>
     <div
       className={`relative flex items-center rounded-lg border transition-all duration-200
       ${
         error
           ? "border-red-500/50 bg-red-500/5"
-          : "border-white/[0.08] bg-white/[0.04] focus-within:border-emerald-500/40 focus-within:bg-emerald-500/[0.03]"
+          : " border-[var(--border-clr)] bg-inputbg focus-within:border-accent/50 focus-within:bg-accent/[0.03]"
       }`}
     >
       {icon && (
-        <div className="px-3 text-white/25 shrink-0">
+        <div className="px-3 text-primary/70 shrink-0">
           <Icon path={icon} className="w-4 h-4" />
         </div>
       )}
       <input
         type={type}
         placeholder={placeholder}
-        className={`flex-1 bg-transparent py-3 px-3 text-sm text-white placeholder:text-white/20 outline-none ${!icon && "rounded-lg"}`}
+        className={`flex-1 bg-transparent py-3 px-3 text-sm text-primary placeholder:text-[var(--text-muted)] outline-none ${!icon && "rounded-lg"}`}
         {...register}
       />
       {rightEl && <div className="p-3">{rightEl}</div>}
@@ -100,7 +100,7 @@ export default function LoginPage() {
     <div className="relative min-h-screen flex items-center justify-center p-4 font-sans overflow-hidden">
       <BackgroundGrid />
 
-      <div className="relative w-full max-w-[420px] z-10">
+      <div className="relative w-full max-w-md z-10">
         <div
           className="absolute -inset-px rounded-3xl opacity-40"
           style={{
@@ -109,33 +109,33 @@ export default function LoginPage() {
           }}
         />
 
-        <div className="relative rounded-3xl bg-[#0f1117]/95 backdrop-blur-xl border border-white/[0.07] overflow-hidden shadow-2xl">
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-emerald-500/60 to-transparent" />
+        <div className="relative rounded-3xl bg-card/95 backdrop-blur-xl border  border-[var(--border-clr)] overflow-hidden shadow-md">
+          <div className="h-px w-full bg-gradient-to-r from-bg-card via-emerald-500/60 from-bg-card" />
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="p-8">
               <div className="fade-up flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center shadow-lg shadow-emerald-500/30">
+                <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center shadow-md shadow-emerald-500/30">
                   <Image src="/icons/logo-white.png" width={25} height={25} alt="Logo" />
                 </div>
-                <span className="text-white font-semibold text-lg tracking-tight">Myntpe</span>
+                <span className="text-primary font-semibold text-lg tracking-tight">Myntpe</span>
                 <span className="ml-auto">
-                  <span className="mono text-[10px] text-emerald-400/70 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                  <span className="mono text-[10px] text-accent/70 bg-accent/10 px-2 py-0.5 rounded-full border  border-[var(--border-clr)]">
                     v1.0.0
                   </span>
                 </span>
               </div>
 
               <div className="fade-up delay-1 mb-7">
-                <h1 className="text-white text-2xl font-semibold tracking-tight">Welcome back</h1>
-                <p className="text-white/40 text-sm mt-1">Sign in to your dashboard</p>
+                <h1 className="text-primary text-2xl font-semibold tracking-tight">Welcome back</h1>
+                <p className="text-primary/50 text-sm mt-1">Sign in to your dashboard</p>
               </div>
 
               <>
                 <div className="fade-up delay-2 flex items-center gap-3 mb-5">
-                  <div className="flex-1 h-px bg-white/[0.06]" />
-                  <span className="text-white/25 text-xs capitalize">sign in</span>
-                  <div className="flex-1 h-px bg-white/[0.06]" />
+                  <div className="flex-1 h-px bg-inputbg" />
+                  <span className="text-primary/70 text-xs capitalize">sign in</span>
+                  <div className="flex-1 h-px bg-inputbg" />
                 </div>
 
                 <div className="fade-up delay-3 flex flex-col gap-4 mb-4">
@@ -173,7 +173,7 @@ export default function LoginPage() {
                       <button
                         type="button"
                         onClick={() => setShowPw((v) => !v)}
-                        className="text-white/25 hover:text-white/60 transition-colors"
+                        className="text-primary/70 hover:text-primary/60 transition-colors"
                       >
                         <Icon path={showPw ? ICONS.eyeOff : ICONS.eye} className="w-4 h-4" />
                       </button>
@@ -186,15 +186,15 @@ export default function LoginPage() {
                     <input type="checkbox" className="hidden" {...register("rememberMe")} id="rememberMe" />
                     <div
                       className={`w-4 h-4 rounded border flex items-center justify-center transition-all
-                        ${rememberMe ? "bg-emerald-500 border-emerald-500" : "border-white/20 bg-white/[0.04]"}`}
+                        ${rememberMe ? "bg-accent border-emerald-500" : "border-white/20 bg-inputbg"}`}
                     ></div>
-                    <span className="text-white/40 text-xs group-hover:text-white/60 transition-colors">
+                    <span className="text-primary/40 text-xs group-hover:text-primary/60 transition-colors">
                       Remember me
                     </span>
                   </label>
                   <button
                     type="button"
-                    className="text-xs text-emerald-400/80 hover:text-emerald-400 transition-colors font-medium"
+                    className="text-xs text-accent/80 hover:text-accent transition-colors font-medium"
                   >
                     Forgot password?
                   </button>
@@ -204,7 +204,7 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     disabled={loginMutation.isPending || isSubmitting}
-                    className="relative w-full overflow-hidden py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-70 text-white text-sm font-semibold tracking-wide transition-all duration-200 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 flex items-center justify-center gap-2 shimmer-btn"
+                    className="relative w-full overflow-hidden py-3 rounded-xl bg-accent hover:bg-accent/80 disabled:opacity-70 text-primary text-sm font-semibold tracking-wide transition-all duration-200 shadow-md shadow-accent/20 hover:shadow-accent/20 flex items-center justify-center gap-2 shimmer-btn"
                   >
                     {loginMutation.isPending || isSubmitting ? (
                       <>
@@ -226,29 +226,29 @@ export default function LoginPage() {
 
               {loginMutation.isSuccess && (
                 <div className="fade-up flex flex-col items-center py-8 text-center gap-4">
-                  <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center">
-                    <Icon path={ICONS.check} className="w-7 h-7 text-emerald-400" />
+                  <div className="w-14 h-14 rounded-full bg-accent/10 border border-emerald-500/30 flex items-center justify-center">
+                    <Icon path={ICONS.check} className="w-7 h-7 text-accent" />
                   </div>
                   <div>
-                    <p className="text-white/40 text-sm mt-1">Redirecting to dashboard…</p>
+                    <p className="text-primary/40 text-sm mt-1">Redirecting to dashboard…</p>
                   </div>
                 </div>
               )}
             </div>
 
             {!loginMutation.isSuccess && (
-              <div className="fade-up delay-5 border-t border-white/[0.05] px-8 py-4 bg-white/[0.01] flex items-center justify-between">
-                <p className="text-white/30 text-xs">
+              <div className="fade-up delay-5 border-t  border-[var(--border-clr)] px-8 py-4 bg-inputbg flex items-center justify-between">
+                <p className="text-primary/50 text-xs">
                   No account?{" "}
                   <button
                     type="button"
-                    className="text-emerald-400/80 hover:text-emerald-400 font-medium transition-colors"
+                    className="text-accent/80 hover:text-accent font-medium transition-colors"
                     onClick={handleCreateAccount}
                   >
                     Create An Account
                   </button>
                 </p>
-                <div className="flex items-center gap-1 text-white/20">
+                <div className="flex items-center gap-1 text-primary/20">
                   <Icon path={ICONS.sparkles} className="w-3 h-3" />
                   <span className="text-[10px] mono">256-bit SSL</span>
                 </div>
@@ -257,7 +257,7 @@ export default function LoginPage() {
           </form>
         </div>
 
-        <p className="text-white text-xs text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-primary mt-4 my-4">
+        <p className="text-primary text-xs text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-primary mt-4 my-4">
           <Link href="/">Terms of Service</Link> and <Link href="/">Privacy Policy</Link>.
         </p>
 

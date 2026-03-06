@@ -35,9 +35,9 @@ const TOTAL = "₹ 1,03,733.08";
 // ── Sub-components ────────────────────────────────────────
 
 const FieldLabel = ({ children, required }) => (
-  <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-1.5">
+  <label className="block text-xs font-semibold text-primary/75 uppercase tracking-wider mb-1.5">
     {children}
-    {required && <span className="text-emerald-400 ml-0.5">*</span>}
+    {required && <span className="text-accent ml-0.5">*</span>}
   </label>
 );
 
@@ -64,16 +64,16 @@ const CurrencySelect = ({ value, onChange, options }) => {
           px-3 pr-7
           text-sm font-semibold
           bg-transparent
-          text-white
-          hover:text-emerald-400
-          focus:text-emerald-400
+          text-primary
+          hover:text-accent
+          focus:text-accent
           outline-none
           cursor-pointer
           transition-colors
         "
       >
         {options.map((c) => (
-          <option key={c} value={c} className="bg-[#13161f] text-white">
+          <option key={c} value={c} className="bg-card2 text-primary">
             {c}
           </option>
         ))}
@@ -81,7 +81,7 @@ const CurrencySelect = ({ value, onChange, options }) => {
 
       {/* Custom Arrow */}
       <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center">
-        <svg className="w-3 h-3 text-white/30" viewBox="0 0 12 12" fill="none">
+        <svg className="w-3 h-3 text-primary/50" viewBox="0 0 12 12" fill="none">
           <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
@@ -113,18 +113,18 @@ const PurposeSelect = ({ value, onChange, onBlur, error }) => {
           ${
             error
               ? "border-red-500/50 bg-red-500/5 focus:border-red-500"
-              : "border-white/[0.08] bg-white/[0.04] hover:border-white/[0.15] focus:border-emerald-500/40 focus:bg-emerald-500/[0.03]"
+              : " border-[var(--border-clr)] bg-inputbg hover: border-[var(--border-clr)] focus:border-accent/50 focus:bg-accent/[0.03]"
           }
 
-          ${value ? "text-white" : "text-white/25"}
+          ${value ? "text-primary" : "text-primary/70"}
         `}
       >
-        <option value="" disabled className="bg-[#13161f] text-white/60">
+        <option value="" disabled className="bg-card2 text-primary/60">
           Select a purpose code
         </option>
 
         {PURPOSE_CODES.map((p) => (
-          <option key={p} value={p} className="bg-[#13161f] text-white">
+          <option key={p} value={p} className="bg-card2 text-primary">
             {p}
           </option>
         ))}
@@ -132,7 +132,7 @@ const PurposeSelect = ({ value, onChange, onBlur, error }) => {
 
       {/* Custom arrow */}
       <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-        <svg className="w-4 h-4 text-white/30" viewBox="0 0 12 12" fill="none">
+        <svg className="w-4 h-4 text-primary/50" viewBox="0 0 12 12" fill="none">
           <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
@@ -159,7 +159,6 @@ export function SendMoneyForm() {
     defaultValues: {
       amount: "",
       purposeCode: "",
-      vendorCode: "",
     },
   });
 
@@ -200,7 +199,6 @@ export function SendMoneyForm() {
         user: user?._id,
         onBehalfOf: user?._id,
         transactionBy: user?._id,
-        vendor: data.vendorCode,
         feeConfig: { ...feeStructure, amount: convertedAmount.toFixed(2), totalPayable: totalPayable.toFixed(2) },
         metadata: data.metadata,
       };
@@ -219,17 +217,17 @@ export function SendMoneyForm() {
 
   if (!remitter) {
     return (
-      <div className="my-8 bg-[#0b0d12] flex items-center justify-center">
-        <div className="w-full rounded-2xl bg-[#0f1117] border border-white/[0.07] overflow-hidden shadow-2xl max-w-6xl">
+      <div className="my-8 bg-base flex items-center justify-center">
+        <div className="w-full rounded-2xl bg-card border  border-[var(--border-clr)] overflow-hidden shadow-md max-w-6xl">
           {/* Header */}
-          <div className="p-5 border-b border-white/[0.05] fade-up">
+          <div className="p-5 border-b  border-[var(--border-clr)] fade-up">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-accent/10 text-accent border  border-[var(--border-clr)] flex items-center justify-center">
                 <Icon path={ICONS.users} />
               </div>
               <div>
-                <h1 className="text-white font-semibold text-xl leading-tight">Remitter</h1>
-                <p className="text-white/35 text-xs mt-0.5">Make Transfer · Powered by Myntpe</p>
+                <h1 className="text-primary font-semibold text-xl leading-tight">Remitter</h1>
+                <p className="text-primary/50 text-xs mt-0.5">Make Transfer · Powered by Myntpe</p>
               </div>
             </div>
           </div>
@@ -243,14 +241,14 @@ export function SendMoneyForm() {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-[#0b0d12] flex items-center justify-center p-4">
-        <div className="w-full rounded-2xl bg-[#0f1117] border border-white/[0.07] overflow-hidden shadow-2xl max-w-[600px]">
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
+      <div className="min-h-screen bg-base flex items-center justify-center p-4">
+        <div className="w-full rounded-2xl bg-card border  border-[var(--border-clr)] overflow-hidden shadow-md max-w-[600px]">
+          <div className="h-px w-full bg-gradient-to-r from-bg-card via-accent/50 from-bg-card" />
           <div className="p-8 flex flex-col items-center text-center gap-5">
-            <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center">
+            <div className="w-16 h-16 rounded-full bg-accent/10 border border-emerald-500/30 flex items-center justify-center">
               <svg
                 viewBox="0 0 24 24"
-                className="w-8 h-8 text-emerald-400"
+                className="w-8 h-8 text-accent"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -259,12 +257,12 @@ export function SendMoneyForm() {
               </svg>
             </div>
             <div>
-              <h2 className="text-white text-xl font-semibold">Transfer Initiated</h2>
-              <p className="text-white/40 text-sm mt-1.5">
+              <h2 className="text-primary text-xl font-semibold">Transfer Initiated</h2>
+              <p className="text-primary/40 text-sm mt-1.5">
                 Your transfer request has been received and is being processed.
               </p>
             </div>
-            <div className="w-full bg-white/[0.03] rounded-xl border border-white/[0.06] divide-y divide-white/[0.05]">
+            <div className="w-full bg-inputbg rounded-xl border  border-[var(--border-clr)] divide-y divide-white/[0.05]">
               {[
                 ["Amount", `${currency} ${amountValue || "0.00"}`],
                 ["(Converted)", displayTotal],
@@ -272,8 +270,8 @@ export function SendMoneyForm() {
                 // ["Est. Delivery", "1–2 business days"],
               ].map(([k, v]) => (
                 <div key={k} className="flex justify-between px-4 py-3">
-                  <span className="text-white/40 text-sm">{k}</span>
-                  <span className="text-white text-sm font-medium mono">{v}</span>
+                  <span className="text-primary/40 text-sm">{k}</span>
+                  <span className="text-primary text-sm font-medium mono">{v}</span>
                 </div>
               ))}
             </div>
@@ -281,7 +279,7 @@ export function SendMoneyForm() {
               onClick={() => {
                 router.replace("/app/send-money/remitter");
               }}
-              className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-sm transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2"
+              className="w-full py-3 rounded-xl bg-accent hover:bg-accent/80 text-white font-semibold text-sm transition-all shadow-md shadow-accent/30 flex items-center justify-center gap-2"
             >
               Proceed & Review Remmiter{" "}
               <svg viewBox="0 0 16 16" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2">
@@ -300,7 +298,7 @@ export function SendMoneyForm() {
                 Cancel Transaction {isCancelPending && <span className="animate-spin w-4 h-4">(Cancelling…)</span>}
               </button>
 
-              <p className="text-white/40 text-xs">Please note once cancelled form cannot be recovered.</p>
+              <p className="text-primary/40 text-xs">Please note once cancelled form cannot be recovered.</p>
             </div>
           </div>
         </div>
@@ -309,20 +307,20 @@ export function SendMoneyForm() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0b0d12] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-base flex items-center justify-center p-4">
       <div className="w-full max-w-[600px]">
         {/* Card */}
-        <div className="relative rounded-2xl bg-[#0f1117] border border-white/[0.07] shadow-2xl overflow-hidden">
+        <div className="relative rounded-2xl bg-card border  border-[var(--border-clr)] shadow-md overflow-hidden">
           {/* Top accent */}
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
+          <div className="h-px w-full bg-gradient-to-r from-bg-card via-accent/50 from-bg-card" />
 
           {/* Header */}
-          <div className="px-7 pt-7 pb-5 border-b border-white/[0.05] fade-up">
+          <div className="px-7 pt-7 pb-5 border-b  border-[var(--border-clr)] fade-up">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-accent/10 border  border-[var(--border-clr)] flex items-center justify-center">
                 <svg
                   viewBox="0 0 24 24"
-                  className="w-4.5 h-4.5 text-emerald-400"
+                  className="w-4.5 h-4.5 text-accent"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.8"
@@ -335,8 +333,8 @@ export function SendMoneyForm() {
                 </svg>
               </div>
               <div>
-                <h1 className="text-white font-semibold text-xl leading-tight">How much do you want to send?</h1>
-                <p className="text-white/35 text-xs mt-0.5">Make Transfer · Powered by Myntpe</p>
+                <h1 className="text-primary font-semibold text-xl leading-tight">How much do you want to send?</h1>
+                <p className="text-primary/50 text-xs mt-0.5">Make Transfer · Powered by Myntpe</p>
               </div>
             </div>
           </div>
@@ -347,10 +345,10 @@ export function SendMoneyForm() {
               <FieldLabel required>Amount to send</FieldLabel>
               <div
                 className={`flex items-stretch rounded-xl border overflow-hidden transition-all duration-200
-                ${errors.amount ? "border-red-500/50 bg-red-500/5" : "border-white/[0.08] bg-white/[0.04] focus-within:border-emerald-500/40 focus-within:bg-emerald-500/[0.02]"}`}
+                ${errors.amount ? "border-red-500/50 bg-red-500/5" : " border-[var(--border-clr)] bg-inputbg focus-within:border-accent/50 focus-within:bg-accent/[0.02]"}`}
               >
                 {/* Currency selector */}
-                <div className="flex items-center border-r border-white/[0.08] px-1 bg-white/[0.03]">
+                <div className="flex items-center border-r  border-[var(--border-clr)] px-1 bg-inputbg">
                   <CurrencySelect value={currency} onChange={setCurrency} options={CURRENCIES?.map((c) => c.code)} />
                 </div>
                 {/* Amount input */}
@@ -364,12 +362,12 @@ export function SendMoneyForm() {
                     min: { value: 1, message: "Minimum amount is 1" },
                     max: { value: 1000000, message: "Maximum amount is 1,000,000" },
                   })}
-                  className="flex-1 bg-transparent outline-none text-white placeholder:text-white/20 text-sm py-3 px-4 mono [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className="flex-1 bg-transparent outline-none text-primary placeholder:text-[var(--text-muted)] text-sm py-3 px-4 mono [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
                 {/* Convert pill */}
                 <button
                   type="button"
-                  className="flex items-center gap-1.5 px-4 text-xs font-semibold text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 border-l border-emerald-500/20 transition-colors whitespace-nowrap"
+                  className="flex items-center gap-1.5 px-4 text-xs font-semibold text-accent bg-accent/10 hover:bg-accent/20 border-l  border-[var(--border-clr)] transition-colors whitespace-nowrap"
                 >
                   <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M2 5h10M9 2l3 3-3 3M14 11H4m3 3l-3-3 3-3" />
@@ -383,15 +381,15 @@ export function SendMoneyForm() {
             {/* Forex result */}
             <div className="fade-up delay-2">
               <FieldLabel>Forex conversion</FieldLabel>
-              <div className="flex items-stretch rounded-xl border border-white/[0.06] bg-white/[0.02] overflow-hidden">
+              <div className="flex items-stretch rounded-xl border  border-[var(--border-clr)] bg-inputbg overflow-hidden">
                 {/* INR tag */}
-                <div className="flex items-center justify-center px-4 bg-white/[0.04] border-r border-white/[0.06] min-w-[72px]">
-                  <span className="text-white/70 font-semibold text-sm">INR</span>
+                <div className="flex items-center justify-center px-4 bg-inputbg border-r  border-[var(--border-clr)] min-w-[72px]">
+                  <span className="text-primary/70 font-semibold text-sm">INR</span>
                 </div>
                 {/* Converted value */}
                 <div className="flex items-center flex-1 px-4 py-3">
                   <span
-                    className={`mono text-sm font-medium transition-all ${amountValue ? "text-emerald-400" : "text-white/20"}`}
+                    className={`mono text-sm font-medium transition-all ${amountValue ? "text-accent" : "text-primary/20"}`}
                   >
                     {amountValue
                       ? (parseFloat(amountValue) * currencyValue).toLocaleString("en-IN", {
@@ -403,7 +401,7 @@ export function SendMoneyForm() {
                 </div>
                 {/* Rate badge */}
                 <div className="flex items-center pr-4">
-                  <span className="text-[10px] font-medium text-white/25 bg-white/[0.05] border border-white/[0.07] rounded-full px-2 py-0.5 mono whitespace-nowrap">
+                  <span className="text-[10px] font-medium text-primary/70 bg-inputbg border  border-[var(--border-clr)] rounded-full px-2 py-0.5 mono whitespace-nowrap">
                     1 {currency} =
                     <span className="text-emerald-500">
                       {" "}
@@ -437,28 +435,6 @@ export function SendMoneyForm() {
               <FieldError message={errors.purposeCode?.message} />
             </div>
 
-            {/* Vendor Name / Code */}
-            <div className="fade-up delay-4">
-              <FieldLabel required={true}>
-                Vendor Name / Code <span className="text-white/25 normal-case font-normal tracking-normal ml-1"></span>
-              </FieldLabel>
-              <div
-                className={`rounded-xl border transition-all duration-200
-                ${errors.vendorCode ? "border-red-500/50 bg-red-500/5" : "border-white/[0.08] bg-white/[0.04] focus-within:border-emerald-500/40 focus-within:bg-emerald-500/[0.02]"}`}
-              >
-                <input
-                  type="text"
-                  placeholder="e.g. UNIV-2024-001 or University of Melbourne"
-                  {...register("vendorCode", {
-                    required: "Vendor name or code is required",
-                    maxLength: { value: 80, message: "Maximum 80 characters" },
-                  })}
-                  className="w-full bg-transparent outline-none text-white placeholder:text-white/20 text-sm px-4 py-3"
-                />
-              </div>
-              <FieldError message={errors.vendorCode?.message} />
-            </div>
-
             {/* Divider */}
             <DividerGr />
 
@@ -467,7 +443,7 @@ export function SendMoneyForm() {
               <div className="flex items-center gap-2 mb-3">
                 <svg
                   viewBox="0 0 16 16"
-                  className="w-3.5 h-3.5 text-emerald-400"
+                  className="w-3.5 h-3.5 text-accent"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.8"
@@ -478,33 +454,33 @@ export function SendMoneyForm() {
                     d="M8 1v14M5 4h4.5a2.5 2.5 0 010 5H5m0 0h4.5a2.5 2.5 0 010 5H5"
                   />
                 </svg>
-                <span className="text-emerald-400 font-semibold text-sm">Fee Structure</span>
+                <span className="text-accent font-semibold text-sm">Fee Structure</span>
               </div>
 
-              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] overflow-hidden">
+              <div className="rounded-xl border  border-[var(--border-clr)] bg-inputbg overflow-hidden">
                 {displayFeeStructure.map((item, i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-between px-4 py-3 border-b border-white/[0.04] last:border-0 group hover:bg-white/[0.02] transition-colors"
+                    className="flex items-center justify-between px-4 py-3 border-b  border-[var(--border-clr)] last:border-0 group hover:bg-inputbg transition-colors"
                   >
-                    <span className="text-white/50 text-sm">{item.label}</span>
-                    <span className="text-white/80 text-sm mono font-medium">{item.value}</span>
+                    <span className="text-primary/75 text-sm">{item.label}</span>
+                    <span className="text-primary/80 text-sm mono font-medium">{item.value}</span>
                   </div>
                 ))}
 
                 {/* Total row */}
-                <div className="flex items-center justify-between px-4 py-4 bg-emerald-500/[0.07] border-t border-emerald-500/20">
+                <div className="flex items-center justify-between px-4 py-4 bg-accent/[0.07] border-t  border-[var(--border-clr)]">
                   <div className="flex items-center gap-2">
-                    <span className="text-white font-semibold text-sm">Total Payable</span>
-                    <span className="text-[10px] text-emerald-400/60 bg-emerald-500/10 border border-emerald-500/15 rounded-full px-1.5 py-0.5 font-medium">
+                    <span className="text-primary font-semibold text-sm">Total Payable</span>
+                    <span className="text-[10px] text-accent/60 bg-accent/10 border border-emerald-500/15 rounded-full px-1.5 py-0.5 font-medium">
                       incl. all charges
                     </span>
                   </div>
-                  <span className="text-emerald-400 font-bold text-base mono">{displayTotal}</span>
+                  <span className="text-accent font-bold text-base mono">{displayTotal}</span>
                 </div>
               </div>
 
-              <p className="text-white/25 text-[11px] mt-2 flex items-center gap-1.5">
+              <p className="text-primary/70 text-[11px] mt-2 flex items-center gap-1.5">
                 <svg
                   viewBox="0 0 12 12"
                   className="w-3 h-3 shrink-0"
@@ -524,7 +500,7 @@ export function SendMoneyForm() {
               <button
                 type="submit"
                 disabled={isPending}
-                className="w-full relative overflow-hidden py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm tracking-wide transition-all duration-200 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 flex items-center justify-center gap-2"
+                className="w-full relative overflow-hidden py-3.5 rounded-xl bg-accent hover:bg-accent/80 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm tracking-wide transition-all duration-200 shadow-md shadow-accent/20 hover:shadow-accent/20 flex items-center justify-center gap-2"
               >
                 {isPending ? (
                   <>
@@ -544,7 +520,7 @@ export function SendMoneyForm() {
                 )}
               </button>
 
-              <p className="text-center text-white/20 text-xs mt-3 flex items-center justify-center gap-1.5">
+              <p className="text-center text-primary/20 text-xs mt-3 flex items-center justify-center gap-1.5">
                 <svg viewBox="0 0 12 12" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <rect x="2" y="5" width="8" height="6" rx="1" />
                   <path strokeLinecap="round" d="M4 5V3.5a2 2 0 014 0V5" />

@@ -98,13 +98,13 @@ const STEPS = [
 
 const C = {
   emerald: {
-    ring: "border-emerald-500/50 bg-emerald-500/[0.06]",
-    text: "text-emerald-400",
-    badge: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-    dot: "bg-emerald-400",
-    glow: "via-emerald-500/45",
-    btn: "bg-emerald-500 hover:bg-emerald-400 shadow-emerald-500/25",
-    bar: "bg-emerald-500",
+    ring: " border-[var(--border-clr)] bg-accent/[0.06]",
+    text: "text-accent",
+    badge: "bg-accent/10 text-accent  border-[var(--border-clr)]",
+    dot: "bg-accent",
+    glow: "via-[var(--accent-glow)]",
+    btn: "bg-accent hover:bg-accent/80 shadow-accent/20",
+    bar: "bg-accent",
   },
   blue: {
     ring: "border-blue-500/50    bg-blue-500/[0.06]",
@@ -137,9 +137,9 @@ const CARD_BG = {
 // PRIMITIVES
 // ─────────────────────────────────────────────────────────────
 const Label = ({ children, required }) => (
-  <label className="block text-[11px] font-semibold text-white/38 uppercase tracking-widest mb-1.5">
+  <label className="block text-[11px] font-semibold text-primary/38 uppercase tracking-widest mb-1.5">
     {children}
-    {required && <span className="text-emerald-400 ml-0.5">*</span>}
+    {required && <span className="text-accent ml-0.5">*</span>}
   </label>
 );
 
@@ -155,8 +155,8 @@ const ErrMsg = ({ msg }) =>
   ) : null;
 
 const inputCls = (err) =>
-  `w-full bg-white/[0.04] border rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/20 outline-none transition-all duration-200
-  ${err ? "border-red-500/45" : "border-white/[0.08] focus:border-emerald-500/45 focus:bg-emerald-500/[0.03]"}`;
+  `w-full bg-inputbg border rounded-xl px-4 py-3 text-sm text-primary placeholder:text-[var(--text-muted)] outline-none transition-all duration-200
+  ${err ? "border-red-500/45" : " border-[var(--border-clr)] focus: border-[var(--border-clr)] focus:bg-accent/[0.03]"}`;
 
 const Field = ({ label, required, error, children, className = "" }) => (
   <div className={className}>
@@ -176,13 +176,13 @@ const Dropdown = ({ value, onChange, onBlur, options, placeholder, error }) => {
         onBlur={() => setTimeout(() => setOpen(false), 150)}
         onClick={() => setOpen((v) => !v)}
         className={`w-full flex items-center justify-between px-4 py-3 rounded-xl border text-sm text-left transition-all
-          ${error ? "border-red-500/45" : open ? "border-emerald-500/45 bg-emerald-500/[0.03]" : "border-white/[0.08] bg-white/[0.04] hover:border-white/[0.15]"}
-          ${sel ? "text-white" : "text-white/25"}`}
+          ${error ? "border-red-500/45" : open ? "border-emerald-500/45 bg-accent/[0.03]" : " border-[var(--border-clr)] bg-inputbg hover: border-[var(--border-clr)]"}
+          ${sel ? "text-primary" : "text-primary/70"}`}
       >
         {sel ? (sel.label ?? sel) : placeholder}
         <svg
           viewBox="0 0 10 6"
-          className={`w-3 h-1.5 text-white/25 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`w-3 h-1.5 text-primary/70 transition-transform ${open ? "rotate-180" : ""}`}
           fill="none"
           stroke="currentColor"
           strokeWidth="1.5"
@@ -191,7 +191,7 @@ const Dropdown = ({ value, onChange, onBlur, options, placeholder, error }) => {
         </svg>
       </button>
       {open && (
-        <div className="absolute left-0 right-0 top-full mt-1.5 z-50 rounded-xl border border-white/[0.08] bg-[#13161f] shadow-2xl overflow-hidden max-h-52 overflow-y-auto">
+        <div className="absolute left-0 right-0 top-full mt-1.5 z-50 rounded-xl border  border-[var(--border-clr)] bg-card2 shadow-md overflow-hidden max-h-52 overflow-y-auto">
           {options.map((opt) => {
             const v = opt.value ?? opt;
             const l = opt.label ?? opt;
@@ -204,10 +204,10 @@ const Dropdown = ({ value, onChange, onBlur, options, placeholder, error }) => {
                   setOpen(false);
                 }}
                 className={`w-full text-left px-4 py-2.5 text-sm transition-colors flex justify-between items-center
-                  ${v === value ? "text-emerald-400 bg-emerald-500/10" : "text-white/60 hover:text-white hover:bg-white/[0.05]"}`}
+                  ${v === value ? "text-accent bg-accent/10" : "text-primary/60 hover:text-primary hover:bg-inputbg"}`}
               >
                 {l}
-                {v === value && <span className="text-emerald-400 text-xs">✓</span>}
+                {v === value && <span className="text-accent text-xs">✓</span>}
               </button>
             );
           })}
@@ -219,7 +219,7 @@ const Dropdown = ({ value, onChange, onBlur, options, placeholder, error }) => {
 
 const StepBar = ({ current }) => (
   <div className="flex items-center justify-between mb-8 relative">
-    <div className="absolute top-3.5 left-0 right-0 h-px bg-white/[0.07] z-0" />
+    <div className="absolute top-3.5 left-0 right-0 h-px bg-inputbg z-0" />
     {STEPS.map((s) => {
       const done = s.id < current;
       const active = s.id === current;
@@ -227,7 +227,7 @@ const StepBar = ({ current }) => (
         <div key={s.id} className="flex flex-col items-center gap-2 z-10">
           <div
             className={`w-7 h-7 rounded-full border-2 flex items-center justify-center text-[10px] font-bold transition-all duration-300
-            ${done ? "bg-emerald-500 border-emerald-500 text-white" : active ? "bg-[#0f1117] border-emerald-500 text-emerald-400 shadow-[0_0_12px_rgba(16,185,129,.3)]" : "bg-[#0f1117] border-white/[0.12] text-white/20"}`}
+            ${done ? "bg-accent border-emerald-500 text-primary" : active ? "bg-card border-emerald-500 text-accent shadow-[0_0_12px_rgba(16,185,129,.3)]" : "bg-card  border-[var(--border-clr)] text-primary/20"}`}
           >
             {done ? (
               <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none">
@@ -244,7 +244,7 @@ const StepBar = ({ current }) => (
             )}
           </div>
           <span
-            className={`text-[10px] font-medium hidden sm:block whitespace-nowrap ${active ? "text-emerald-400" : done ? "text-white/30" : "text-white/18"}`}
+            className={`text-[10px] font-medium hidden sm:block whitespace-nowrap ${active ? "text-accent" : done ? "text-primary/50" : "text-primary/18"}`}
           >
             {s.label}
           </span>
@@ -256,12 +256,12 @@ const StepBar = ({ current }) => (
 
 const SH = ({ n, title, sub }) => (
   <div className="flex items-center gap-3 mb-5">
-    <span className="w-7 h-7 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center shrink-0">
+    <span className="w-7 h-7 rounded-full bg-accent text-primary text-xs font-bold flex items-center justify-center shrink-0">
       {n}
     </span>
     <div>
-      <p className="text-white font-semibold text-[15px]">{title}</p>
-      {sub && <p className="text-white/30 text-xs mt-0.5">{sub}</p>}
+      <p className="text-primary font-semibold text-[15px]">{title}</p>
+      {sub && <p className="text-primary/50 text-xs mt-0.5">{sub}</p>}
     </div>
   </div>
 );
@@ -273,18 +273,18 @@ const FileZone = ({ label, hint, required }) => {
     <div>
       <Label required={required}>{label}</Label>
       {file ? (
-        <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-emerald-500/30 bg-emerald-500/[0.05]">
+        <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-emerald-500/30 bg-accent/[0.05]">
           <div className="w-8 h-8 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center text-[10px] font-bold mono shrink-0">
             {file.name.split(".").pop().toUpperCase()}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-white/75 text-sm truncate">{file.name}</p>
-            <p className="text-white/30 text-xs">{(file.size / 1024).toFixed(0)} KB</p>
+            <p className="text-primary/75 text-sm truncate">{file.name}</p>
+            <p className="text-primary/50 text-xs">{(file.size / 1024).toFixed(0)} KB</p>
           </div>
           <button
             type="button"
             onClick={() => setFile(null)}
-            className="text-white/25 hover:text-red-400 transition-colors"
+            className="text-primary/70 hover:text-red-400 transition-colors"
           >
             ✕
           </button>
@@ -292,11 +292,11 @@ const FileZone = ({ label, hint, required }) => {
       ) : (
         <div
           onClick={() => ref.current?.click()}
-          className="flex flex-col items-center gap-2 py-5 rounded-xl border-2 border-dashed border-white/[0.09] hover:border-white/[0.2] hover:bg-white/[0.025] cursor-pointer transition-all group"
+          className="flex flex-col items-center gap-2 py-5 rounded-xl border-2 border-dashed  border-[var(--border-clr)] hover: border-[var(--border-clr)] hover:bg-inputbg cursor-pointer transition-all group"
         >
           <svg
             viewBox="0 0 20 20"
-            className="w-5 h-5 text-white/18 group-hover:text-white/38 transition-colors"
+            className="w-5 h-5 text-primary/18 group-hover:text-primary/38 transition-colors"
             fill="none"
             stroke="currentColor"
             strokeWidth="1.5"
@@ -307,7 +307,7 @@ const FileZone = ({ label, hint, required }) => {
               d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
             />
           </svg>
-          <p className="text-white/28 text-xs">{hint}</p>
+          <p className="text-primary/28 text-xs">{hint}</p>
           <input
             ref={ref}
             type="file"
@@ -322,15 +322,15 @@ const FileZone = ({ label, hint, required }) => {
 };
 
 const RRow = ({ label, value, mono }) => (
-  <div className="flex items-start justify-between py-2.5 border-b border-white/[0.04] last:border-0 gap-4">
-    <span className="text-white/35 text-sm shrink-0">{label}</span>
-    <span className={`text-sm font-medium text-right ${mono ? "font-mono" : ""} text-white/70`}>{value || "—"}</span>
+  <div className="flex items-start justify-between py-2.5 border-b  border-[var(--border-clr)] last:border-0 gap-4">
+    <span className="text-primary/50 text-sm shrink-0">{label}</span>
+    <span className={`text-sm font-medium text-right ${mono ? "font-mono" : ""} text-primary/70`}>{value || "—"}</span>
   </div>
 );
 const RSection = ({ title, children }) => (
   <div className="mb-4 last:mb-0">
-    <p className="text-[10px] font-bold text-white/22 uppercase tracking-widest mb-2">{title}</p>
-    <div className="bg-white/[0.025] rounded-xl border border-white/[0.05] px-4 overflow-hidden divide-y divide-white/[0.04]">
+    <p className="text-[10px] font-bold text-primary/22 uppercase tracking-widest mb-2">{title}</p>
+    <div className="bg-inputbg rounded-xl border  border-[var(--border-clr)] px-4 overflow-hidden divide-y divide-white/[0.04]">
       {children}
     </div>
   </div>
@@ -342,7 +342,7 @@ const CardPreview = ({ plan, selected }) => {
   return (
     <div
       className={`relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 border-2 select-none
-      ${selected ? `${c.ring} shadow-xl` : "border-white/[0.08] hover:border-white/[0.2]"}`}
+      ${selected ? `${c.ring} shadow-xl` : " border-[var(--border-clr)] hover: border-[var(--border-clr)]"}`}
       style={{ background: CARD_BG[plan.id] }}
     >
       {/* Grid pattern */}
@@ -354,7 +354,7 @@ const CardPreview = ({ plan, selected }) => {
         }}
       />
       {plan.popular && (
-        <div className="absolute top-3 left-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/15 text-white backdrop-blur-sm z-10">
+        <div className="absolute top-3 left-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/15 text-primary backdrop-blur-sm z-10">
           Most popular
         </div>
       )}
@@ -374,9 +374,9 @@ const CardPreview = ({ plan, selected }) => {
       <div className="relative p-5 flex flex-col gap-3">
         <div className="flex items-start justify-between mt-5">
           <div>
-            <p className="text-white/45 text-[10px] uppercase tracking-widest font-semibold">FinVault</p>
-            <p className="text-white text-lg font-bold mt-0.5">{plan.name}</p>
-            <p className="text-white/35 text-xs mt-0.5">{plan.tagline}</p>
+            <p className="text-primary/45 text-[10px] uppercase tracking-widest font-semibold">FinVault</p>
+            <p className="text-primary text-lg font-bold mt-0.5">{plan.name}</p>
+            <p className="text-primary/50 text-xs mt-0.5">{plan.tagline}</p>
           </div>
           <span className="text-2xl">{plan.icon}</span>
         </div>
@@ -384,7 +384,7 @@ const CardPreview = ({ plan, selected }) => {
           <div className="w-7 h-5 rounded bg-gradient-to-br from-yellow-300/60 to-yellow-500/40 border border-yellow-400/20" />
           <svg
             viewBox="0 0 24 24"
-            className="w-4 h-4 text-white/25"
+            className="w-4 h-4 text-primary/70"
             fill="none"
             stroke="currentColor"
             strokeWidth="1.5"
@@ -395,16 +395,16 @@ const CardPreview = ({ plan, selected }) => {
             />
           </svg>
         </div>
-        <p className="text-white/25 text-[11px] mono tracking-[0.18em]">•••• •••• •••• ••••</p>
-        <div className="flex items-center gap-3 pt-2 border-t border-white/[0.1]">
+        <p className="text-primary/70 text-[11px] mono tracking-[0.18em]">•••• •••• •••• ••••</p>
+        <div className="flex items-center gap-3 pt-2 border-t  border-[var(--border-clr)]">
           {[
             ["Currencies", plan.currencies],
             ["Annual fee", plan.fee],
             ["ATM", plan.atm],
           ].map(([k, v]) => (
             <div key={k} className="flex-1">
-              <p className="text-white/25 text-[8px] uppercase tracking-wider">{k}</p>
-              <p className="text-white font-bold text-[11px] mono">{v}</p>
+              <p className="text-primary/70 text-[8px] uppercase tracking-wider">{k}</p>
+              <p className="text-primary font-bold text-[11px] mono">{v}</p>
             </div>
           ))}
         </div>
@@ -497,27 +497,27 @@ export default function ForexCardPage() {
   // ── SUCCESS ───────────────────────────────────────────────
   if (done) {
     return (
-      <div className="min-h-screen bg-[#0b0d12] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-base flex items-center justify-center p-4">
         <div
-          className="w-full max-w-md rounded-2xl bg-[#0f1117] border border-white/[0.07] shadow-2xl overflow-hidden"
+          className="w-full max-w-md rounded-2xl bg-card border  border-[var(--border-clr)] shadow-md overflow-hidden"
           style={{ animation: "fadeUp .35s ease" }}
         >
-          <div className={`h-px w-full bg-gradient-to-r from-transparent ${c.glow} to-transparent`} />
+          <div className={`h-px w-full bg-gradient-to-r from-bg-card ${c.glow} from-bg-card`} />
           <div className="p-8 flex flex-col items-center text-center gap-5">
             <div className="relative flex items-center justify-center w-20 h-20">
-              <div className="absolute inset-0 rounded-full bg-emerald-500/10 animate-ping opacity-30" />
-              <div className="relative w-14 h-14 rounded-full bg-emerald-500/12 border border-emerald-500/25 flex items-center justify-center text-3xl">
+              <div className="absolute inset-0 rounded-full bg-accent/10 animate-ping opacity-30" />
+              <div className="relative w-14 h-14 rounded-full bg-accent/12 border border-emerald-500/25 flex items-center justify-center text-3xl">
                 {plan?.icon ?? "💳"}
               </div>
             </div>
             <div>
-              <h2 className="text-white text-xl font-semibold">Application Submitted!</h2>
-              <p className="text-white/40 text-sm mt-1.5 leading-relaxed">
+              <h2 className="text-primary text-xl font-semibold">Application Submitted!</h2>
+              <p className="text-primary/40 text-sm mt-1.5 leading-relaxed">
                 Your <span className={`font-semibold ${c.text}`}>{plan?.name} Forex Card</span> is being processed.
-                Delivery in <span className="text-white/60 font-medium">5–7 business days</span>.
+                Delivery in <span className="text-primary/60 font-medium">5–7 business days</span>.
               </p>
             </div>
-            <div className="w-full bg-white/[0.03] rounded-xl border border-white/[0.05] divide-y divide-white/[0.04] text-left">
+            <div className="w-full bg-inputbg rounded-xl border  border-[var(--border-clr)] divide-y divide-white/[0.04] text-left">
               {[
                 ["Application ID", "FXC-FV-" + Math.floor(Math.random() * 90000 + 10000), true],
                 ["Card plan", plan?.name + " Forex Card"],
@@ -528,7 +528,7 @@ export default function ForexCardPage() {
               ].map(([k, val, mono], i) =>
                 k === "Status" ? (
                   <div key={i} className="flex justify-between px-4 py-3">
-                    <span className="text-white/35 text-sm">{k}</span>
+                    <span className="text-primary/50 text-sm">{k}</span>
                     <span className="flex items-center gap-1.5 text-amber-400 text-sm font-medium">
                       <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
                       Under review
@@ -536,8 +536,8 @@ export default function ForexCardPage() {
                   </div>
                 ) : (
                   <div key={i} className="flex justify-between px-4 py-3">
-                    <span className="text-white/35 text-sm">{k}</span>
-                    <span className={`text-white/65 text-sm font-medium ${mono ? "font-mono" : ""}`}>{val}</span>
+                    <span className="text-primary/50 text-sm">{k}</span>
+                    <span className={`text-primary/65 text-sm font-medium ${mono ? "font-mono" : ""}`}>{val}</span>
                   </div>
                 ),
               )}
@@ -548,7 +548,7 @@ export default function ForexCardPage() {
                 setStep(1);
                 setAgreed(false);
               }}
-              className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-sm transition-all shadow-lg shadow-emerald-500/20"
+              className="w-full py-3 rounded-xl bg-accent hover:bg-accent/80 text-white font-semibold text-sm transition-all shadow-md shadow-accent/30"
             >
               Apply for Another Card
             </button>
@@ -559,15 +559,15 @@ export default function ForexCardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0b0d12] p-4 md:p-8">
+    <div className="min-h-screen bg-base p-4 md:p-8">
       <div className="max-w-full mx-auto">
         {/* Header */}
         <div className="mb-6 fu">
           <div className="flex items-center gap-3 mb-1">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-accent/10 border  border-[var(--border-clr)] flex items-center justify-center">
               <svg
                 viewBox="0 0 20 20"
-                className="w-4 h-4 text-emerald-400"
+                className="w-4 h-4 text-accent"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.7"
@@ -579,14 +579,14 @@ export default function ForexCardPage() {
                 />
               </svg>
             </div>
-            <h1 className="text-white text-xl font-semibold tracking-tight">Apply for Forex Card</h1>
+            <h1 className="text-primary text-xl font-semibold tracking-tight">Apply for Forex Card</h1>
             {plan && (
               <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${c.badge}`}>
                 {plan.icon} {plan.name}
               </span>
             )}
           </div>
-          <p className="text-white/30 text-sm ml-11">
+          <p className="text-primary/50 text-sm ml-11">
             Multi-currency prepaid card for international travel · Powered by Visa
           </p>
         </div>
@@ -595,10 +595,10 @@ export default function ForexCardPage() {
           {/* ── MAIN FORM ── */}
           <div className="lg:col-span-2">
             <div
-              className="rounded-2xl bg-[#0f1117] border border-white/[0.07] shadow-2xl overflow-hidden fu"
+              className="rounded-2xl bg-card border  border-[var(--border-clr)] shadow-md overflow-hidden fu"
               style={{ animationDelay: ".05s" }}
             >
-              <div className={`h-px w-full bg-gradient-to-r from-transparent ${c.glow} to-transparent`} />
+              <div className={`h-px w-full bg-gradient-to-r from-bg-card ${c.glow} from-bg-card`} />
               <div className="px-7 pt-7 pb-6">
                 <StepBar current={step} />
 
@@ -643,7 +643,7 @@ export default function ForexCardPage() {
                                   />
                                 </svg>
                               </div>
-                              <p className="text-white/55 text-xs leading-relaxed">{perk}</p>
+                              <p className="text-primary/55 text-xs leading-relaxed">{perk}</p>
                             </div>
                           ))}
                         </div>
@@ -656,12 +656,12 @@ export default function ForexCardPage() {
                 {step === 2 && (
                   <div className="fu">
                     <SH n="2" title="Select currencies" sub={`Load up to ${maxCurr} currencies on your card`} />
-                    <div className="flex items-center justify-between mb-4 px-4 py-3 rounded-xl border border-white/[0.06] bg-white/[0.02]">
-                      <span className="text-white/40 text-sm">Slots used</span>
+                    <div className="flex items-center justify-between mb-4 px-4 py-3 rounded-xl border  border-[var(--border-clr)] bg-inputbg">
+                      <span className="text-primary/40 text-sm">Slots used</span>
                       <div className="flex items-center gap-3">
                         <span className={`text-sm font-bold mono ${c.text}`}>{selCurr.length}</span>
-                        <span className="text-white/25 text-sm">/ {maxCurr}</span>
-                        <div className="w-20 h-1.5 bg-white/[0.07] rounded-full overflow-hidden">
+                        <span className="text-primary/70 text-sm">/ {maxCurr}</span>
+                        <div className="w-20 h-1.5 bg-inputbg rounded-full overflow-hidden">
                           <div
                             className={`h-full rounded-full ${c.bar} transition-all duration-300`}
                             style={{ width: `${(selCurr.length / maxCurr) * 100}%` }}
@@ -680,12 +680,12 @@ export default function ForexCardPage() {
                             onClick={() => toggleCurr(cur.code)}
                             disabled={locked}
                             className={`flex items-center gap-2.5 px-3 py-3 rounded-xl border text-left transition-all duration-150
-                              ${sel ? `${c.ring} border` : locked ? "border-white/[0.04] bg-white/[0.015] opacity-30 cursor-not-allowed" : "border-white/[0.07] bg-white/[0.03] hover:border-white/[0.16] hover:bg-white/[0.06]"}`}
+                              ${sel ? `${c.ring} border` : locked ? " border-[var(--border-clr)] bg-inputbg opacity-30 cursor-not-allowed" : " border-[var(--border-clr)] bg-inputbg hover: border-[var(--border-clr)] hover:bg-inputbg"}`}
                           >
                             <span className="text-lg leading-none shrink-0">{cur.flag}</span>
                             <div className="min-w-0 flex-1">
-                              <p className={`text-xs font-bold mono ${sel ? c.text : "text-white/65"}`}>{cur.code}</p>
-                              <p className="text-[10px] text-white/25 truncate">{cur.name}</p>
+                              <p className={`text-xs font-bold mono ${sel ? c.text : "text-primary/65"}`}>{cur.code}</p>
+                              <p className="text-[10px] text-primary/70 truncate">{cur.name}</p>
                             </div>
                             {sel && (
                               <div
@@ -736,19 +736,19 @@ export default function ForexCardPage() {
                         })}
                       </div>
                     )}
-                    <div className="mt-5 pt-4 border-t border-white/[0.06]">
+                    <div className="mt-5 pt-4 border-t  border-[var(--border-clr)]">
                       <Field label="Initial load amount (₹)" required>
-                        <div className="flex items-stretch rounded-xl border border-white/[0.08] focus-within:border-emerald-500/45 overflow-hidden">
-                          <div className="flex items-center bg-white/[0.04] border-r border-white/[0.08] px-3 shrink-0">
-                            <span className="text-white/35 text-sm">₹</span>
+                        <div className="flex items-stretch rounded-xl border  border-[var(--border-clr)] focus-within:border-emerald-500/45 overflow-hidden">
+                          <div className="flex items-center bg-inputbg border-r  border-[var(--border-clr)] px-3 shrink-0">
+                            <span className="text-primary/50 text-sm">₹</span>
                           </div>
                           <input
                             {...register("initialLoad")}
                             placeholder="50,000"
-                            className="flex-1 bg-transparent outline-none text-white placeholder:text-white/20 text-sm px-3.5 py-3 mono"
+                            className="flex-1 bg-transparent outline-none text-primary placeholder:text-[var(--text-muted)] text-sm px-3.5 py-3 mono"
                           />
                         </div>
-                        <p className="text-white/22 text-[11px] mt-1.5">
+                        <p className="text-primary/22 text-[11px] mt-1.5">
                           Min ₹10,000 · Max ₹7,00,000 per LRS guidelines
                         </p>
                       </Field>
@@ -801,10 +801,10 @@ export default function ForexCardPage() {
                       </Field>
                       <Field label="Mobile number" required error={errors.mobile}>
                         <div
-                          className={`flex items-stretch rounded-xl border overflow-hidden transition-all ${errors.mobile ? "border-red-500/45" : "border-white/[0.08] focus-within:border-emerald-500/45"}`}
+                          className={`flex items-stretch rounded-xl border overflow-hidden transition-all ${errors.mobile ? "border-red-500/45" : " border-[var(--border-clr)] focus-within:border-emerald-500/45"}`}
                         >
-                          <div className="flex items-center bg-white/[0.04] border-r border-white/[0.08] px-3 shrink-0">
-                            <span className="text-white/35 text-sm mono">+91</span>
+                          <div className="flex items-center bg-inputbg border-r  border-[var(--border-clr)] px-3 shrink-0">
+                            <span className="text-primary/50 text-sm mono">+91</span>
                           </div>
                           <input
                             {...register("mobile", {
@@ -812,7 +812,7 @@ export default function ForexCardPage() {
                               pattern: { value: /^\d{10}$/, message: "10 digits" },
                             })}
                             placeholder="98765 43210"
-                            className="flex-1 bg-transparent outline-none text-white placeholder:text-white/20 text-sm px-3.5 py-3 mono"
+                            className="flex-1 bg-transparent outline-none text-primary placeholder:text-[var(--text-muted)] text-sm px-3.5 py-3 mono"
                           />
                         </div>
                         <ErrMsg msg={errors.mobile?.message} />
@@ -871,7 +871,7 @@ export default function ForexCardPage() {
                                   type="button"
                                   onClick={() => field.onChange(p)}
                                   className={`px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all
-                                    ${field.value === p ? `${c.ring} border ${c.text}` : "bg-white/[0.04] border-white/[0.08] text-white/45 hover:text-white/70 hover:border-white/[0.16]"}`}
+                                    ${field.value === p ? `${c.ring} border ${c.text}` : "bg-inputbg  border-[var(--border-clr)] text-primary/45 hover:text-primary/70 hover: border-[var(--border-clr)]"}`}
                                 >
                                   {p}
                                 </button>
@@ -909,7 +909,7 @@ export default function ForexCardPage() {
                           placeholder="Leave blank to deliver to registered address"
                           className={inputCls(false)}
                         />
-                        <p className="text-white/22 text-[11px] mt-1.5">
+                        <p className="text-primary/22 text-[11px] mt-1.5">
                           Card delivered in 5–7 business days after KYC approval
                         </p>
                       </Field>
@@ -1020,7 +1020,7 @@ export default function ForexCardPage() {
                       className="mt-4 flex items-start gap-2.5 text-left group w-full"
                     >
                       <div
-                        className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 mt-0.5 transition-all ${agreed ? "bg-emerald-500 border-emerald-500" : "border-white/20 group-hover:border-white/40"}`}
+                        className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 mt-0.5 transition-all ${agreed ? "bg-accent border-emerald-500" : "border-white/20 group-hover:border-white/40"}`}
                         style={{ minWidth: "16px" }}
                       >
                         {agreed && (
@@ -1036,7 +1036,7 @@ export default function ForexCardPage() {
                         )}
                       </div>
                       <p
-                        className={`text-xs leading-relaxed transition-colors ${agreed ? "text-white/50" : "text-white/28 group-hover:text-white/40"}`}
+                        className={`text-xs leading-relaxed transition-colors ${agreed ? "text-primary/75" : "text-primary/28 group-hover:text-primary/40"}`}
                       >
                         I confirm all information is accurate and authorise FinVault to issue a forex card and debit my
                         registered account for the initial load amount, in compliance with RBI FEMA / LRS regulations.
@@ -1051,7 +1051,7 @@ export default function ForexCardPage() {
                     <button
                       type="button"
                       onClick={() => setStep((s) => s - 1)}
-                      className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white/50 hover:text-white hover:bg-white/[0.09] text-sm font-medium transition-all"
+                      className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-inputbg border  border-[var(--border-clr)] text-primary/75 hover:text-primary hover:bg-inputbg text-sm font-medium transition-all"
                     >
                       <svg
                         viewBox="0 0 14 14"
@@ -1069,7 +1069,7 @@ export default function ForexCardPage() {
                     <button
                       type="button"
                       onClick={next}
-                      className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-white text-sm font-semibold transition-all shadow-lg ${c.btn}`}
+                      className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-primary text-sm font-semibold transition-all shadow-md ${c.btn}`}
                     >
                       Continue
                       <svg
@@ -1088,7 +1088,7 @@ export default function ForexCardPage() {
                       onClick={handleSubmit(onSubmit)}
                       disabled={!agreed || loading}
                       className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold transition-all
-                        ${agreed && !loading ? `text-white shadow-lg ${c.btn}` : "bg-white/[0.06] border border-white/[0.08] text-white/30 cursor-not-allowed"}`}
+                        ${agreed && !loading ? `text-primary shadow-md ${c.btn}` : "bg-inputbg border  border-[var(--border-clr)] text-primary/50 cursor-not-allowed"}`}
                     >
                       {loading ? (
                         <>
@@ -1130,12 +1130,12 @@ export default function ForexCardPage() {
           <div className="flex flex-col gap-4">
             {/* Card preview */}
             <div
-              className="rounded-2xl bg-[#0f1117] border border-white/[0.07] overflow-hidden shadow-xl fu"
+              className="rounded-2xl bg-card border  border-[var(--border-clr)] overflow-hidden shadow-xl fu"
               style={{ animationDelay: ".08s" }}
             >
-              <div className={`h-px w-full bg-gradient-to-r from-transparent ${c.glow} to-transparent`} />
+              <div className={`h-px w-full bg-gradient-to-r from-bg-card ${c.glow} from-bg-card`} />
               <div className="px-5 pt-5 pb-5">
-                <p className="text-white font-semibold text-sm mb-4">Card Preview</p>
+                <p className="text-primary font-semibold text-sm mb-4">Card Preview</p>
                 {plan ? (
                   <div className="si">
                     <CardPreview plan={plan} selected={false} />
@@ -1147,15 +1147,15 @@ export default function ForexCardPage() {
                         ["Currencies", plan.currencies],
                       ].map(([k, v]) => (
                         <div key={k} className="flex justify-between">
-                          <span className="text-white/28 text-xs">{k}</span>
+                          <span className="text-primary/28 text-xs">{k}</span>
                           <span className={`text-xs font-semibold mono ${c.text}`}>{v}</span>
                         </div>
                       ))}
                     </div>
                   </div>
                 ) : (
-                  <div className="h-32 rounded-xl border-2 border-dashed border-white/[0.07] flex items-center justify-center">
-                    <p className="text-white/18 text-xs">Select a plan to preview</p>
+                  <div className="h-32 rounded-xl border-2 border-dashed  border-[var(--border-clr)] flex items-center justify-center">
+                    <p className="text-primary/18 text-xs">Select a plan to preview</p>
                   </div>
                 )}
               </div>
@@ -1163,13 +1163,13 @@ export default function ForexCardPage() {
 
             {/* Currencies loaded */}
             <div
-              className="rounded-2xl bg-[#0f1117] border border-white/[0.07] overflow-hidden shadow-xl fu"
+              className="rounded-2xl bg-card border  border-[var(--border-clr)] overflow-hidden shadow-xl fu"
               style={{ animationDelay: ".12s" }}
             >
-              <div className="h-px w-full bg-gradient-to-r from-transparent via-violet-500/35 to-transparent" />
+              <div className="h-px w-full bg-gradient-to-r from-bg-card via-violet-500/35 from-bg-card" />
               <div className="px-5 pt-5 pb-5">
                 <div className="flex items-center justify-between mb-3">
-                  <p className="text-white font-semibold text-sm">Loaded Currencies</p>
+                  <p className="text-primary font-semibold text-sm">Loaded Currencies</p>
                   <span className={`text-xs font-bold mono ${c.text}`}>
                     {selCurr.length}/{maxCurr}
                   </span>
@@ -1180,10 +1180,10 @@ export default function ForexCardPage() {
                     return (
                       <span
                         key={code}
-                        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/[0.05] border border-white/[0.07] text-xs"
+                        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-inputbg border  border-[var(--border-clr)] text-xs"
                       >
                         <span>{cur?.flag}</span>
-                        <span className="text-white/60 font-mono font-medium">{code}</span>
+                        <span className="text-primary/60 font-mono font-medium">{code}</span>
                       </span>
                     );
                   })}
@@ -1193,12 +1193,12 @@ export default function ForexCardPage() {
 
             {/* Why FinVault forex card */}
             <div
-              className="rounded-2xl bg-[#0f1117] border border-white/[0.07] overflow-hidden shadow-xl fu"
+              className="rounded-2xl bg-card border  border-[var(--border-clr)] overflow-hidden shadow-xl fu"
               style={{ animationDelay: ".16s" }}
             >
-              <div className="h-px w-full bg-gradient-to-r from-transparent via-cyan-500/35 to-transparent" />
+              <div className="h-px w-full bg-gradient-to-r from-bg-card via-cyan-500/35 from-bg-card" />
               <div className="px-5 pt-5 pb-5">
-                <p className="text-white font-semibold text-sm mb-3.5">Why FinVault Forex?</p>
+                <p className="text-primary font-semibold text-sm mb-3.5">Why FinVault Forex?</p>
                 {[
                   { e: "⚡", t: "Instant app reload", s: "Add funds anytime, anywhere" },
                   { e: "🔒", t: "Rate lock", s: "Lock exchange rates pre-travel" },
@@ -1209,8 +1209,8 @@ export default function ForexCardPage() {
                   <div key={f.t} className="flex items-start gap-2.5 mb-3 last:mb-0">
                     <span className="text-base shrink-0 mt-0.5">{f.e}</span>
                     <div>
-                      <p className="text-white/65 text-xs font-medium">{f.t}</p>
-                      <p className="text-white/25 text-[11px]">{f.s}</p>
+                      <p className="text-primary/65 text-xs font-medium">{f.t}</p>
+                      <p className="text-primary/70 text-[11px]">{f.s}</p>
                     </div>
                   </div>
                 ))}
@@ -1219,20 +1219,20 @@ export default function ForexCardPage() {
 
             {/* Progress */}
             <div
-              className="rounded-2xl bg-[#0f1117] border border-white/[0.07] px-5 py-4 fu"
+              className="rounded-2xl bg-card border  border-[var(--border-clr)] px-5 py-4 fu"
               style={{ animationDelay: ".2s" }}
             >
               <div className="flex justify-between items-center mb-2">
-                <p className="text-white/40 text-xs font-medium">Application progress</p>
+                <p className="text-primary/40 text-xs font-medium">Application progress</p>
                 <p className={`text-xs font-semibold mono ${c.text}`}>{Math.round(((step - 1) / 5) * 100)}%</p>
               </div>
-              <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+              <div className="h-1.5 bg-inputbg rounded-full overflow-hidden">
                 <div
                   className={`h-full rounded-full ${c.bar} transition-all duration-500`}
                   style={{ width: `${((step - 1) / 5) * 100}%` }}
                 />
               </div>
-              <p className="text-white/20 text-[11px] mt-2">
+              <p className="text-primary/20 text-[11px] mt-2">
                 Step {step} of 6 — {STEPS[step - 1].label}
               </p>
             </div>

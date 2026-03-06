@@ -29,13 +29,16 @@ const fmtTimeStampDate = (timestamp) => {
 };
 
 const statusStyle = {
-  completed: { bg: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20", dot: "bg-emerald-400" },
+  completed: {
+    bg: "bg-accent/10 text-accent  border-[var(--border-clr)]",
+    dot: "bg-accent",
+  },
   pending: { bg: "bg-amber-500/10  text-amber-400  border-amber-500/20", dot: "bg-amber-400" },
   failed: { bg: "bg-red-500/10    text-red-400    border-red-500/20", dot: "bg-red-400" },
 };
 
 const categoryIcon = {
-  Revenue: { bg: "bg-emerald-500/10", icon: "💰" },
+  Revenue: { bg: "bg-accent/10", icon: "💰" },
   Cloud: { bg: "bg-blue-500/10", icon: "☁️" },
   HR: { bg: "bg-violet-500/10", icon: "👥" },
   Refund: { bg: "bg-cyan-500/10", icon: "↩" },
@@ -45,7 +48,7 @@ const categoryIcon = {
   Services: { bg: "bg-teal-500/10", icon: "🔧" },
   Operations: { bg: "bg-yellow-500/10", icon: "🏢" },
   Tax: { bg: "bg-red-500/10", icon: "📋" },
-  Funding: { bg: "bg-emerald-500/10", icon: "🚀" },
+  Funding: { bg: "bg-accent/10", icon: "🚀" },
 };
 
 // ── Sub-components ────────────────────────────────────────
@@ -55,14 +58,14 @@ const FilterPill = ({ label, active, onClick, count }) => (
     className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 whitespace-nowrap flex items-center gap-1.5 border
       ${
         active
-          ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/25"
-          : "bg-white/[0.04] text-white/45 border-white/[0.06] hover:text-white/70 hover:bg-white/[0.07]"
+          ? "bg-accent/10 text-accent border-emerald-500/25"
+          : "bg-inputbg text-primary/45  border-[var(--border-clr)] hover:text-primary/70 hover:bg-inputbg"
       }`}
   >
     {label}
     {count != null && (
       <span
-        className={`text-[10px] rounded-full px-1.5 py-0.5 font-semibold ${active ? "bg-emerald-500/20" : "bg-white/[0.08]"}`}
+        className={`text-[10px] rounded-full px-1.5 py-0.5 font-semibold ${active ? "bg-accent/20" : "bg-inputbg"}`}
       >
         {count}
       </span>
@@ -88,24 +91,24 @@ const Pagination = ({ page, totalPages, onPage, pageSize, onPageSize, total, fro
   }, [page, totalPages]);
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-5 py-4 border-t border-white/[0.05]">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-5 py-4 border-t  border-[var(--border-clr)]">
       {/* Info + page size */}
       <div className="flex items-center gap-4">
-        <span className="text-white/30 text-xs font-mono">
+        <span className="text-primary/50 text-xs font-mono">
           Showing{" "}
-          <span className="text-white/60">
+          <span className="text-primary/60">
             {from}–{to}
           </span>{" "}
-          of <span className="text-white/60">{total}</span>
+          of <span className="text-primary/60">{total}</span>
         </span>
         <div className="flex items-center gap-1.5">
-          <span className="text-white/25 text-xs">Rows:</span>
+          <span className="text-primary/70 text-xs">Rows:</span>
           <div className="flex gap-1">
             {PAGE_SIZES.map((s) => (
               <button
                 key={s}
                 onClick={() => onPageSize(s)}
-                className={`w-7 h-6 rounded text-xs font-medium transition-all ${pageSize === s ? "bg-emerald-500/15 text-emerald-400" : "text-white/30 hover:text-white/60 hover:bg-white/[0.05]"}`}
+                className={`w-7 h-6 rounded text-xs font-medium transition-all ${pageSize === s ? "bg-accent/15 text-accent" : "text-primary/50 hover:text-primary/60 hover:bg-inputbg"}`}
               >
                 {s}
               </button>
@@ -119,13 +122,13 @@ const Pagination = ({ page, totalPages, onPage, pageSize, onPageSize, total, fro
         <button
           onClick={() => onPage(page - 1)}
           disabled={page === 1}
-          className="w-8 h-8 rounded-lg flex items-center justify-center text-white/30 hover:text-white hover:bg-white/[0.06] disabled:opacity-30 disabled:cursor-not-allowed transition-all text-sm"
+          className="w-8 h-8 rounded-lg flex items-center justify-center text-primary/50 hover:text-primary hover:bg-inputbg disabled:opacity-30 disabled:cursor-not-allowed transition-all text-sm"
         >
           ‹
         </button>
         {pages.map((p, i) =>
           p === "…" ? (
-            <span key={`e${i}`} className="w-8 h-8 flex items-center justify-center text-white/20 text-xs">
+            <span key={`e${i}`} className="w-8 h-8 flex items-center justify-center text-primary/20 text-xs">
               …
             </span>
           ) : (
@@ -133,7 +136,7 @@ const Pagination = ({ page, totalPages, onPage, pageSize, onPageSize, total, fro
               key={p}
               onClick={() => onPage(p)}
               className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-medium transition-all
-                ${p === page ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20" : "text-white/40 hover:text-white hover:bg-white/[0.06]"}`}
+                ${p === page ? "bg-accent text-primary shadow-md shadow-accent/30" : "text-primary/40 hover:text-primary hover:bg-inputbg"}`}
             >
               {p}
             </button>
@@ -142,7 +145,7 @@ const Pagination = ({ page, totalPages, onPage, pageSize, onPageSize, total, fro
         <button
           onClick={() => onPage(page + 1)}
           disabled={page === totalPages}
-          className="w-8 h-8 rounded-lg flex items-center justify-center text-white/30 hover:text-white hover:bg-white/[0.06] disabled:opacity-30 disabled:cursor-not-allowed transition-all text-sm"
+          className="w-8 h-8 rounded-lg flex items-center justify-center text-primary/50 hover:text-primary hover:bg-inputbg disabled:opacity-30 disabled:cursor-not-allowed transition-all text-sm"
         >
           ›
         </button>
@@ -251,11 +254,11 @@ export default function TransactionsTable({ data = [] }) {
         <div className="fade-up mb-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div>
-              <h1 className="text-white text-xl font-semibold tracking-tight">Transactions</h1>
-              <p className="text-white/35 text-sm mt-0.5">{filtered.length} records · last updated just now</p>
+              <h1 className="text-primary text-xl font-semibold tracking-tight">Transactions</h1>
+              <p className="text-primary/50 text-sm mt-0.5">{filtered.length} records · last updated just now</p>
             </div>
             <div className="flex items-center gap-2">
-              <button className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white/50 hover:text-white/80 hover:bg-white/[0.08] text-sm font-medium transition-all">
+              <button className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-inputbg border  border-[var(--border-clr)] text-primary/75 hover:text-primary/80 hover:bg-inputbg text-sm font-medium transition-all">
                 <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h10M5 8h6M7 13h2" />
                 </svg>
@@ -263,7 +266,7 @@ export default function TransactionsTable({ data = [] }) {
               </button>
               <Link
                 href={"/app/send-money"}
-                className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white text-sm font-semibold transition-all shadow-lg shadow-emerald-500/20"
+                className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-accent hover:bg-accent/80 text-white text-sm font-semibold transition-all shadow-md shadow-accent/30"
               >
                 <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8 2v12M2 8h12" />
@@ -276,17 +279,17 @@ export default function TransactionsTable({ data = [] }) {
           {/* Summary stat strip */}
           {/* <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
             {[
-              { label: "Total Transactions", value: ALL_TRANSACTIONS.length, suffix: "records", color: "text-white" },
-              { label: "Total Inflow", value: fmtAmount(totalCredit), color: "text-emerald-400" },
+              { label: "Total Transactions", value: ALL_TRANSACTIONS.length, suffix: "records", color: "text-primary" },
+              { label: "Total Inflow", value: fmtAmount(totalCredit), color: "text-accent" },
               { label: "Total Outflow", value: fmtAmount(totalDebit), color: "text-red-400" },
               {
                 label: "Net Balance",
                 value: fmtAmount(totalCredit - totalDebit),
-                color: totalCredit - totalDebit >= 0 ? "text-emerald-400" : "text-red-400",
+                color: totalCredit - totalDebit >= 0 ? "text-accent" : "text-red-400",
               },
             ].map((s) => (
-              <div key={s.label} className="bg-[#13161f] border border-white/[0.06] rounded-xl px-4 py-3">
-                <p className="text-white/35 text-[11px] uppercase tracking-wider font-medium mb-1">{s.label}</p>
+              <div key={s.label} className="bg-card2 border  border-[var(--border-clr)] rounded-xl px-4 py-3">
+                <p className="text-primary/50 text-[11px] uppercase tracking-wider font-medium mb-1">{s.label}</p>
                 <p className={`${s.color} font-semibold text-base mono leading-tight`}>{s.value}</p>
               </div>
             ))}
@@ -294,17 +297,17 @@ export default function TransactionsTable({ data = [] }) {
         </div>
 
         {/* ── Main panel ── */}
-        <div className="fade-up bg-[#0f1117] rounded-2xl border border-white/[0.07] overflow-hidden shadow-2xl">
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
+        <div className="fade-up bg-card rounded-2xl border  border-[var(--border-clr)] overflow-hidden shadow-md">
+          <div className="h-px w-full bg-gradient-to-r from-bg-card via-emerald-500/40 from-bg-card" />
 
           {/* ── Toolbar ── */}
-          <div className="px-5 py-4 border-b border-white/[0.05]">
+          <div className="px-5 py-4 border-b  border-[var(--border-clr)]">
             <div className="flex flex-col sm:flex-row gap-3">
               {/* Search */}
-              <div className="flex-1 flex items-center gap-2.5 bg-white/[0.04] border border-white/[0.07] rounded-xl px-3.5 py-2.5 focus-within:border-emerald-500/40 transition-all">
+              <div className="flex-1 flex items-center gap-2.5 bg-inputbg border  border-[var(--border-clr)] rounded-xl px-3.5 py-2.5 focus-within:border-accent/50 transition-all">
                 <svg
                   viewBox="0 0 16 16"
-                  className="w-3.5 h-3.5 text-white/30 shrink-0"
+                  className="w-3.5 h-3.5 text-primary/50 shrink-0"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.8"
@@ -319,12 +322,12 @@ export default function TransactionsTable({ data = [] }) {
                     setPage(1);
                   }}
                   placeholder="Search by Transaction ID or Reference ID"
-                  className="bg-transparent flex-1 outline-none text-sm text-white placeholder:text-white/25"
+                  className="bg-transparent flex-1 outline-none text-sm text-primary placeholder:text-primary/70"
                 />
                 {search && (
                   <button
                     onClick={() => setSearch("")}
-                    className="text-white/25 hover:text-white/60 transition-colors text-xs"
+                    className="text-primary/70 hover:text-primary/60 transition-colors text-xs"
                   >
                     ✕
                   </button>
@@ -352,14 +355,14 @@ export default function TransactionsTable({ data = [] }) {
               <button
                 onClick={() => setFiltersOpen((v) => !v)}
                 className={`flex items-center gap-2 px-3.5 py-2 rounded-xl border text-sm font-medium transition-all shrink-0
-                  ${filtersOpen ? "bg-emerald-500/10 border-emerald-500/25 text-emerald-400" : "bg-white/[0.04] border-white/[0.07] text-white/45 hover:text-white/70"}`}
+                  ${filtersOpen ? "bg-accent/10 border-emerald-500/25 text-accent" : "bg-inputbg  border-[var(--border-clr)] text-primary/45 hover:text-primary/70"}`}
               >
                 <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
                   <path strokeLinecap="round" d="M2 4h12M5 8h6M7 12h2" />
                 </svg>
                 Filters
                 {(currencyFilter !== "All" || statusFilter !== "All") && (
-                  <span className="w-4 h-4 rounded-full bg-emerald-500 text-white text-[9px] font-bold flex items-center justify-center">
+                  <span className="w-4 h-4 rounded-full bg-accent text-primary text-[9px] font-bold flex items-center justify-center">
                     {(currencyFilter !== "All" ? 1 : 0) + (statusFilter !== "All" ? 1 : 0)}
                   </span>
                 )}
@@ -368,9 +371,9 @@ export default function TransactionsTable({ data = [] }) {
 
             {/* Expanded filters */}
             {filtersOpen && (
-              <div className="mt-3 pt-3 border-t border-white/[0.05] flex flex-col gap-3">
+              <div className="mt-3 pt-3 border-t  border-[var(--border-clr)] flex flex-col gap-3">
                 <div>
-                  <p className="text-white/25 text-[10px] uppercase tracking-widest mb-2">Currency</p>
+                  <p className="text-primary/70 text-[10px] uppercase tracking-widest mb-2">Currency</p>
                   <div className="flex flex-wrap gap-1.5">
                     {["All", ...CURRENCIES?.map((c) => c.code)].map((c) => {
                       const cnt = c === "All" ? null : data?.content?.filter((t) => t.currency === c).length;
@@ -390,7 +393,7 @@ export default function TransactionsTable({ data = [] }) {
                   </div>
                 </div>
                 <div>
-                  <p className="text-white/25 text-[10px] uppercase tracking-widest mb-2">Status</p>
+                  <p className="text-primary/70 text-[10px] uppercase tracking-widest mb-2">Status</p>
                   <div className="flex flex-wrap gap-1.5">
                     {STATUSES.map((s) => {
                       const cnt = s === "All" ? null : data?.content?.filter((t) => t.status === s).length;
@@ -430,12 +433,12 @@ export default function TransactionsTable({ data = [] }) {
           <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/[0.05]">
+                <tr className="border-b  border-[var(--border-clr)]">
                   <th className="px-5 py-3.5 w-10">
                     <div
                       onClick={toggleAll}
                       className={`w-4 h-4 rounded border-2 flex items-center justify-center cursor-pointer transition-all
-                        ${allSelected ? "bg-emerald-500 border-emerald-500" : "border-white/20 hover:border-white/40"}`}
+                        ${allSelected ? "bg-accent border-emerald-500" : "border-white/20 hover:border-white/40"}`}
                     >
                       {allSelected && (
                         <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none">
@@ -454,7 +457,7 @@ export default function TransactionsTable({ data = [] }) {
                     <th
                       key={col.key}
                       onClick={() => handleSort(col.key)}
-                      className={`px-4 py-3.5 text-left text-[11px] font-semibold text-white/30 uppercase tracking-wider cursor-pointer hover:text-white/60 transition-colors select-none
+                      className={`px-4 py-3.5 text-left text-[11px] font-semibold text-primary/50 uppercase tracking-wider cursor-pointer hover:text-primary/60 transition-colors select-none
                         ${col.right ? "text-right" : ""}`}
                     >
                       <span className="flex items-center gap-1 w-full justify-start">
@@ -469,7 +472,7 @@ export default function TransactionsTable({ data = [] }) {
               <tbody>
                 {paginated.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="text-center py-16 text-white/20 text-sm">
+                    <td colSpan={7} className="text-center py-16 text-primary/20 text-sm">
                       <div className="flex flex-col items-center gap-2">
                         <span className="text-3xl opacity-30">◎</span>
                         No transactions found
@@ -478,14 +481,14 @@ export default function TransactionsTable({ data = [] }) {
                   </tr>
                 ) : (
                   paginated.map((tx, i) => {
-                    const cat = categoryIcon["Transfer"] || { bg: "bg-white/[0.06]", icon: "•" };
+                    const cat = categoryIcon["Transfer"] || { bg: "bg-inputbg", icon: "•" };
                     const stat = statusStyle[tx.status];
                     const isSel = selected.has(tx._id);
                     return (
                       <tr
                         key={tx._id}
-                        className={`border-b border-white/[0.04] last:border-0 transition-all group cursor-pointer
-                        ${isSel ? "bg-emerald-500/[0.04]" : "hover:bg-white/[0.025]"}`}
+                        className={`border-b  border-[var(--border-clr)] last:border-0 transition-all group cursor-pointer
+                        ${isSel ? "bg-accent/[0.04]" : "hover:bg-inputbg"}`}
                         onClick={() => setDetailRow(tx)}
                       >
                         {/* select */}
@@ -498,7 +501,7 @@ export default function TransactionsTable({ data = [] }) {
                         >
                           <div
                             className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-all
-                          ${isSel ? "bg-emerald-500 border-emerald-500" : "border-white/15 hover:border-white/35"}`}
+                          ${isSel ? "bg-accent border-emerald-500" : "border-white/15 hover:border-white/35"}`}
                           >
                             {isSel && (
                               <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none">
@@ -531,29 +534,29 @@ export default function TransactionsTable({ data = [] }) {
                               {cat.icon}
                             </div>
                             <div>
-                              <p className="text-white/85 font-medium text-sm leading-tight">{tx.transactionId}</p>
-                              <p className="text-white/30 text-xs mt-0.5 mono">{tx.referenceId}</p>
+                              <p className="text-primary/85 font-medium text-sm leading-tight">{tx.transactionId}</p>
+                              <p className="text-primary/50 text-xs mt-0.5 mono">{tx.referenceId}</p>
                             </div>
                           </div>
                         </td>
                         {/* Date */}
                         <td className="px-4 py-3.5">
-                          <p className="text-white/55 text-sm">{fmtTimeStampDate(tx.createdAt)}</p>
+                          <p className="text-primary/55 text-sm">{fmtTimeStampDate(tx.createdAt)}</p>
                         </td>
                         {/* remitter */}
                         <td className="px-4 py-3.5">
-                          <span className="text-xs font-medium mono text-white/40 bg-white/[0.05] border border-white/[0.07] px-2 py-1 rounded-md">
+                          <span className="text-xs font-medium mono text-primary/40 bg-inputbg border  border-[var(--border-clr)] px-2 py-1 rounded-md">
                             {tx.user?.firstName} {tx.user?.lastName}
                           </span>
                         </td>
                         <td className="px-4 py-3.5">
-                          <span className="text-xs font-medium mono text-white/40 px-2 py-1 rounded-md">
+                          <span className="text-xs font-medium mono text-primary/40 px-2 py-1 rounded-md">
                             {tx.vendor}
                           </span>
                         </td>
                         {/* Amount */}
                         <td className="px-4 py-3.5 text-right">
-                          <p className={`font-semibold text-sm mono text-emerald-400`}>
+                          <p className={`font-semibold text-sm mono text-accent`}>
                             {fmtAmount(tx.amount, tx.currency)}
                           </p>
                         </td>
@@ -561,7 +564,7 @@ export default function TransactionsTable({ data = [] }) {
                         <td className="px-4 py-3.5">
                           <svg
                             viewBox="0 0 8 12"
-                            className="w-2 h-3 text-white/15 group-hover:text-white/40 transition-colors"
+                            className="w-2 h-3 text-primary/15 group-hover:text-primary/40 transition-colors"
                             fill="none"
                             stroke="currentColor"
                             strokeWidth="1.8"
@@ -580,31 +583,29 @@ export default function TransactionsTable({ data = [] }) {
           {/* ── Mobile card list ── */}
           <div className="md:hidden divide-y divide-white/[0.04]">
             {paginated.length === 0 ? (
-              <div className="text-center py-12 text-white/20 text-sm">No transactions found</div>
+              <div className="text-center py-12 text-primary/20 text-sm">No transactions found</div>
             ) : (
               paginated.map((tx) => {
-                const cat = categoryIcon["Transfer"] || { bg: "bg-white/[0.06]", icon: "•" };
+                const cat = categoryIcon["Transfer"] || { bg: "bg-inputbg", icon: "•" };
                 const stat = statusStyle[tx.status];
                 return (
                   <div
                     key={tx._id}
                     onClick={() => setDetailRow(tx)}
-                    className="flex items-center gap-3 px-5 py-4 hover:bg-white/[0.025] transition-all cursor-pointer"
+                    className="flex items-center gap-3 px-5 py-4 hover:bg-inputbg transition-all cursor-pointer"
                   >
                     <div className={`w-9 h-9 rounded-lg ${cat.bg} flex items-center justify-center text-sm shrink-0`}>
                       {cat.icon}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-white/85 font-medium text-sm truncate">{tx.transactionId}</p>
+                      <p className="text-primary/85 font-medium text-sm truncate">{tx.transactionId}</p>
                       <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-white/30 text-xs mono">{tx.referenceId}</span>
+                        <span className="text-primary/50 text-xs mono">{tx.referenceId}</span>
                       </div>
                     </div>
                     <div className="text-right shrink-0">
-                      <p className={`font-semibold text-sm mono text-emerald-400`}>
-                        {fmtAmount(tx.amount, tx.currency)}
-                      </p>
-                      <p className="text-white/25 text-xs">{fmtTimeStampDate(tx.createdAt)}</p>
+                      <p className={`font-semibold text-sm mono text-accent`}>{fmtAmount(tx.amount, tx.currency)}</p>
+                      <p className="text-primary/70 text-xs">{fmtTimeStampDate(tx.createdAt)}</p>
                     </div>
                   </div>
                 );
@@ -614,18 +615,18 @@ export default function TransactionsTable({ data = [] }) {
 
           {/* ── Bulk action bar ── */}
           {selected.size > 0 && (
-            <div className="m-2 px-4 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-3">
-              <span className="text-emerald-400 text-sm font-medium">{selected.size} selected</span>
+            <div className="m-2 px-4 py-3 rounded-xl bg-accent/10 border  border-[var(--border-clr)] flex items-center gap-3">
+              <span className="text-accent text-sm font-medium">{selected.size} selected</span>
               <div className="flex-1" />
-              <button className="text-xs text-white/50 hover:text-white/80 transition-colors px-3 py-1.5 rounded-lg hover:bg-white/[0.05]">
+              <button className="text-xs text-primary/75 hover:text-primary/80 transition-colors px-3 py-1.5 rounded-lg hover:bg-inputbg">
                 Export
               </button>
-              <button className="text-xs text-white/50 hover:text-white/80 transition-colors px-3 py-1.5 rounded-lg hover:bg-white/[0.05]">
+              <button className="text-xs text-primary/75 hover:text-primary/80 transition-colors px-3 py-1.5 rounded-lg hover:bg-inputbg">
                 Mark reviewed
               </button>
               <button
                 onClick={() => setSelected(new Set())}
-                className="text-xs text-white/30 hover:text-white/60 transition-colors"
+                className="text-xs text-primary/50 hover:text-primary/60 transition-colors"
               >
                 ✕ Clear
               </button>
@@ -655,27 +656,27 @@ export default function TransactionsTable({ data = [] }) {
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" onClick={() => setDetailRow(null)} />
           <div
             ref={detailRef}
-            className="fixed right-0 top-0 h-full w-full md:max-w-xl bg-[#0f1117] border-l border-white/[0.07] z-50 flex flex-col shadow-2xl slide-in"
+            className="fixed right-0 top-0 h-full w-full md:max-w-xl bg-card border-l  border-[var(--border-clr)] z-50 flex flex-col shadow-md slide-in"
           >
-            <div className="h-px w-full bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
+            <div className="h-px w-full bg-gradient-to-r from-bg-card via-emerald-500/40 from-bg-card" />
 
             {/* Drawer header */}
-            <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.06]">
+            <div className="flex items-center justify-between px-6 py-5 border-b  border-[var(--border-clr)]">
               <div className="flex items-center gap-3">
                 <div
-                  className={`w-9 h-9 rounded-lg ${(categoryIcon["Transfer"] || { bg: "bg-white/[0.06]" }).bg} flex items-center justify-center text-sm`}
+                  className={`w-9 h-9 rounded-lg ${(categoryIcon["Transfer"] || { bg: "bg-inputbg" }).bg} flex items-center justify-center text-sm`}
                 >
                   {(categoryIcon["Transfer"] || { icon: "•" }).icon}
                 </div>
                 <div>
-                  <p className="text-white font-semibold text-sm">{detailRow.transactionId} </p>
+                  <p className="text-primary font-semibold text-sm">{detailRow.transactionId} </p>
                 </div>
               </div>
 
               {/* close icon */}
               <button
                 onClick={() => setDetailRow(null)}
-                className="text-white/25 hover:text-white/60 hover:bg-white/[0.06] rounded-lg p-1.5 transition-all"
+                className="text-primary/70 hover:text-primary/60 hover:bg-inputbg rounded-lg p-1.5 transition-all"
               >
                 <svg viewBox="0 0 14 14" className="w-4 h-4" fill="currentColor">
                   <path d="M3.293 3.293a1 1 0 011.414 0L7 5.586l2.293-2.293a1 1 0 111.414 1.414L8.414 7l2.293 2.293a1 1 0 01-1.414 1.414L7 8.414l-2.293 2.293a1 1 0 01-1.414-1.414L5.586 7 3.293 4.707a1 1 0 010-1.414z" />
@@ -684,9 +685,9 @@ export default function TransactionsTable({ data = [] }) {
             </div>
 
             {/* Amount hero */}
-            <div className="px-6 py-6 border-b border-white/[0.06]">
+            <div className="px-6 py-6 border-b  border-[var(--border-clr)]">
               <div className="flex justify-between">
-                <p className="text-white/35 text-xs uppercase tracking-wider mb-1">Amount </p>
+                <p className="text-primary/50 text-xs uppercase tracking-wider mb-1">Amount </p>
 
                 <span
                   className={`inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full border ${statusStyle[detailRow.status].bg}`}
@@ -695,18 +696,16 @@ export default function TransactionsTable({ data = [] }) {
                   <span className="capitalize">{detailRow.status}</span>
                 </span>
               </div>
-              <p className={`text-3xl font-bold mono text-emerald-400`}>
-                {fmtAmount(detailRow.amount, detailRow.currency)}
-              </p>
+              <p className={`text-3xl font-bold mono text-accent`}>{fmtAmount(detailRow.amount, detailRow.currency)}</p>
               <div className="flex items-center gap-2 mt-2">
-                <span className="text-white/25 text-xs">{fmtTimeStampDate(detailRow.createdAt)}</span>
+                <span className="text-primary/70 text-xs">{fmtTimeStampDate(detailRow.createdAt)}</span>
               </div>
             </div>
 
             {/* Details list */}
             <div className="flex-1 px-6 py-4 space-y-5 overflow-y-auto">
-              <h1 className="text-white text-sm mb-3">Transaction Details</h1>
-              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] divide-y divide-white/[0.04] overflow-hidden">
+              <h1 className="text-primary text-sm mb-3">Transaction Details</h1>
+              <div className="rounded-xl border  border-[var(--border-clr)] bg-inputbg divide-y divide-white/[0.04] overflow-hidden">
                 {[
                   ["Transaction ID", detailRow.transactionId],
                   ["Ref. ID", detailRow.referenceId],
@@ -714,28 +713,28 @@ export default function TransactionsTable({ data = [] }) {
                   ["Vendor", detailRow.vendor],
                 ].map(([k, v]) => (
                   <div key={k} className="flex items-center justify-between px-4 py-3">
-                    <span className="text-white/35 text-sm">{k}</span>
-                    <span className="text-white/75 text-sm font-medium mono">{v}</span>
+                    <span className="text-primary/50 text-sm">{k}</span>
+                    <span className="text-primary/75 text-sm font-medium mono">{v}</span>
                   </div>
                 ))}
               </div>
 
-              <h1 className="text-white text-sm mb-3">Remitter Details</h1>
-              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] divide-y divide-white/[0.04] overflow-hidden">
+              <h1 className="text-primary text-sm mb-3">Remitter Details</h1>
+              <div className="rounded-xl border  border-[var(--border-clr)] bg-inputbg divide-y divide-white/[0.04] overflow-hidden">
                 {[
                   ["Remitter Name", `${detailRow.user?.firstName} ${detailRow.user?.lastName}`],
                   ["Email", detailRow.user?.email],
                 ].map(([k, v]) => (
                   <div key={k} className="flex items-center justify-between px-4 py-3">
-                    <span className="text-white/35 text-sm">{k}</span>
-                    <span className="text-white/75 text-sm font-medium mono">{v}</span>
+                    <span className="text-primary/50 text-sm">{k}</span>
+                    <span className="text-primary/75 text-sm font-medium mono">{v}</span>
                   </div>
                 ))}
               </div>
 
               {/* Fee Config */}
-              <h1 className="text-white text-sm mb-3">Fee Structure</h1>
-              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] divide-y divide-white/[0.04] overflow-hidden">
+              <h1 className="text-primary text-sm mb-3">Fee Structure</h1>
+              <div className="rounded-xl border  border-[var(--border-clr)] bg-inputbg divide-y divide-white/[0.04] overflow-hidden">
                 {[
                   ["Fx Rate", fmtAmount(detailRow?.feeConfig?.fxRate, "INR")],
                   ["Bank Fee", fmtAmount(detailRow?.feeConfig?.bankFee, "INR")],
@@ -744,22 +743,22 @@ export default function TransactionsTable({ data = [] }) {
                   ["Total Payable", fmtAmount(detailRow?.feeConfig?.totalPayable, "INR")],
                 ].map(([k, v]) => (
                   <div key={k} className="flex items-center justify-between px-4 py-3">
-                    <span className="text-white/35 text-sm">{k}</span>
-                    <span className="text-white/75 text-sm font-medium mono">{v}</span>
+                    <span className="text-primary/50 text-sm">{k}</span>
+                    <span className="text-primary/75 text-sm font-medium mono">{v}</span>
                   </div>
                 ))}
               </div>
 
               {/* Actions */}
               {/* <div className="mt-5 flex flex-col gap-2">
-                <button className="w-full py-2.5 rounded-xl bg-white/[0.05] border border-white/[0.07] text-white/60 hover:text-white hover:bg-white/[0.09] text-sm font-medium transition-all">
+                <button className="w-full py-2.5 rounded-xl bg-inputbg border  border-[var(--border-clr)] text-primary/60 hover:text-primary hover:bg-inputbg text-sm font-medium transition-all">
                   Download Receipt
                 </button>
-                <button className="w-full py-2.5 rounded-xl bg-white/[0.05] border border-white/[0.07] text-white/60 hover:text-white hover:bg-white/[0.09] text-sm font-medium transition-all">
+                <button className="w-full py-2.5 rounded-xl bg-inputbg border  border-[var(--border-clr)] text-primary/60 hover:text-primary hover:bg-inputbg text-sm font-medium transition-all">
                   Flag for Review
                 </button>
                 {detailRow.status === "failed" && (
-                  <button className="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white text-sm font-semibold transition-all shadow-lg shadow-emerald-500/20">
+                  <button className="w-full py-2.5 rounded-xl bg-accent hover:bg-accent/80 text-white text-sm font-semibold transition-all shadow-md shadow-accent/30">
                     Retry Transfer
                   </button>
                 )}

@@ -24,7 +24,7 @@ import { Avatar } from "./Avatar";
 // ─────────────────────────────────────────────────────────────
 
 export const statusColor = {
-  online: "bg-emerald-400",
+  online: "bg-accent",
   busy: "bg-amber-400",
   away: "bg-orange-400",
   offline: "bg-white/20",
@@ -34,8 +34,8 @@ const roleColor = {
   Admin: "bg-violet-500/10 text-violet-400 border-violet-500/20",
   Owner: "bg-amber-500/10  text-amber-400  border-amber-500/20",
   Editor: "bg-blue-500/10   text-blue-400   border-blue-500/20",
-  Viewer: "bg-white/[0.07]  text-white/45   border-white/[0.08]",
-  default: "bg-white/[0.07]  text-white/45   border-white/[0.08]",
+  Viewer: "bg-inputbg  text-primary/45    border-[var(--border-clr)]",
+  default: "bg-inputbg  text-primary/45    border-[var(--border-clr)]",
 };
 
 const highlight = (text = "", query = "") => {
@@ -45,9 +45,7 @@ const highlight = (text = "", query = "") => {
   return (
     <>
       {text.slice(0, idx)}
-      <mark className="bg-emerald-500/25 text-emerald-300 rounded-sm px-0.5">
-        {text.slice(idx, idx + query.length)}
-      </mark>
+      <mark className="bg-accent/25 text-emerald-300 rounded-sm px-0.5">{text.slice(idx, idx + query.length)}</mark>
       {text.slice(idx + query.length)}
     </>
   );
@@ -57,8 +55,8 @@ const highlight = (text = "", query = "") => {
 // SELECTED CHIP (multi-select)
 // ─────────────────────────────────────────────────────────────
 const SelectedChip = ({ user, onRemove }) => (
-  <span className="inline-flex items-center gap-1.5 pl-1 pr-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs font-medium">
-    <div className="w-4 h-4 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center text-[8px] font-bold text-white shrink-0">
+  <span className="inline-flex items-center gap-1.5 pl-1 pr-2 py-0.5 rounded-full bg-accent/10 border border-emerald-500/25 text-accent text-xs font-medium">
+    <div className="w-4 h-4 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center text-[8px] font-bold text-primary shrink-0">
       {getInitials(user.name)}
     </div>
     {user.name.split(" ")[0]}
@@ -90,10 +88,10 @@ const ListItem = ({ user, selected, onSelect, query, mode }) => {
       className={[
         "w-full flex items-center gap-3 px-4 py-3 transition-all duration-150 text-left group",
         isSelected
-          ? "bg-emerald-500/[0.08]"
+          ? "bg-accent/[0.08]"
           : user.disabled
             ? "opacity-40 cursor-not-allowed"
-            : "hover:bg-white/[0.04] cursor-pointer",
+            : "hover:bg-inputbg cursor-pointer",
       ].join(" ")}
     >
       <Avatar user={user} />
@@ -103,7 +101,7 @@ const ListItem = ({ user, selected, onSelect, query, mode }) => {
         <div className="flex items-center gap-2 flex-wrap">
           <span
             className={`text-sm font-medium truncate ${
-              isSelected ? "text-white" : "text-white/80 group-hover:text-white"
+              isSelected ? "text-primary" : "text-primary/80 group-hover:text-primary"
             }`}
           >
             {highlight(user.name, query)}
@@ -118,9 +116,9 @@ const ListItem = ({ user, selected, onSelect, query, mode }) => {
             </span>
           )}
         </div>
-        <p className="text-xs text-white/30 truncate mt-0.5">
+        <p className="text-xs text-primary/50 truncate mt-0.5">
           {highlight(user.email, query)}
-          {user.meta && <span className="text-white/20"> · {user.meta}</span>}
+          {user.meta && <span className="text-primary/20"> · {user.meta}</span>}
         </p>
       </div>
 
@@ -130,7 +128,7 @@ const ListItem = ({ user, selected, onSelect, query, mode }) => {
         {mode === "multi" && (
           <div
             className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-all
-            ${isSelected ? "bg-emerald-500 border-emerald-500" : "border-white/20 group-hover:border-white/40"}`}
+            ${isSelected ? "bg-accent border-emerald-500" : "border-white/20 group-hover:border-white/40"}`}
           >
             {isSelected && (
               <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none">
@@ -148,13 +146,7 @@ const ListItem = ({ user, selected, onSelect, query, mode }) => {
 
         {/* Single-select checkmark */}
         {mode === "single" && isSelected && (
-          <svg
-            viewBox="0 0 16 16"
-            className="w-4 h-4 text-emerald-400"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
+          <svg viewBox="0 0 16 16" className="w-4 h-4 text-accent" fill="none" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l3.5 3.5L13 4" />
           </svg>
         )}
@@ -249,10 +241,12 @@ export const UserList = ({
   const selectedCount = mode === "multi" ? selectedUsers.length : selectedUser ? 1 : 0;
 
   return (
-    <div className={`flex flex-col bg-[#0f1117] rounded-2xl border border-white/[0.07] overflow-hidden ${className}`}>
+    <div
+      className={`flex flex-col bg-card rounded-2xl border  border-[var(--border-clr)] overflow-hidden ${className}`}
+    >
       {/* ── Search header ── */}
       {showSearch && (
-        <div className="px-4 py-3 border-b border-white/[0.06]">
+        <div className="px-4 py-3 border-b  border-[var(--border-clr)]">
           {/* Multi-select chips */}
           {mode === "multi" && selectedUsers.length > 0 && (
             <div className="flex flex-wrap gap-1.5 mb-2.5">
@@ -262,10 +256,10 @@ export const UserList = ({
             </div>
           )}
 
-          <div className="flex items-center gap-2.5 bg-white/[0.04] border border-white/[0.07] rounded-xl px-3.5 py-2 focus-within:border-emerald-500/40 transition-all">
+          <div className="flex items-center gap-2.5 bg-inputbg border  border-[var(--border-clr)] rounded-xl px-3.5 py-2 focus-within:border-accent/50 transition-all">
             <svg
               viewBox="0 0 16 16"
-              className="w-3.5 h-3.5 text-white/25 shrink-0"
+              className="w-3.5 h-3.5 text-primary/70 shrink-0"
               fill="none"
               stroke="currentColor"
               strokeWidth="1.8"
@@ -278,12 +272,12 @@ export const UserList = ({
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={placeholder}
-              className="flex-1 bg-transparent outline-none text-sm text-white placeholder:text-white/25"
+              className="flex-1 bg-transparent outline-none text-sm text-primary placeholder:text-primary/70"
             />
             {query && (
               <button
                 onClick={() => setQuery("")}
-                className="text-white/25 hover:text-white/60 transition-colors text-xs"
+                className="text-primary/70 hover:text-primary/60 transition-colors text-xs"
               >
                 ✕
               </button>
@@ -297,11 +291,11 @@ export const UserList = ({
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-10 gap-2 text-center px-6">
             <span className="text-2xl opacity-20">◎</span>
-            <p className="text-white/30 text-sm">{emptyText}</p>
+            <p className="text-primary/50 text-sm">{emptyText}</p>
             {query && (
               <button
                 onClick={() => setQuery("")}
-                className="text-emerald-400/70 hover:text-emerald-400 text-xs transition-colors"
+                className="text-accent/70 hover:text-accent text-xs transition-colors"
               >
                 Clear search
               </button>
@@ -311,7 +305,7 @@ export const UserList = ({
           Object.entries(grouped).map(([group, groupUsers]) => (
             <div key={group}>
               {groupByRole && group && (
-                <div className="px-4 py-2 bg-white/[0.02] border-b border-white/[0.04] flex items-center gap-2">
+                <div className="px-4 py-2 bg-inputbg border-b  border-[var(--border-clr)] flex items-center gap-2">
                   <span
                     className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${
                       roleColor[group] ?? roleColor.default
@@ -319,7 +313,7 @@ export const UserList = ({
                   >
                     {group}
                   </span>
-                  <span className="text-white/20 text-xs">{groupUsers.length}</span>
+                  <span className="text-primary/20 text-xs">{groupUsers.length}</span>
                 </div>
               )}
               {groupUsers.map((user) => (
@@ -339,10 +333,10 @@ export const UserList = ({
 
       {/* ── Footer ── */}
       {(footer || (mode === "multi" && selectedCount > 0)) && (
-        <div className="border-t border-white/[0.06] bg-white/[0.01] px-4 py-3 flex items-center justify-between gap-3">
+        <div className="border-t  border-[var(--border-clr)] bg-inputbg px-4 py-3 flex items-center justify-between gap-3">
           {mode === "multi" && selectedCount > 0 ? (
-            <span className="text-white/35 text-xs">
-              <span className="text-emerald-400 font-semibold">{selectedCount}</span> selected
+            <span className="text-primary/50 text-xs">
+              <span className="text-accent font-semibold">{selectedCount}</span> selected
             </span>
           ) : (
             <span />
@@ -466,17 +460,17 @@ export default function UserListDemo() {
   const [groupUsers, setGroupUsers] = useState([]);
 
   return (
-    <div className="min-h-screen bg-[#0b0d12] p-6 md:p-10">
+    <div className="min-h-screen bg-base p-6 md:p-10">
       {/* Header */}
       <div className="mb-10">
         <div className="flex items-center gap-3 mb-1">
-          <div className="w-9 h-9 rounded-xl bg-emerald-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-emerald-500/30">
+          <div className="w-9 h-9 rounded-xl bg-accent flex items-center justify-center text-primary font-bold text-sm shadow-md shadow-emerald-500/30">
             F
           </div>
-          <h1 className="text-white text-2xl font-semibold tracking-tight">UserList</h1>
-          <span className="text-xs font-medium bg-white/[0.07] text-white/50 px-2 py-0.5 rounded-full">Component</span>
+          <h1 className="text-primary text-2xl font-semibold tracking-tight">UserList</h1>
+          <span className="text-xs font-medium bg-inputbg text-primary/75 px-2 py-0.5 rounded-full">Component</span>
         </div>
-        <p className="text-white/35 text-sm ml-12">
+        <p className="text-primary/50 text-sm ml-12">
           Searchable user list · single & multi-select · role grouping · highlight
         </p>
       </div>
@@ -485,30 +479,30 @@ export default function UserListDemo() {
         {/* ── Single Select ── */}
         <div className="flex flex-col gap-3">
           <div>
-            <h2 className="text-white font-semibold text-sm mb-0.5">Single Select</h2>
-            <p className="text-white/30 text-xs">mode="single" · click to select one user</p>
+            <h2 className="text-primary font-semibold text-sm mb-0.5">Single Select</h2>
+            <p className="text-primary/50 text-xs">mode="single" · click to select one user</p>
           </div>
 
           {/* Result */}
-          <div className="bg-[#13161f] border border-white/[0.06] rounded-xl px-4 py-3 min-h-[56px] flex items-center">
+          <div className="bg-card2 border  border-[var(--border-clr)] rounded-xl px-4 py-3 min-h-[56px] flex items-center">
             {singleUser ? (
               <div className="flex items-center gap-2.5 w-full">
-                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center text-[10px] font-bold text-white shrink-0">
+                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center text-[10px] font-bold text-primary shrink-0">
                   {getInitials(singleUser.name)}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-white text-sm font-medium truncate">{singleUser.name}</p>
-                  <p className="text-white/35 text-xs truncate">{singleUser.email}</p>
+                  <p className="text-primary text-sm font-medium truncate">{singleUser.name}</p>
+                  <p className="text-primary/50 text-xs truncate">{singleUser.email}</p>
                 </div>
                 <button
                   onClick={() => setSingleUser(null)}
-                  className="text-white/25 hover:text-white/60 transition-colors text-xs"
+                  className="text-primary/70 hover:text-primary/60 transition-colors text-xs"
                 >
                   ✕
                 </button>
               </div>
             ) : (
-              <p className="text-white/20 text-sm">No user selected</p>
+              <p className="text-primary/20 text-sm">No user selected</p>
             )}
           </div>
 
@@ -524,8 +518,8 @@ export default function UserListDemo() {
         {/* ── Multi Select ── */}
         <div className="flex flex-col gap-3">
           <div>
-            <h2 className="text-white font-semibold text-sm mb-0.5">Multi Select</h2>
-            <p className="text-white/30 text-xs">mode="multi" · chips above search</p>
+            <h2 className="text-primary font-semibold text-sm mb-0.5">Multi Select</h2>
+            <p className="text-primary/50 text-xs">mode="multi" · chips above search</p>
           </div>
 
           <UserList
@@ -538,7 +532,7 @@ export default function UserListDemo() {
               multiUsers.length > 0 && (
                 <button
                   onClick={() => setMultiUsers([])}
-                  className="text-xs text-white/30 hover:text-white/60 transition-colors"
+                  className="text-xs text-primary/50 hover:text-primary/60 transition-colors"
                 >
                   Clear all
                 </button>
@@ -547,18 +541,18 @@ export default function UserListDemo() {
           />
 
           {/* Result */}
-          <div className="bg-[#13161f] border border-white/[0.06] rounded-xl px-4 py-3 min-h-[56px]">
+          <div className="bg-card2 border  border-[var(--border-clr)] rounded-xl px-4 py-3 min-h-[56px]">
             {multiUsers.length > 0 ? (
               <div>
-                <p className="text-white/35 text-xs mb-2">
-                  <span className="text-emerald-400 font-semibold">{multiUsers.length}</span> member
+                <p className="text-primary/50 text-xs mb-2">
+                  <span className="text-accent font-semibold">{multiUsers.length}</span> member
                   {multiUsers.length !== 1 ? "s" : ""} selected
                 </p>
                 <div className="flex flex-wrap gap-1.5">
                   {multiUsers.map((u) => (
                     <span
                       key={u.id}
-                      className="text-xs bg-white/[0.06] text-white/50 border border-white/[0.08] px-2 py-0.5 rounded-full"
+                      className="text-xs bg-inputbg text-primary/75 border  border-[var(--border-clr)] px-2 py-0.5 rounded-full"
                     >
                       {u.name.split(" ")[0]}
                     </span>
@@ -566,7 +560,7 @@ export default function UserListDemo() {
                 </div>
               </div>
             ) : (
-              <p className="text-white/20 text-sm">No users selected</p>
+              <p className="text-primary/20 text-sm">No users selected</p>
             )}
           </div>
         </div>
@@ -574,8 +568,8 @@ export default function UserListDemo() {
         {/* ── Grouped by Role ── */}
         <div className="flex flex-col gap-3">
           <div>
-            <h2 className="text-white font-semibold text-sm mb-0.5">Grouped by Role</h2>
-            <p className="text-white/30 text-xs">groupByRole=true · mode="multi"</p>
+            <h2 className="text-primary font-semibold text-sm mb-0.5">Grouped by Role</h2>
+            <p className="text-primary/50 text-xs">groupByRole=true · mode="multi"</p>
           </div>
 
           <UserList
