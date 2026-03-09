@@ -261,7 +261,7 @@ const StepBar = ({ current }) => (
             )}
           </div>
           <span
-            className={`text-[10px] font-medium hidden sm:block whitespace-nowrap ${active ? "text-accent" : done ? "text-primary/50" : "text-primary/18"}`}
+            className={`text-[10px] font-medium hidden sm:block whitespace-nowrap ${active ? "text-accent" : done ? "text-primary/50" : "text-primary/40"}`}
           >
             {s.label}
           </span>

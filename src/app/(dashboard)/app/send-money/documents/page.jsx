@@ -7,13 +7,13 @@ import DocumentUploadForm from "./DocumentUploadForm";
 
 const Page = () => {
   // const user = useAuthStore((state) => state.user);
-  const user = useSendMoneyForm((state) => state.user);
+  const remitter = useSendMoneyForm((state) => state.remitter);
   return (
     <div>
       <AppPage title="Recipient">
         {/* Progress indicator */}
         <ProgressStepper activeStep={3} />
-        <DocumentUploadForm _id={user?._id} />
+        <DocumentUploadForm _id={remitter?._id} />
       </AppPage>
     </div>
   );

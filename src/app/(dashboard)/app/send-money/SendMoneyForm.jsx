@@ -18,10 +18,8 @@ const PURPOSE_CODES = [
   "Overseas Education – Living Expenses",
   "Family Maintenance",
   "Medical Treatment Abroad",
-  "Travel & Tourism",
   "Gift / Donation",
-  "Business Services",
-  "Import of Goods",
+  "Business Services / Import of Goods",
 ];
 
 const FEE_STRUCTURE = [

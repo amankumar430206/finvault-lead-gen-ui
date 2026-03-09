@@ -7,14 +7,16 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-export const useCreateStudent = () => {
+export const useCreateStudent = ({ redirectUrl = "" }) => {
   const router = useRouter();
 
   return useMutation({
     mutationFn: (data) => api.post("/users/create/student", data).then((res) => res.data),
     onSuccess: (data) => {
       toast.success("Student created successfully!");
-      router.push("/login");
+      toast.success("Verify OTP");
+      if (redirectUrl) router.push(redirectUrl || "/login");
+      return data;
     },
     onError: (error) => {
       console.log("Error Message:", error.response?.data?.msg);
@@ -37,7 +39,7 @@ export const useStudents = ({ query = {}, params = {}, payload = {} }) => {
 
 export const useGetUserById = ({ query = {}, params = {}, payload = {} }) => {
   return useQuery({
-    queryKey: ["user", query, params],
+    queryKey: ["user", params?._id, query, params],
     queryFn: async () => {
       const { data } = await api.get(`/users/${params?._id}` + getQueryParams(query));
       return data;

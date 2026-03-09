@@ -383,7 +383,7 @@ export default function AddUserForm() {
         </div>
 
         {/* Footer note */}
-        <p className="text-center text-primary/18 text-xs mt-4 flex items-center justify-center gap-1.5">
+        <p className="text-center text-primary/40 text-xs mt-4 flex items-center justify-center gap-1.5">
           <svg viewBox="0 0 12 12" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="1.4">
             <rect x="2" y="5" width="8" height="6" rx="1" />
             <path strokeLinecap="round" d="M4 5V3.5a2 2 0 014 0V5" />

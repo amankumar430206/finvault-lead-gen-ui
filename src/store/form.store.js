@@ -9,6 +9,7 @@ export const useSendMoneyForm = create(
       activeStep: 0,
       user: null, // user is the remiiter in context to send money feature
       transaction: null,
+      recipeint: null,
       remitter: null,
       formData: null,
 
@@ -36,6 +37,11 @@ export const useSendMoneyForm = create(
           inProgress: true,
         }),
 
+      setRecipient: (data) =>
+        set({
+          recipeint: data,
+        }),
+
       setActiveStep: (step) =>
         set({
           activeStep: step,
@@ -47,6 +53,7 @@ export const useSendMoneyForm = create(
           user: null,
           remitter: null,
           formData: null,
+          recipeint: null,
           activeStep: 0,
         }),
     }),

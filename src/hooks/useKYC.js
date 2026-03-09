@@ -1,14 +1,15 @@
 "use client";
 
 import { api } from "@/lib/axios";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 export const usePassportVerify = () => {
   return useMutation({
     mutationFn: (payload) => api.post("/kyc/passport/verify", payload).then((res) => res.data),
     onSuccess: (data) => {
-      toast.success("Passport Verified Successfully!");
+      console.log("data", data);
+      toast.success(data?.msg || "Passport Verified Successfully!");
     },
     onError: (error) => {
       toast.error(

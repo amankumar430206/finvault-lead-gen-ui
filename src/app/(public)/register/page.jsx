@@ -6,6 +6,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { BackgroundGrid } from "../login/page";
+import { useOtpVerify } from "@/hooks/useAuth";
+import { useState } from "react";
 
 const Icon = ({ path, className = "w-5 h-5" }) => (
   <svg
@@ -49,7 +51,7 @@ export const InputField = ({ label, type = "text", placeholder, icon, rightEl, e
   </div>
 );
 
-const formatDOB = (value) => {
+export const formatDOB = (value) => {
   const numbers = value.replace(/\D/g, "").slice(0, 8);
 
   const day = numbers.slice(0, 2);
@@ -65,7 +67,17 @@ const formatDOB = (value) => {
 };
 
 export default function RegisterPage() {
-  const { isPending, isSuccess, mutateAsync } = useCreateStudent();
+  const [verifyOtp, setVerifyOtp] = useState(false);
+
+  const {
+    isPending,
+    isSuccess,
+    mutateAsync,
+    data: studentData,
+  } = useCreateStudent({
+    redirectUrl: "",
+  });
+  const { isPending: otpPending, isSuccess: otpSuccess, mutateAsync: OtpMutation } = useOtpVerify();
   const router = useRouter();
 
   const {
@@ -76,15 +88,22 @@ export default function RegisterPage() {
     mode: "all",
   });
 
+  const isLoading = isPending || otpPending;
+
   const onSubmit = async (data) => {
-    const payload = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      passportNumber: data.passportNumber,
-      fileNumber: data.passportFileNo,
-      dob: data.dateOfBirth,
-    };
+    const payload = {};
+    payload.email = data.email;
+
+    if (verifyOtp) {
+      payload.verificationCode = data.otp;
+      await OtpMutation(payload);
+      return;
+    }
+
+    payload.firstName = data.firstName;
+    payload.lastName = data.lastName;
+    setVerifyOtp(true);
+
     await mutateAsync(payload);
   };
 
@@ -123,48 +142,51 @@ export default function RegisterPage() {
                 <p className="text-primary/40 text-sm mt-1">Create An Account</p>
               </div>
 
-              <>
-                <div className="fade-up delay-3 flex flex-col gap-4 mb-4">
+              {verifyOtp ? (
+                <div className="mb-4">
+                  <div className="fade-up delay-1 mb-7">
+                    <p className="text-primary/40 text-sm mt-1">OTP Verfication</p>
+                  </div>
                   <InputField
-                    label="Email address"
-                    type="email"
-                    placeholder="you@company.com"
-                    icon={ICONS.mail}
-                    name="email"
-                    register={register("email", {
-                      required: "Email is required",
+                    label="OTP"
+                    type="text"
+                    placeholder="XXXXXX"
+                    name="otp"
+                    register={register("otp", {
+                      required: "OTP is required",
                       pattern: {
-                        value: /\S+@\S+\.\S+/,
-                        message: "Enter a valid email",
+                        value: /^\d{6}$/,
+                        message: "OTP must be a 6-digit number",
                       },
                     })}
-                    error={errors.email}
+                    error={errors.otp}
                   />
                 </div>
+              ) : (
+                <>
+                  <div className="fade-up delay-3 flex flex-col gap-4 mb-4">
+                    <InputField
+                      label="First Name"
+                      type="text"
+                      placeholder="First Name"
+                      name="firstName"
+                      register={register("firstName", {
+                        required: "First name is required",
+                      })}
+                      error={errors.firstName}
+                    />
+                    <InputField
+                      label="Last Name"
+                      type="text"
+                      placeholder="Last Name"
+                      name="lastName"
+                      register={register("lastName", {
+                        required: "Last name is required",
+                      })}
+                      error={errors.lastName}
+                    />
 
-                <div className="fade-up delay-3 flex flex-col gap-4 mb-4">
-                  <InputField
-                    label="First Name"
-                    type="text"
-                    placeholder="First Name"
-                    name="firstName"
-                    register={register("firstName", {
-                      required: "First name is required",
-                    })}
-                    error={errors.firstName}
-                  />
-                  <InputField
-                    label="Last Name"
-                    type="text"
-                    placeholder="Last Name"
-                    name="lastName"
-                    register={register("lastName", {
-                      required: "Last name is required",
-                    })}
-                    error={errors.lastName}
-                  />
-
-                  <InputField
+                    {/* <InputField
                     label="Passport Number"
                     type="text"
                     placeholder="•••••••••"
@@ -255,40 +277,55 @@ export default function RegisterPage() {
                       },
                     })}
                     error={errors.dateOfBirth}
-                  />
-                </div>
-
-                <div className="fade-up delay-4">
-                  <button
-                    type="submit"
-                    disabled={isPending || isSubmitting}
-                    className="relative w-full overflow-hidden py-3 rounded-xl bg-accent hover:bg-accent/80 disabled:opacity-70 text-white text-sm font-semibold tracking-wide transition-all duration-200 shadow-md shadow-accent/20 hover:shadow-accent/20 flex items-center justify-center gap-2 shimmer-btn"
-                  >
-                    {isPending || isSubmitting ? (
-                      <>
-                        <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-                        </svg>
-                        Authenticating…
-                      </>
-                    ) : (
-                      <>Verify Passport & Submit</>
-                    )}
-                  </button>
-                </div>
-              </>
-
-              {isSuccess && (
-                <div className="fade-up flex flex-col items-center py-8 text-center gap-4">
-                  <div className="w-14 h-14 rounded-full bg-accent/10 border border-emerald-500/30 flex items-center justify-center">
-                    <Icon path={ICONS.check} className="w-7 h-7 text-accent" />
+                  /> */}
                   </div>
-                  <div>
-                    <p className="text-primary/40 text-sm mt-1">Redirecting to Login..</p>
+
+                  <div className="fade-up delay-3 flex flex-col gap-4 mb-4">
+                    <InputField
+                      label="Email address"
+                      type="email"
+                      placeholder="you@company.com"
+                      icon={ICONS.mail}
+                      name="email"
+                      register={register("email", {
+                        required: "Email is required",
+                        pattern: {
+                          value: /\S+@\S+\.\S+/,
+                          message: "Enter a valid email",
+                        },
+                      })}
+                      error={errors.email}
+                    />
                   </div>
-                </div>
+
+                  <div className="flex items-center justify-between px-4 py-3 bg-amber-200/10 rounded-lg mb-3">
+                    <span className="text-amber-400 text-sm">
+                      <b>Note:</b> Your name must exactly match your <b>Passport</b> (mandatory) and other identity
+                      documents such as <b>PAN</b> or <b>Aadhaar</b> to avoid verification issues.
+                    </span>
+                  </div>
+                </>
               )}
+
+              <div className="fade-up delay-4">
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="relative w-full overflow-hidden py-3 rounded-xl bg-accent hover:bg-accent/80 disabled:opacity-70 text-white text-sm font-semibold tracking-wide transition-all duration-200 shadow-md shadow-accent/20 hover:shadow-accent/20 flex items-center justify-center gap-2 shimmer-btn"
+                >
+                  {isLoading ? (
+                    <>
+                      <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                      </svg>
+                      Please Wait..
+                    </>
+                  ) : (
+                    <>Submit</>
+                  )}
+                </button>
+              </div>
             </div>
 
             {!isSuccess && (

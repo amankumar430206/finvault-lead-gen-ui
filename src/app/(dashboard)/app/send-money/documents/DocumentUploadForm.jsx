@@ -1,10 +1,12 @@
+import { useSendMoneyForm } from "@/store/form.store";
+import Link from "next/link";
 import { useState, useRef, useCallback } from "react";
 
 // ─────────────────────────────────────────────────────────────
 // PURPOSE → DOCUMENT CONFIG
 // ─────────────────────────────────────────────────────────────
 const PURPOSE_DOCS = {
-  "overseas-education": {
+  "Overseas Education – University Fees": {
     label: "Overseas Education – University Fees",
     color: "emerald",
     documents: [
@@ -52,7 +54,7 @@ const PURPOSE_DOCS = {
       },
     ],
   },
-  "overseas-living": {
+  "Overseas Education – Living Expenses": {
     label: "Overseas Education – Living Expenses",
     color: "emerald",
     documents: [
@@ -86,7 +88,7 @@ const PURPOSE_DOCS = {
       },
     ],
   },
-  "family-maintenance": {
+  "Family Maintenance": {
     label: "Family Maintenance",
     color: "emerald",
     documents: [
@@ -120,7 +122,7 @@ const PURPOSE_DOCS = {
       },
     ],
   },
-  medical: {
+  "Medical Treatment Abroad": {
     label: "Medical Treatment Abroad",
     color: "emerald",
     documents: [
@@ -161,8 +163,8 @@ const PURPOSE_DOCS = {
       },
     ],
   },
-  business: {
-    label: "Business Services / Import",
+  "Business Services / Import of Goods": {
+    label: "Business Services / Import of Goods",
     color: "emerald",
     documents: [
       {
@@ -202,7 +204,7 @@ const PURPOSE_DOCS = {
       },
     ],
   },
-  gift: {
+  "Gift / Donation": {
     label: "Gift / Donation",
     color: "emerald",
     documents: [
@@ -245,6 +247,7 @@ const PURPOSES = Object.entries(PURPOSE_DOCS).map(([id, cfg]) => ({
   color: cfg.color,
 }));
 
+console.log("PURPOSES", PURPOSES);
 // ─────────────────────────────────────────────────────────────
 // HELPERS
 // ─────────────────────────────────────────────────────────────
@@ -552,7 +555,10 @@ const ProgressHeader = ({ docs, uploads, color }) => {
 // MAIN PAGE
 // ─────────────────────────────────────────────────────────────
 export default function DocumentUploadPage() {
-  const [purpose, setPurpose] = useState("");
+  const formData = useSendMoneyForm((s) => s.formData);
+
+  console.log("formdata", formData);
+  const [purpose, setPurpose] = useState(formData?.purposeCode || "");
   const [uploads, setUploads] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -626,15 +632,9 @@ export default function DocumentUploadPage() {
                 <span className="text-primary/50 text-sm">Documents uploaded</span>
                 <span className="text-primary/70 text-sm font-mono font-medium">{uploadedCount} files</span>
               </div>
-              <div className="flex justify-between px-4 py-3">
-                <span className="text-primary/50 text-sm">Status</span>
-                <span className="text-amber-400 text-sm font-medium flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse inline-block" />
-                  Under review
-                </span>
-              </div>
             </div>
-            <button
+            <Link
+              href={"/app/send-money/review"}
               onClick={() => {
                 setSubmitted(false);
                 setPurpose("");
@@ -643,8 +643,8 @@ export default function DocumentUploadPage() {
               }}
               className="w-full py-3 rounded-xl bg-accent hover:bg-accent/80 text-white font-semibold text-sm transition-all shadow-md shadow-accent/30"
             >
-              Upload for Another Purpose
-            </button>
+              Review Transfer & Confirm
+            </Link>
           </div>
         </div>
       </div>
@@ -811,7 +811,7 @@ export default function DocumentUploadPage() {
                 "w-full flex items-center justify-center gap-2.5 py-3.5 rounded-xl",
                 "text-primary text-sm font-semibold transition-all duration-200",
                 canSubmit
-                  ? "bg-accent hover:bg-accent/80 shadow-md shadow-accent/20 hover:shadow-accent/20"
+                  ? "text-white bg-accent hover:bg-accent/80 shadow-md shadow-accent/20 hover:shadow-accent/20"
                   : "bg-inputbg border  border-[var(--border-clr)] text-primary/50 cursor-not-allowed",
                 loading ? "opacity-70 cursor-not-allowed" : "",
               ].join(" ")}

@@ -8,13 +8,12 @@ import { ProgressStepper } from "../ProgressStepper";
 import { useSendMoneyForm } from "@/store/form.store";
 
 const Page = () => {
-  const remitter = useSendMoneyForm((state) => state.remitter);
   return (
     <div>
       <AppPage title="Remitter">
         {/* Progress indicator */}
         <ProgressStepper activeStep={2} />
-        <RemitterDetail _id={remitter?._id} />
+        <RemitterDetail />
       </AppPage>
     </div>
   );

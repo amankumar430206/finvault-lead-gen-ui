@@ -1,3 +1,5 @@
+import { useSendMoneyForm } from "@/store/form.store";
+import Link from "next/link";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 
@@ -7,15 +9,15 @@ const FONTS = `
 
 // ── Country list (abbreviated) ────────────────────────────
 const COUNTRIES = [
+  "India",
+  "UAE",
+  "Canada",
   "United States",
   "United Kingdom",
   "Germany",
   "France",
-  "India",
-  "Canada",
   "Australia",
   "Singapore",
-  "UAE",
   "Japan",
   "Netherlands",
   "Switzerland",
@@ -230,6 +232,7 @@ const ReviewSection = ({ title, children }) => (
 // MAIN PAGE
 // ─────────────────────────────────────────────────────────────
 export default function AddRecipientPage() {
+  const { transaction, setRecipient, recipient, remitter, user } = useSendMoneyForm((s) => s);
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
@@ -258,6 +261,7 @@ export default function AddRecipientPage() {
       iban: "",
       routingNumber: "",
       accountNumber: "",
+      ...(recipient && recipient),
     },
   });
 
@@ -275,8 +279,9 @@ export default function AddRecipientPage() {
     if (valid) setStep((s) => s + 1);
   };
 
-  const onSubmit = () => {
+  const onSubmit = (data) => {
     setLoading(true);
+    setRecipient(data);
     setTimeout(() => {
       setLoading(false);
       setDone(true);
@@ -317,12 +322,12 @@ export default function AddRecipientPage() {
               <ReviewRow label="Country" value={allValues.country} />
               <ReviewRow label="SWIFT / BIC" value={allValues.swift} mono />
             </div>
-            <button
-              onClick={() => {}}
+            <Link
+              href={"/app/send-money/documents"}
               className="w-full py-3 rounded-xl bg-accent hover:bg-accent/80 text-white font-semibold text-sm transition-all shadow-md shadow-accent/30"
             >
               Upload Documents
-            </button>
+            </Link>
             <button
               onClick={() => {
                 setDone(false);
@@ -724,18 +729,7 @@ export default function AddRecipientPage() {
                       Saving…
                     </>
                   ) : (
-                    <>
-                      Save Recipient
-                      <svg
-                        viewBox="0 0 14 14"
-                        className="w-3.5 h-3.5"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.5 7l3.5 3.5 5.5-7" />
-                      </svg>
-                    </>
+                    <>Next</>
                   )}
                 </button>
               )}

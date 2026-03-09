@@ -244,7 +244,7 @@ const StepBar = ({ current }) => (
             )}
           </div>
           <span
-            className={`text-[10px] font-medium hidden sm:block whitespace-nowrap ${active ? "text-accent" : done ? "text-primary/50" : "text-primary/18"}`}
+            className={`text-[10px] font-medium hidden sm:block whitespace-nowrap ${active ? "text-accent" : done ? "text-primary/50" : "text-primary/40"}`}
           >
             {s.label}
           </span>
@@ -296,7 +296,7 @@ const FileZone = ({ label, hint, required }) => {
         >
           <svg
             viewBox="0 0 20 20"
-            className="w-5 h-5 text-primary/18 group-hover:text-primary/38 transition-colors"
+            className="w-5 h-5 text-primary/40 group-hover:text-primary/38 transition-colors"
             fill="none"
             stroke="currentColor"
             strokeWidth="1.5"
@@ -1155,7 +1155,7 @@ export default function ForexCardPage() {
                   </div>
                 ) : (
                   <div className="h-32 rounded-xl border-2 border-dashed  border-[var(--border-clr)] flex items-center justify-center">
-                    <p className="text-primary/18 text-xs">Select a plan to preview</p>
+                    <p className="text-primary/40 text-xs">Select a plan to preview</p>
                   </div>
                 )}
               </div>

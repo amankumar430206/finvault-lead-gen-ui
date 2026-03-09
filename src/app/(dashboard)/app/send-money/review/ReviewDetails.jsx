@@ -134,7 +134,7 @@ const SectionCard = ({ title, subtitle, icon, accent = "emerald", action, childr
 
   return (
     <div
-      className="rounded-2xl bg-card border  border-[var(--border-clr)] overflow-hidden shadow-xl"
+      className="rounded-2xl bg-card border  border-[var(--border-clr)] overflow-hidden shadow-sm"
       style={{ animation: `fadeUp 0.4s ease ${delay}s both` }}
     >
       <div className="px-6 pt-5 pb-2 flex items-start justify-between gap-3">
@@ -192,9 +192,8 @@ const EditBtn = ({ onClick }) => (
 );
 
 const Divider = ({ label }) => (
-  <div className="flex items-center gap-3 my-3">
-    <div className="flex-1 h-px bg-inputbg" />
-    {label && <span className="text-primary/18 text-[10px] uppercase tracking-widest font-semibold">{label}</span>}
+  <div className="flex items-center gap-3 my-4">
+    {label && <span className="text-accent text-[10px] uppercase tracking-widest font-semibold">{label}</span>}
     <div className="flex-1 h-px bg-inputbg" />
   </div>
 );
@@ -404,7 +403,7 @@ export default function ReviewPage({ _id = null }) {
               accent="emerald"
               delay={0.05}
               icon={
-                <svg viewBox="0 0 18 18" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <svg viewBox="0 0 25 25" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.6">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -412,7 +411,7 @@ export default function ReviewPage({ _id = null }) {
                   />
                 </svg>
               }
-              action={<EditBtn />}
+              // action={<EditBtn />}
             >
               {/* Hero amount */}
               <div className="flex items-end justify-between mb-5 py-3 px-4 bg-accent/[0.06] rounded-xl border border-emerald-500/15">
@@ -471,7 +470,7 @@ export default function ReviewPage({ _id = null }) {
               accent="blue"
               delay={0.1}
               icon={
-                <svg viewBox="0 0 18 18" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <svg viewBox="0 0 25 25" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.6">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -479,7 +478,7 @@ export default function ReviewPage({ _id = null }) {
                   />
                 </svg>
               }
-              action={<EditBtn />}
+              // action={<EditBtn />}
             >
               {/* Recipient identity card */}
               <div className="flex items-center gap-4 p-4 bg-blue-500/[0.05] rounded-xl border border-blue-500/15 mb-5">
@@ -512,6 +511,65 @@ export default function ReviewPage({ _id = null }) {
               <Row label="IBAN" value={recipient.iban} mono />
               <Row label="Account No." value={recipient.accountNumber} mono />
             </SectionCard>
+          </div>
+
+          {/* ════ RIGHT SIDEBAR ══════════════════════════════ */}
+          <div className="flex flex-col gap-5">
+            {/* Transfer progress timeline */}
+            {/* <SectionCard
+              title="Transfer Status"
+              subtitle="Live progress"
+              accent="emerald"
+              delay={0.08}
+              icon={
+                <svg viewBox="0 0 25 25" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.6">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              }
+            >
+              <Timeline />
+            </SectionCard> */}
+
+            {/* Quick summary */}
+            <SectionCard
+              title="Quick Summary"
+              subtitle="Key figures at a glance"
+              accent="cyan"
+              delay={0.13}
+              icon={
+                <svg viewBox="0 0 25 25" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.6">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"
+                  />
+                </svg>
+              }
+            >
+              {[
+                { label: "Sending", value: `USD ${transfer.amount}`, valueClass: "text-primary" },
+                { label: "Forex rate", value: transfer.forexRate, valueClass: "text-primary/65", mono: true },
+                {
+                  label: "Total payable",
+                  value: transfer.totalPayable,
+                  valueClass: "text-accent font-bold",
+                  mono: true,
+                },
+                { label: "To", value: recipient.name, valueClass: "text-primary/75" },
+                { label: "Country", value: `${recipient.flag} ${recipient.country}` },
+                { label: "Via", value: recipient.method, mono: true },
+                {
+                  label: "Documents",
+                  value: `${documents.length} uploaded, ${documents.filter((d) => d.status === "verified").length} verified`,
+                },
+              ].map((r, i) => (
+                <Row key={i} {...r} />
+              ))}
+            </SectionCard>
 
             {/* ── 3. DOCUMENTS ── */}
             <SectionCard
@@ -520,7 +578,7 @@ export default function ReviewPage({ _id = null }) {
               accent="violet"
               delay={0.15}
               icon={
-                <svg viewBox="0 0 18 18" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <svg viewBox="0 0 25 25" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.6">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -528,7 +586,7 @@ export default function ReviewPage({ _id = null }) {
                   />
                 </svg>
               }
-              action={<EditBtn />}
+              // action={<EditBtn />}
             >
               <div className="flex flex-col gap-2.5">
                 {documents.map((doc, i) => {
@@ -577,7 +635,7 @@ export default function ReviewPage({ _id = null }) {
               accent="amber"
               delay={0.2}
               icon={
-                <svg viewBox="0 0 18 18" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <svg viewBox="0 0 25 25" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.6">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -590,66 +648,6 @@ export default function ReviewPage({ _id = null }) {
               <Row label="Email" value={sender.email} />
               <Row label="Phone" value={sender.phone} mono />
               <Row label="PAN" value={sender.pan} mono valueClass="text-primary/60" />
-              <Row label="Debit account" value={`${sender.bank} · ${sender.account}`} mono />
-            </SectionCard>
-          </div>
-
-          {/* ════ RIGHT SIDEBAR ══════════════════════════════ */}
-          <div className="flex flex-col gap-5">
-            {/* Transfer progress timeline */}
-            <SectionCard
-              title="Transfer Status"
-              subtitle="Live progress"
-              accent="emerald"
-              delay={0.08}
-              icon={
-                <svg viewBox="0 0 18 18" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.6">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              }
-            >
-              <Timeline />
-            </SectionCard>
-
-            {/* Quick summary */}
-            <SectionCard
-              title="Quick Summary"
-              subtitle="Key figures at a glance"
-              accent="cyan"
-              delay={0.13}
-              icon={
-                <svg viewBox="0 0 18 18" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.6">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"
-                  />
-                </svg>
-              }
-            >
-              {[
-                { label: "Sending", value: `USD ${transfer.amount}`, valueClass: "text-primary" },
-                { label: "Forex rate", value: transfer.forexRate, valueClass: "text-primary/65", mono: true },
-                {
-                  label: "Total payable",
-                  value: transfer.totalPayable,
-                  valueClass: "text-accent font-bold",
-                  mono: true,
-                },
-                { label: "To", value: recipient.name, valueClass: "text-primary/75" },
-                { label: "Country", value: `${recipient.flag} ${recipient.country}` },
-                { label: "Via", value: recipient.method, mono: true },
-                {
-                  label: "Documents",
-                  value: `${documents.length} uploaded, ${documents.filter((d) => d.status === "verified").length} verified`,
-                },
-              ].map((r, i) => (
-                <Row key={i} {...r} />
-              ))}
             </SectionCard>
 
             {/* Confirm block */}
@@ -660,10 +658,10 @@ export default function ReviewPage({ _id = null }) {
               <div className="h-px w-full bg-gradient-to-r from-bg-card via-accent/80 from-bg-card" />
               <div className="px-6 py-5 flex flex-col gap-4">
                 {/* Warning note */}
-                <div className="flex gap-2.5 bg-amber-500/[0.07] border border-amber-500/20 rounded-xl p-3.5">
+                <div className="flex gap-2.5 bg-red-500/[0.07] border border-amber-500/20 rounded-xl p-3.5">
                   <svg
-                    viewBox="0 0 16 16"
-                    className="w-4 h-4 text-amber-400 shrink-0 mt-0.5"
+                    viewBox="0 0 25 25"
+                    className="w-3 h-3 text-red-400 shrink-0 mt-1"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.6"
@@ -687,8 +685,8 @@ export default function ReviewPage({ _id = null }) {
                   className="flex items-start gap-2.5 text-left group"
                 >
                   <div
-                    className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 mt-0.5 transition-all
-                    ${agreed ? "bg-accent border-emerald-500" : "border-white/20 group-hover:border-white/40"}`}
+                    className={`w-4 h-4 rounded border-2 flex items-center cursor-pointer justify-center shrink-0 mt-0.5 transition-all
+                    ${agreed ? "bg-accent border-emerald-500" : "border-primary/40 group-hover:border-primary/80"}`}
                     style={{ minWidth: "16px" }}
                   >
                     {agreed && (
@@ -704,7 +702,7 @@ export default function ReviewPage({ _id = null }) {
                     )}
                   </div>
                   <p
-                    className={`text-xs leading-relaxed transition-colors ${agreed ? "text-primary/55" : "text-primary/50 group-hover:text-primary/45"}`}
+                    className={`text-xs cursor-pointer leading-relaxed transition-colors ${agreed ? "text-primary/55" : "text-primary/50 group-hover:text-primary/45"}`}
                   >
                     I confirm all recipient and transfer details are accurate, and I authorise FinVault to process this
                     remittance under LRS regulations.
@@ -746,7 +744,7 @@ export default function ReviewPage({ _id = null }) {
                   )}
                 </button>
 
-                <p className="text-center text-primary/18 text-[11px] flex items-center justify-center gap-1.5">
+                <p className="text-center text-primary/40 text-[11px] flex items-center justify-center gap-1.5">
                   <svg viewBox="0 0 12 12" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="1.4">
                     <rect x="2" y="5" width="8" height="6" rx="1" />
                     <path strokeLinecap="round" d="M4 5V3.5a2 2 0 014 0V5" />
